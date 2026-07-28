@@ -186,7 +186,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .online-circle .center-text .num{font-size:11px;}
 .online-circle .center-text .sep{font-size:8px;opacity:0.5;margin:0 1px;}
 
-@media (max-width:400px){.online-circle{width:42px;height:42px;}.online-circle .center-text{font-size:7px;}.online-circle .center-text .num{font-size:9px;}}
+@media (max-width:400px){.online-circle{width:42px;height:42px;}.online-circle .center-text{font-size:7px;}.online-circle .center-text .num{font-size:9px;}} 
 @media (max-width:500px){.privilege-grid{grid-template-columns:1fr;gap:10px;}.privilege-card{padding:16px;}}
 @media (max-width:400px){.container{padding:0;}.hero-card{padding:24px 16px;}.hero-card .title .avatar-wrap{width:60px;height:60px;}.cta-row{flex-direction:column;}.btn{width:100%;justify-content:center;}.server-item{padding:10px 0;flex-wrap:wrap;}.server-item .actions{width:100%;justify-content:flex-end;}.server-item .copy-btn{width:100%;text-align:center;padding:8px;}.header{flex-wrap:wrap;gap:8px;}.header .logo{font-size:18px;}.header-right{gap:6px;}.lang-toggle .lang-option{font-size:8px;padding:3px 10px;}.modal{padding:24px 16px;}.admin-card{padding:14px;}}
 .lang-text{transition:opacity 0.3s ease;}
@@ -286,14 +286,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 <span class="lang-text active" data-lang="eng">— Servers —</span>
 </div>
 
-<!-- Server 1: ZM & LVL SYSTEM (16/16) GREEN -->
+<!-- Server 1: ZM & LVL SYSTEM (Real-time) -->
 <div class="server-item">
-<div class="online-circle" data-players="16" data-max="16" data-color="#00ff88">
+<div class="online-circle" id="zm-circle" data-players="0" data-max="16" data-color="#00ff88">
 <svg viewBox="0 0 50 50">
 <circle class="bg" cx="25" cy="25" r="20"/>
 <circle class="fill" cx="25" cy="25" r="20" stroke="#00ff88" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
 </svg>
-<span class="center-text"><span class="num">16</span><span class="sep">/</span>16</span>
+<span class="center-text"><span class="num" id="zm-online">0</span><span class="sep">/</span>16</span>
 </div>
 <div class="info">
 <span class="name">CS 1.6 ZM & LVL SYSTEM</span>
@@ -307,14 +307,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 </div>
 </div>
 
-<!-- Server 2: ZE & NEMESIS MODE (8/16) YELLOW 50% -->
+<!-- Server 2: ZE & NEMESIS MODE (заглушка) -->
 <div class="server-item">
-<div class="online-circle" data-players="8" data-max="16" data-color="#ffd700">
+<div class="online-circle" id="ze-circle" data-players="8" data-max="16" data-color="#ffd700">
 <svg viewBox="0 0 50 50">
 <circle class="bg" cx="25" cy="25" r="20"/>
 <circle class="fill" cx="25" cy="25" r="20" stroke="#ffd700" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
 </svg>
-<span class="center-text"><span class="num">8</span><span class="sep">/</span>16</span>
+<span class="center-text"><span class="num" id="ze-online">8</span><span class="sep">/</span>16</span>
 </div>
 <div class="info">
 <span class="name">CS 1.6 ZE & NEMESIS MODE</span>
@@ -328,14 +328,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 </div>
 </div>
 
-<!-- Server 3: DEATHMATCH (2/16) RED 12.5% -->
+<!-- Server 3: DEATHMATCH (заглушка) -->
 <div class="server-item">
-<div class="online-circle" data-players="2" data-max="16" data-color="#ff0055">
+<div class="online-circle" id="dm-circle" data-players="2" data-max="16" data-color="#ff0055">
 <svg viewBox="0 0 50 50">
 <circle class="bg" cx="25" cy="25" r="20"/>
 <circle class="fill" cx="25" cy="25" r="20" stroke="#ff0055" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
 </svg>
-<span class="center-text"><span class="num">2</span><span class="sep">/</span>16</span>
+<span class="center-text"><span class="num" id="dm-online">2</span><span class="sep">/</span>16</span>
 </div>
 <div class="info">
 <span class="name">CS 1.6 DEATHMATCH</span>
@@ -349,14 +349,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 </div>
 </div>
 
-<!-- Server 4: JAIL (5/16) ORANGE 31.25% -->
+<!-- Server 4: JAIL (заглушка) -->
 <div class="server-item">
-<div class="online-circle" data-players="5" data-max="16" data-color="#ff8800">
+<div class="online-circle" id="jail-circle" data-players="5" data-max="16" data-color="#ff8800">
 <svg viewBox="0 0 50 50">
 <circle class="bg" cx="25" cy="25" r="20"/>
 <circle class="fill" cx="25" cy="25" r="20" stroke="#ff8800" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
 </svg>
-<span class="center-text"><span class="num">5</span><span class="sep">/</span>16</span>
+<span class="center-text"><span class="num" id="jail-online">5</span><span class="sep">/</span>16</span>
 </div>
 <div class="info">
 <span class="name">JAIL | Побег из Ада 12+</span>
@@ -682,16 +682,28 @@ setTimeout(function(){btn.textContent='COPY IP';btn.classList.remove('copied');}
 }
 }
 
-function animateCircles(){
-document.querySelectorAll('.online-circle').forEach(function(circle){
-var players=parseInt(circle.getAttribute('data-players'));
-var max=parseInt(circle.getAttribute('data-max'));
+function animateCircle(selector, players, max){
+var circle=document.querySelector(selector);
+if(!circle)return;
 var percent=players/max;
 var circumference=125.66;
 var offset=circumference*(1-percent);
 var fill=circle.querySelector('.fill');
 if(players===0){fill.style.strokeDashoffset=circumference;}
 else{fill.style.strokeDashoffset=offset;}
+var numEl=circle.querySelector('.num');
+if(numEl)numEl.textContent=players;
+}
+
+function updateZMOnline(){
+fetch('https://kontra-api.avalon.kontra.workers.dev/api/status')
+.then(res=>res.json())
+.then(data=>{
+var players=data.zm?data.zm.totalOnline||0:0;
+animateCircle('#zm-circle', players, 16);
+})
+.catch(()=>{
+animateCircle('#zm-circle', 0, 16);
 });
 }
 
@@ -703,8 +715,9 @@ document.querySelectorAll('[data-lang]').forEach(el=>{
 if(el.getAttribute('data-lang')==='eng'){el.classList.add('active');el.classList.remove('hidden');}
 else{el.classList.remove('active');el.classList.add('hidden');}
 });
-setTimeout(animateCircles,300);
+updateZMOnline();
+setInterval(updateZMOnline, 10000);
 });
 </script>
 </body>
-</html>
+</html>	
