@@ -34,6 +34,8 @@ font-style: normal;
 @keyframes privilege-card{0%{opacity:0;transform:translateY(30px) scale(0.95);}100%{opacity:1;transform:translateY(0) scale(1);}}
 @keyframes border-glow{0%,100%{border-color:rgba(255,215,0,0.2);box-shadow:0 0 20px rgba(255,215,0,0.05);}50%{border-color:rgba(255,215,0,0.5);box-shadow:0 0 40px rgba(255,215,0,0.15);}}
 @keyframes circle-fill{from{stroke-dashoffset:var(--circumference);}to{stroke-dashoffset:var(--offset);}}
+@keyframes btn-press{0%{transform:scale(1);}50%{transform:scale(0.94);}100%{transform:scale(1);}}
+@keyframes fade-in-up{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 
 .avatar-wrap{display:inline-block;position:relative;width:80px;height:80px;vertical-align:middle;animation:avatar-float 3s ease-in-out infinite,avatar-glow 2.5s ease-in-out infinite;}
 .avatar-wrap svg{width:100%;height:100%;display:block;}
@@ -71,23 +73,30 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .btn::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg, rgba(0,212,255,0.1), rgba(123,47,252,0.1));opacity:0;transition:opacity 0.4s ease;}
 .btn:hover::before{opacity:1;}
 .btn:hover{border-color:var(--accent);color:var(--text-bright);box-shadow:0 0 40px rgba(0,212,255,0.15),inset 0 0 30px rgba(0,212,255,0.05);transform:translateY(-2px);}
-.btn-telegram{background:linear-gradient(135deg,#0088cc,#00aaff);border-color:#0088cc;color:#fff;box-shadow:0 0 30px rgba(0,136,204,0.2);}
-.btn-telegram:hover{box-shadow:0 0 60px rgba(0,136,204,0.4),inset 0 0 30px rgba(0,136,204,0.1);transform:translateY(-2px);}
-.btn-discord{background:linear-gradient(135deg,#5865F2,#7d8cf5);border-color:#5865F2;color:#fff;box-shadow:0 0 30px rgba(88,101,242,0.2);}
-.btn-discord:hover{box-shadow:0 0 60px rgba(88,101,242,0.4),inset 0 0 30px rgba(88,101,242,0.1);transform:translateY(-2px);}
-.btn-tiktok{background:linear-gradient(135deg,#000,#1a1a2e);border-color:#333;color:#fff;box-shadow:0 0 30px rgba(254,44,85,0.15);}
-.btn-tiktok:hover{box-shadow:0 0 60px rgba(254,44,85,0.3),inset 0 0 30px rgba(254,44,85,0.05);transform:translateY(-2px);}
-.btn-youtube{background:linear-gradient(135deg,#f00,#f33);border-color:#f00;color:#fff;box-shadow:0 0 30px rgba(255,0,0,0.2);}
-.btn-youtube:hover{box-shadow:0 0 60px rgba(255,0,0,0.4),inset 0 0 30px rgba(255,0,0,0.1);transform:translateY(-2px);}
-.btn-privilege{background:linear-gradient(135deg,var(--gold),#f0a500);border-color:var(--gold);color:#0a0a0f;box-shadow:0 0 30px rgba(255,215,0,0.25);font-weight:800;}
-.btn-privilege:hover{box-shadow:0 0 60px rgba(255,215,0,0.5),inset 0 0 30px rgba(255,215,0,0.1);transform:translateY(-2px);color:#0a0a0f;}
-.btn-privilege svg{fill:#0a0a0f;}
-.btn svg{width:16px;height:16px;fill:currentColor;}
+.btn:active{animation:btn-press 0.3s ease forwards;}
+.btn-telegram{background:transparent;border:1px solid #00d4ff;color:#00d4ff;text-shadow:0 0 20px rgba(0,212,255,0.3),0 0 40px rgba(0,212,255,0.1);}
+.btn-telegram svg{fill:#00d4ff;filter:drop-shadow(0 0 10px rgba(0,212,255,0.4));}
+.btn-telegram:hover{background:rgba(0,212,255,0.08);border-color:#00d4ff;color:#00d4ff;box-shadow:0 0 40px rgba(0,212,255,0.2),inset 0 0 30px rgba(0,212,255,0.05);}
+.btn-discord{background:transparent;border:1px solid #5865F2;color:#5865F2;text-shadow:0 0 20px rgba(88,101,242,0.3),0 0 40px rgba(88,101,242,0.1);}
+.btn-discord svg{fill:#5865F2;filter:drop-shadow(0 0 10px rgba(88,101,242,0.4));}
+.btn-discord:hover{background:rgba(88,101,242,0.08);border-color:#5865F2;color:#5865F2;box-shadow:0 0 40px rgba(88,101,242,0.2),inset 0 0 30px rgba(88,101,242,0.05);}
+.btn-tiktok{background:transparent;border:1px solid #ffffff;color:#ffffff;text-shadow:0 0 20px rgba(255,255,255,0.3),0 0 40px rgba(255,255,255,0.1);}
+.btn-tiktok svg{fill:#ffffff;filter:drop-shadow(0 0 10px rgba(255,255,255,0.3));}
+.btn-tiktok:hover{background:rgba(255,255,255,0.05);border-color:#ffffff;color:#ffffff;box-shadow:0 0 40px rgba(255,255,255,0.15),inset 0 0 30px rgba(255,255,255,0.05);}
+.btn-youtube{background:transparent;border:1px solid #ff0000;color:#ff0000;text-shadow:0 0 20px rgba(255,0,0,0.3),0 0 40px rgba(255,0,0,0.1);}
+.btn-youtube svg{fill:#ff0000;filter:drop-shadow(0 0 10px rgba(255,0,0,0.4));}
+.btn-youtube:hover{background:rgba(255,0,0,0.08);border-color:#ff0000;color:#ff0000;box-shadow:0 0 40px rgba(255,0,0,0.2),inset 0 0 30px rgba(255,0,0,0.05);}
+.btn-privilege{background:transparent;border:1px solid #ffd700;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.4),0 0 40px rgba(255,215,0,0.15);font-weight:700;animation:privilege-pulse 2s ease-in-out infinite;}
+.btn-privilege svg{fill:#ffd700;filter:drop-shadow(0 0 15px rgba(255,215,0,0.5));}
+.btn-privilege:hover{background:rgba(255,215,0,0.08);border-color:#ffd700;color:#ffd700;box-shadow:0 0 60px rgba(255,215,0,0.25),inset 0 0 30px rgba(255,215,0,0.05);}
+@keyframes privilege-pulse{0%,100%{text-shadow:0 0 20px rgba(255,215,0,0.4),0 0 40px rgba(255,215,0,0.15);}50%{text-shadow:0 0 30px rgba(255,215,0,0.6),0 0 60px rgba(255,215,0,0.25);}}
+.btn svg{width:16px;height:16px;flex-shrink:0;}
 .btn .lang-text{display:inline-block;transition:opacity 0.4s ease;}
 .btn .lang-text.hidden{display:none;}
 .admin-btn-wrap{margin:10px 0 4px;text-align:center;}
 .admin-btn-wrap .btn-admin{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 24px;border-radius:30px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.3s ease;font-family:'Inter',sans-serif;box-shadow:0 0 20px rgba(255,215,0,0.05);}
 .admin-btn-wrap .btn-admin:hover{background:var(--gold);color:#0a0a0f;box-shadow:0 0 40px rgba(255,215,0,0.3);transform:translateY(-2px);}
+.admin-btn-wrap .btn-admin:active{animation:btn-press 0.3s ease forwards;}
 .admin-btn-wrap .btn-admin .lang-text{display:inline-block;transition:opacity 0.4s ease;}
 .admin-btn-wrap .btn-admin .lang-text.hidden{display:none;}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:999;justify-content:center;align-items:center;animation:modalBg 0.3s ease;padding:20px;}
@@ -98,7 +107,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .modal-title{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;text-align:center;color:var(--gold);text-shadow:0 0 30px rgba(255,215,0,0.15);margin-bottom:24px;letter-spacing:0.02em;}
 .modal-title .lang-text{display:inline-block;transition:opacity 0.4s ease;}
 .modal-title .lang-text.hidden{display:none;}
-
 .privilege-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
 .privilege-card{background:rgba(255,255,255,0.02);border:2px solid var(--border);border-radius:16px;padding:20px 16px;text-align:center;cursor:pointer;transition:all 0.4s ease;position:relative;overflow:hidden;animation:privilege-card 0.5s ease forwards;}
 .privilege-card:nth-child(1){animation-delay:0.05s;}
@@ -111,6 +119,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .privilege-card .p-price{font-size:11px;color:var(--green);margin-top:6px;font-weight:600;}
 .privilege-card .p-btn{display:inline-block;margin-top:8px;padding:4px 16px;border-radius:20px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border:1px solid;transition:all 0.3s ease;cursor:pointer;background:transparent;font-family:'Inter',sans-serif;}
 .privilege-card .p-btn:hover{background:currentColor;color:var(--bg) !important;}
+.privilege-card:active{animation:btn-press 0.3s ease forwards;}
 .privilege-card.deluxe{border-color:rgba(255,215,0,0.3);}
 .privilege-card.deluxe:hover{border-color:var(--gold);box-shadow:0 0 40px rgba(255,215,0,0.15);}
 .privilege-card.deluxe .p-name{color:var(--gold);}
@@ -126,7 +135,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .privilege-card.vip .p-name{color:var(--red);}
 .privilege-card.vip .p-btn{border-color:var(--red);color:var(--red);}
 .privilege-card.vip .p-btn:hover{background:var(--red);color:#0a0a0f !important;}
-
 .privilege-detail{display:none;animation:fadeInUp 0.4s ease;}
 .privilege-detail.active{display:block;}
 .privilege-detail .detail-header{text-align:center;margin-bottom:16px;}
@@ -156,7 +164,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .privilege-detail .detail-back:hover{color:var(--accent);border-bottom-color:var(--accent);}
 .privilege-detail .detail-back .lang-text{display:inline-block;}
 .privilege-detail .detail-back .lang-text.hidden{display:none;}
-
 .servers-card{background:linear-gradient(145deg, var(--card), rgba(17,17,24,0.95));border:1px solid var(--border);border-radius:20px;padding:20px 24px;margin-top:16px;box-shadow:0 0 60px rgba(0,212,255,0.03);}
 .servers-card .card-title{font-family:'Orbitron',sans-serif;font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.15em;text-align:center;margin-bottom:16px;}
 .servers-card .card-title .lang-text{display:inline-block;transition:opacity 0.4s ease;}
@@ -175,9 +182,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .copy-btn{background:transparent;border:1px solid var(--border);color:rgba(255,255,255,0.3);padding:6px 14px;border-radius:20px;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all 0.3s ease;letter-spacing:0.05em;white-space:nowrap;}
 .copy-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px rgba(0,212,255,0.05);}
 .copy-btn.copied{border-color:var(--green);color:var(--green);}
+.copy-btn:active{animation:btn-press 0.3s ease forwards;}
 .copy-btn .lang-text{display:inline-block;transition:opacity 0.4s ease;}
 .copy-btn .lang-text.hidden{display:none;}
-
 .online-circle{flex-shrink:0;width:50px;height:50px;position:relative;display:flex;align-items:center;justify-content:center;}
 .online-circle svg{width:100%;height:100%;transform:rotate(-90deg);}
 .online-circle .bg{stroke:rgba(255,255,255,0.08);fill:none;stroke-width:3.5;}
@@ -185,15 +192,22 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .online-circle .center-text{position:absolute;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:var(--text-bright);letter-spacing:0.02em;text-align:center;line-height:1;display:flex;flex-direction:row;align-items:center;gap:0px;}
 .online-circle .center-text .num{font-size:11px;}
 .online-circle .center-text .sep{font-size:8px;opacity:0.5;margin:0 1px;}
+.offline .online-circle .fill{stroke:#444 !important;}
+.offline .online-circle .center-text{color:#444;}
+.offline .status{color:#555 !important;}
+.offline .status .dot{background:#555 !important;animation:none !important;}
 
-@media (max-width:400px){.online-circle{width:42px;height:42px;}.online-circle .center-text{font-size:7px;}.online-circle .center-text .num{font-size:9px;}} 
+.loading-shimmer{animation:shimmer 1.5s ease-in-out infinite;background:linear-gradient(90deg,var(--border),rgba(255,255,255,0.05),var(--border));background-size:200% 100%;border-radius:4px;}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+.update-time{text-align:center;font-size:9px;color:var(--text-dim);margin-top:8px;letter-spacing:0.05em;}
+.update-time .time{color:var(--text-dim);}
+
+@media (max-width:400px){.online-circle{width:42px;height:42px;}.online-circle .center-text{font-size:7px;}.online-circle .center-text .num{font-size:9px;}}
 @media (max-width:500px){.privilege-grid{grid-template-columns:1fr;gap:10px;}.privilege-card{padding:16px;}}
 @media (max-width:400px){.container{padding:0;}.hero-card{padding:24px 16px;}.hero-card .title .avatar-wrap{width:60px;height:60px;}.cta-row{flex-direction:column;}.btn{width:100%;justify-content:center;}.server-item{padding:10px 0;flex-wrap:wrap;}.server-item .actions{width:100%;justify-content:flex-end;}.server-item .copy-btn{width:100%;text-align:center;padding:8px;}.header{flex-wrap:wrap;gap:8px;}.header .logo{font-size:18px;}.header-right{gap:6px;}.lang-toggle .lang-option{font-size:8px;padding:3px 10px;}.modal{padding:24px 16px;}.admin-card{padding:14px;}}
 .lang-text{transition:opacity 0.3s ease;}
 .lang-text.hidden{display:none;}
 .lang-text.active{display:inline-block;animation:lang-slide 0.3s ease forwards;}
-
-/* Admin styles */
 .admin-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
 .admin-card .name{font-family:'Orbitron',sans-serif;font-weight:700;font-size:15px;color:var(--text-bright);}
 .admin-card .role{font-size:11px;color:var(--accent);margin-top:2px;font-weight:500;letter-spacing:0.03em;}
@@ -263,10 +277,26 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 <span class="lang-text active" data-lang="eng"><strong>Kontra</strong> is a mobile shooter game with various modes like: Deathmatch, Defuse, GunGame, Zombie Mode, Zombie Escape and JailBreak.</span>
 </p>
 <div class="cta-row">
-<a href="https://t.me/avalon_hosting" target="_blank" rel="noopener" class="btn btn-telegram"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg>Telegram</a>
-<a href="https://discord.gg/uSVVwrq22" target="_blank" rel="noopener" class="btn btn-discord"><svg viewBox="0 0 24 24"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.9-1.52.08.08 0 0 0-.08.04c-.21.38-.45.87-.61 1.26a18.3 18.3 0 0 0-5.48 0 12.6 12.6 0 0 0-.62-1.26.08.08 0 0 0-.08-.04c-1.7.29-3.36.8-4.9 1.52a.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .09-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1 0-.13c.13-.09.25-.19.37-.28a.08.08 0 0 1 .08 0c3.93 1.8 8.18 1.8 12.06 0a.08.08 0 0 1 .09 0c.12.1.24.19.37.28a.08.08 0 0 1 0 .13c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.11c.36.7.78 1.37 1.23 2a.08.08 0 0 0 .09.03 19.8 19.8 0 0 0 6.03-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"/></svg>Discord</a>
-<a href="https://www.tiktok.com/@goofiyanskiy" target="_blank" rel="noopener" class="btn btn-tiktok"><svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.14 1.47.68 2.91 1.56 4.1.88 1.19 2.05 2.02 3.43 2.38v3.18c-1.12-.14-2.23-.46-3.25-1.09-.15-.09-.29-.18-.43-.28v5.22c0 2.14-.73 4.22-2.07 5.89-1.34 1.66-3.2 2.76-5.26 3.12-2.06.36-4.18-.03-5.96-1.09-1.78-1.06-3.14-2.72-3.72-4.82-.58-2.1-.3-4.33.77-6.22 1.07-1.89 2.8-3.24 4.83-3.78.38-.11.77-.18 1.16-.22v3.18c-.52.08-1.03.28-1.48.58-.45.3-.82.68-1.08 1.14-.26.45-.41.95-.42 1.47-.01.52.12 1.03.38 1.48.26.45.63.83 1.08 1.13.45.3.96.49 1.48.56.52.07 1.05.03 1.55-.13.5-.16.96-.44 1.34-.82.38-.38.66-.84.82-1.34.16-.5.2-1.03.13-1.55-.07-.52-.26-1.03-.56-1.48V.02z"/></svg>TikTok</a>
-<a href="https://www.youtube.com/@Goofyanskiy" target="_blank" rel="noopener" class="btn btn-youtube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>YouTube</a>
+<a href="https://t.me/avalon_hosting" target="_blank" rel="noopener" class="btn btn-telegram">
+<svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg>
+<span class="lang-text hidden" data-lang="rus">Телеграм</span>
+<span class="lang-text active" data-lang="eng">Telegram</span>
+</a>
+<a href="https://discord.gg/uSVVwrq22" target="_blank" rel="noopener" class="btn btn-discord">
+<svg viewBox="0 0 24 24"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.9-1.52.08.08 0 0 0-.08.04c-.21.38-.45.87-.61 1.26a18.3 18.3 0 0 0-5.48 0 12.6 12.6 0 0 0-.62-1.26.08.08 0 0 0-.08-.04c-1.7.29-3.36.8-4.9 1.52a.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .09-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1 0-.13c.13-.09.25-.19.37-.28a.08.08 0 0 1 .08 0c3.93 1.8 8.18 1.8 12.06 0a.08.08 0 0 1 .09 0c.12.1.24.19.37.28a.08.08 0 0 1 0 .13c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.11c.36.7.78 1.37 1.23 2a.08.08 0 0 0 .09.03 19.8 19.8 0 0 0 6.03-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"/></svg>
+<span class="lang-text hidden" data-lang="rus">Дискорд</span>
+<span class="lang-text active" data-lang="eng">Discord</span>
+</a>
+<a href="https://www.tiktok.com/@goofiyanskiy" target="_blank" rel="noopener" class="btn btn-tiktok">
+<svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.14 1.47.68 2.91 1.56 4.1.88 1.19 2.05 2.02 3.43 2.38v3.18c-1.12-.14-2.23-.46-3.25-1.09-.15-.09-.29-.18-.43-.28v5.22c0 2.14-.73 4.22-2.07 5.89-1.34 1.66-3.2 2.76-5.26 3.12-2.06.36-4.18-.03-5.96-1.09-1.78-1.06-3.14-2.72-3.72-4.82-.58-2.1-.3-4.33.77-6.22 1.07-1.89 2.8-3.24 4.83-3.78.38-.11.77-.18 1.16-.22v3.18c-.52.08-1.03.28-1.48.58-.45.3-.82.68-1.08 1.14-.26.45-.41.95-.42 1.47-.01.52.12 1.03.38 1.48.26.45.63.83 1.08 1.13.45.3.96.49 1.48.56.52.07 1.05.03 1.55-.13.5-.16.96-.44 1.34-.82.38-.38.66-.84.82-1.34.16-.5.2-1.03.13-1.55-.07-.52-.26-1.03-.56-1.48V.02z"/></svg>
+<span class="lang-text hidden" data-lang="rus">ТикТок</span>
+<span class="lang-text active" data-lang="eng">TikTok</span>
+</a>
+<a href="https://www.youtube.com/@Goofyanskiy" target="_blank" rel="noopener" class="btn btn-youtube">
+<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+<span class="lang-text hidden" data-lang="rus">Ютуб</span>
+<span class="lang-text active" data-lang="eng">YouTube</span>
+</a>
 <button class="btn btn-privilege" onclick="openPrivilegeModal()">
 <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
 <span class="lang-text hidden" data-lang="rus">Привилегии</span>
@@ -286,14 +316,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 <span class="lang-text active" data-lang="eng">— Servers —</span>
 </div>
 
-<!-- Server 1: ZM & LVL SYSTEM (Real-time) -->
-<div class="server-item">
-<div class="online-circle" id="zm-circle" data-players="0" data-max="16" data-color="#00ff88">
+<div class="server-item" id="server-5006">
+<div class="online-circle" data-players="0" data-max="16" data-color="#00ff88">
 <svg viewBox="0 0 50 50">
 <circle class="bg" cx="25" cy="25" r="20"/>
 <circle class="fill" cx="25" cy="25" r="20" stroke="#00ff88" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
 </svg>
-<span class="center-text"><span class="num" id="zm-online">0</span><span class="sep">/</span>16</span>
+<span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
 </div>
 <div class="info">
 <span class="name">CS 1.6 ZM & LVL SYSTEM</span>
@@ -307,14 +336,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 </div>
 </div>
 
-<!-- Server 2: ZE & NEMESIS MODE (заглушка) -->
-<div class="server-item">
-<div class="online-circle" id="ze-circle" data-players="8" data-max="16" data-color="#ffd700">
+<div class="server-item" id="server-5005">
+<div class="online-circle" data-players="0" data-max="16" data-color="#ffd700">
 <svg viewBox="0 0 50 50">
 <circle class="bg" cx="25" cy="25" r="20"/>
 <circle class="fill" cx="25" cy="25" r="20" stroke="#ffd700" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
 </svg>
-<span class="center-text"><span class="num" id="ze-online">8</span><span class="sep">/</span>16</span>
+<span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
 </div>
 <div class="info">
 <span class="name">CS 1.6 ZE & NEMESIS MODE</span>
@@ -328,14 +356,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 </div>
 </div>
 
-<!-- Server 3: DEATHMATCH (заглушка) -->
-<div class="server-item">
-<div class="online-circle" id="dm-circle" data-players="2" data-max="16" data-color="#ff0055">
+<div class="server-item" id="server-5002">
+<div class="online-circle" data-players="0" data-max="16" data-color="#ff0055">
 <svg viewBox="0 0 50 50">
 <circle class="bg" cx="25" cy="25" r="20"/>
 <circle class="fill" cx="25" cy="25" r="20" stroke="#ff0055" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
 </svg>
-<span class="center-text"><span class="num" id="dm-online">2</span><span class="sep">/</span>16</span>
+<span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
 </div>
 <div class="info">
 <span class="name">CS 1.6 DEATHMATCH</span>
@@ -349,14 +376,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 </div>
 </div>
 
-<!-- Server 4: JAIL (заглушка) -->
-<div class="server-item">
-<div class="online-circle" id="jail-circle" data-players="5" data-max="16" data-color="#ff8800">
+<div class="server-item" id="server-5003">
+<div class="online-circle" data-players="0" data-max="16" data-color="#ff8800">
 <svg viewBox="0 0 50 50">
 <circle class="bg" cx="25" cy="25" r="20"/>
 <circle class="fill" cx="25" cy="25" r="20" stroke="#ff8800" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
 </svg>
-<span class="center-text"><span class="num" id="jail-online">5</span><span class="sep">/</span>16</span>
+<span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
 </div>
 <div class="info">
 <span class="name">JAIL | Побег из Ада 12+</span>
@@ -370,11 +396,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 </div>
 </div>
 
+<div class="update-time"><span class="lang-text hidden" data-lang="rus">Обновлено:</span><span class="lang-text active" data-lang="eng">Updated:</span> <span class="time" id="updateTime">—</span></div>
 </div>
-<footer>
-<span class="lang-text hidden" data-lang="rus">© 2026 KONTRA • <a href="https://github.com/GooFiyanskiy/kontra-avalon">GitHub</a></span>
-<span class="lang-text active" data-lang="eng">© 2026 KONTRA • <a href="https://github.com/GooFiyanskiy/kontra-avalon">GitHub</a></span>
-</footer>
 </div>
 
 <div class="modal-overlay" id="adminModal" onclick="closeModalOutside(event)">
@@ -682,28 +705,60 @@ setTimeout(function(){btn.textContent='COPY IP';btn.classList.remove('copied');}
 }
 }
 
-function animateCircle(selector, players, max){
-var circle=document.querySelector(selector);
-if(!circle)return;
+function animateCircles(){
+document.querySelectorAll('.online-circle').forEach(function(circle){
+var players=parseInt(circle.getAttribute('data-players'))||0;
+var max=parseInt(circle.getAttribute('data-max'))||16;
 var percent=players/max;
 var circumference=125.66;
 var offset=circumference*(1-percent);
 var fill=circle.querySelector('.fill');
 if(players===0){fill.style.strokeDashoffset=circumference;}
 else{fill.style.strokeDashoffset=offset;}
-var numEl=circle.querySelector('.num');
-if(numEl)numEl.textContent=players;
+});
 }
 
-function updateZMOnline(){
-fetch('https://kontra-api.avalon.kontra.workers.dev/api/status')
-.then(res=>res.json())
-.then(data=>{
-var players=data.zm?data.zm.totalOnline||0:0;
-animateCircle('#zm-circle', players, 16);
-})
-.catch(()=>{
-animateCircle('#zm-circle', 0, 16);
+function updateServerData(){
+var apiUrl='https://kontra-stats.avalon-kontra.workers.dev';
+fetch(apiUrl).then(function(response){
+return response.json();
+}).then(function(data){
+var serverMap={
+'zm':{id:'server-5006',ip:'serverIp1',players:data.players||0,maxPlayers:data.maxPlayers||16},
+'ze':{id:'server-5005',ip:'serverIp2',players:data.players||0,maxPlayers:data.maxPlayers||16},
+'dm':{id:'server-5002',ip:'serverIp3',players:data.players||0,maxPlayers:data.maxPlayers||16},
+'jail':{id:'server-5003',ip:'serverIp4',players:data.players||0,maxPlayers:data.maxPlayers||16}
+};
+if(data.serverId && serverMap[data.serverId]){
+var server=serverMap[data.serverId];
+var players=server.players;
+var maxPlayers=server.maxPlayers;
+var circle=document.querySelector('#'+server.id+' .online-circle');
+if(circle){
+circle.setAttribute('data-players',players);
+circle.setAttribute('data-max',maxPlayers);
+var numSpan=circle.querySelector('.num');
+if(numSpan) numSpan.textContent=players;
+var fill=circle.querySelector('.fill');
+var color=circle.getAttribute('data-color')||'#00ff88';
+var circumference=125.66;
+var percent=players/maxPlayers;
+var offset=circumference*(1-percent);
+if(players===0){fill.style.strokeDashoffset=circumference;}
+else{fill.style.strokeDashoffset=offset;}
+if(players===0){circle.closest('.server-item').classList.add('offline');}
+else{circle.closest('.server-item').classList.remove('offline');}
+}
+var ipSpan=document.getElementById(server.ip);
+if(ipSpan) ipSpan.textContent='5.141.89.34:'+(data.port||'5000');
+}
+var now=new Date();
+var timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')+':'+now.getSeconds().toString().padStart(2,'0');
+document.getElementById('updateTime').textContent=timeStr;
+}).catch(function(){
+var now=new Date();
+var timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0')+':'+now.getSeconds().toString().padStart(2,'0');
+document.getElementById('updateTime').textContent=timeStr+' (err)';
 });
 }
 
@@ -715,9 +770,10 @@ document.querySelectorAll('[data-lang]').forEach(el=>{
 if(el.getAttribute('data-lang')==='eng'){el.classList.add('active');el.classList.remove('hidden');}
 else{el.classList.remove('active');el.classList.add('hidden');}
 });
-updateZMOnline();
-setInterval(updateZMOnline, 10000);
+animateCircles();
+updateServerData();
+setInterval(updateServerData,15000);
 });
 </script>
 </body>
-</html>	
+</html>
