@@ -745,7 +745,7 @@ setTimeout(function(){btn.textContent='COPY IP';btn.classList.remove('copied');}
 // Функции для обновления статуса серверов через Worker
 async function fetchServerStatus(serverId, circleId, detailsId) {
     try {
-        const response = await fetch(`https://kontra-status.твой-аккаунт.workers.dev/api/status?server=${serverId}`);
+        const response = await fetch(`https://kontra-status.avalon-kontra.workers.dev/api/status?server=${serverId}`);
         const data = await response.json();
         
         // Обновляем онлайн-круг
