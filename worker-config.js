@@ -6,7 +6,7 @@ export default {
     {
       binding: "KONTRA_STATUS",
       database_name: "kontra-status-db",
-      database_id: "ВАШ_D1_ID_СЮДА"
+      database_id: "4beccfab-f433-4b41-92b4-fda63ff17e34"
     }
   ]
 };
