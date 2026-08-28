@@ -1,738 +1,308 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KONTRA — Multiplayer FPS</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-@font-face {
-font-family: 'Konstruct';
-src: url('https://fonts.gstatic.com/s/konstruct/v1/Sj6k6GgGpZqLxGXuZ3T0Bz0.woff2') format('woff2');
-font-weight: 100;
-font-style: normal;
-}
-@font-face {
-font-family: 'Konstruct';
-src: url('https://fonts.gstatic.com/s/konstruct/v1/Sj6k6GgGpZqLxGXuZ3T0Bz0.woff2') format('woff2');
-font-weight: 300;
-font-style: normal;
-}
-
-:root{--bg:#0a0a0f;--card:#111118;--border:#1a1a2e;--text:#c8c8e0;--text-dim:#5a5a7a;--text-bright:#f0f0ff;--accent:#00d4ff;--accent2:#7b2ffc;--accent3:#ff6b9d;--gold:#ffd700;--green:#00ff88;--red:#ff0055;--silver:#c0c0c0;}
-
-@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 20px rgba(0,255,136,0.8),0 0 40px rgba(0,255,136,0.4);}50%{opacity:0.5;transform:scale(0.8);box-shadow:0 0 40px rgba(0,255,136,1),0 0 80px rgba(0,255,136,0.6);}}
-@keyframes pulse-badge{0%,100%{opacity:1;box-shadow:0 0 20px rgba(0,255,136,0.5),0 0 40px rgba(0,255,136,0.2);}50%{opacity:0.8;box-shadow:0 0 40px rgba(0,255,136,0.8),0 0 80px rgba(0,255,136,0.4);}}
-@keyframes gradient-shift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-@keyframes lang-slide{0%{transform:translateX(0);opacity:0;}100%{transform:translateX(0);opacity:1;}}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(20px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);}}
-@keyframes modalBg{from{opacity:0;}to{opacity:1;}}
-@keyframes avatar-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-@keyframes avatar-glow{0%,100%{filter:drop-shadow(0 0 20px rgba(255,255,255,0.3)) drop-shadow(0 0 60px rgba(255,255,255,0.05));}50%{filter:drop-shadow(0 0 40px rgba(255,255,255,0.6)) drop-shadow(0 0 100px rgba(255,255,255,0.15));}}
-@keyframes privilege-card{0%{opacity:0;transform:translateY(30px) scale(0.95);}100%{opacity:1;transform:translateY(0) scale(1);}}
-@keyframes border-glow{0%,100%{border-color:rgba(255,215,0,0.2);box-shadow:0 0 20px rgba(255,215,0,0.05);}50%{border-color:rgba(255,215,0,0.5);box-shadow:0 0 40px rgba(255,215,0,0.15);}}
-@keyframes circle-fill{from{stroke-dashoffset:var(--circumference);}to{stroke-dashoffset:var(--offset);}}
-@keyframes btn-press{0%{transform:scale(1);}50%{transform:scale(0.94);}100%{transform:scale(1);}}
-
-.avatar-wrap{display:inline-block;position:relative;width:80px;height:80px;vertical-align:middle;animation:avatar-float 3s ease-in-out infinite,avatar-glow 2.5s ease-in-out infinite;}
-.avatar-wrap svg{width:100%;height:100%;display:block;}
-
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;display:flex;justify-content:center;padding:40px 20px;background-image:radial-gradient(ellipse at 20% 50%, rgba(0,212,255,0.04) 0%, transparent 60%),radial-gradient(ellipse at 80% 50%, rgba(123,47,252,0.04) 0%, transparent 60%),radial-gradient(ellipse at 50% 100%, rgba(255,107,157,0.03) 0%, transparent 40%);}
-.container{max-width:420px;width:100%;}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding:0 4px;gap:10px;}
-.header .logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:22px;letter-spacing:-0.5px;color:#fff;text-shadow:0 0 20px rgba(255,255,255,0.3),0 0 60px rgba(255,255,255,0.05);flex-shrink:0;}
-.header-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.lang-toggle{display:flex;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:30px;padding:3px;cursor:pointer;position:relative;overflow:hidden;transition:border-color 0.4s ease,box-shadow 0.4s ease;font-family:'Inter',sans-serif;}
-.lang-toggle:hover{border-color:var(--accent);box-shadow:0 0 30px rgba(0,212,255,0.1);}
-.lang-toggle .lang-option{padding:4px 12px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-dim);transition:color 0.4s ease;position:relative;z-index:2;user-select:none;}
-.lang-toggle .lang-option.active{color:var(--text-bright);}
-.lang-toggle .lang-slider{position:absolute;top:3px;bottom:3px;width:calc(50% - 6px);background:linear-gradient(135deg, rgba(0,212,255,0.2), rgba(123,47,252,0.2));border-radius:30px;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 0 20px rgba(0,212,255,0.1);z-index:1;}
-.lang-toggle .lang-slider.right{transform:translateX(calc(100% + 6px));}
-.lang-toggle .lang-slider.left{transform:translateX(0);}
-.header .badge{background:var(--green);color:#0a0a0f;font-size:9px;font-weight:800;padding:4px 14px;border-radius:20px;letter-spacing:0.5px;text-transform:uppercase;animation:pulse-badge 1.5s ease-in-out infinite;flex-shrink:0;}
-.hero-card{background:linear-gradient(145deg, var(--card), rgba(17,17,24,0.95));border:1px solid var(--border);border-radius:20px;padding:28px 24px 32px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden;}
-.hero-card::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 20%, rgba(0,212,255,0.04) 0%, transparent 50%),radial-gradient(ellipse at 70% 80%, rgba(123,47,252,0.04) 0%, transparent 50%);pointer-events:none;}
-.hero-card .tag{font-family:'Orbitron',sans-serif;font-size:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-transform:uppercase;letter-spacing:0.3em;margin-bottom:10px;}
-.hero-card .tag .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.hero-card .tag .lang-text.hidden{display:none;}
-.hero-card .title{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:8px;}
-.hero-card .title .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.hero-card .title .lang-text.hidden{display:none;}
-.hero-card .sub{font-size:13px;color:var(--text-dim);margin-top:12px;letter-spacing:0.3em;text-transform:uppercase;}
-.hero-card .sub .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.hero-card .sub .lang-text.hidden{display:none;}
-.hero-card .divider{width:60px;height:2px;margin:18px auto;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));box-shadow:0 0 30px rgba(0,212,255,0.2);}
-.hero-card .desc{font-size:13px;color:var(--text);line-height:1.8;max-width:300px;margin:0 auto;}
-.hero-card .desc .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.hero-card .desc .lang-text.hidden{display:none;}
-.cta-row{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;justify-content:center;}
-.btn{font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;padding:12px 28px;border-radius:30px;border:1px solid var(--border);color:var(--text);background:rgba(0,212,255,0.05);transition:all 0.4s ease;display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;position:relative;overflow:hidden;}
-.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg, rgba(0,212,255,0.1), rgba(123,47,252,0.1));opacity:0;transition:opacity 0.4s ease;}
-.btn:hover::before{opacity:1;}
-.btn:hover{border-color:var(--accent);color:var(--text-bright);box-shadow:0 0 40px rgba(0,212,255,0.15),inset 0 0 30px rgba(0,212,255,0.05);transform:translateY(-2px);}
-.btn:active{animation:btn-press 0.3s ease forwards;}
-
-.btn-telegram{background:transparent;border:1px solid #00d4ff;color:#00d4ff;text-shadow:0 0 20px rgba(0,212,255,0.3),0 0 40px rgba(0,212,255,0.1);}
-.btn-telegram svg{fill:#00d4ff;filter:drop-shadow(0 0 10px rgba(0,212,255,0.4));}
-.btn-telegram:hover{background:rgba(0,212,255,0.08);border-color:#00d4ff;color:#00d4ff;box-shadow:0 0 40px rgba(0,212,255,0.2),inset 0 0 30px rgba(0,212,255,0.05);}
-
-.btn-discord{background:transparent;border:1px solid #5865F2;color:#5865F2;text-shadow:0 0 20px rgba(88,101,242,0.3),0 0 40px rgba(88,101,242,0.1);}
-.btn-discord svg{fill:#5865F2;filter:drop-shadow(0 0 10px rgba(88,101,242,0.4));}
-.btn-discord:hover{background:rgba(88,101,242,0.08);border-color:#5865F2;color:#5865F2;box-shadow:0 0 40px rgba(88,101,242,0.2),inset 0 0 30px rgba(88,101,242,0.05);}
-
-.btn-tiktok{background:transparent;border:1px solid #ffffff;color:#ffffff;text-shadow:0 0 20px rgba(255,255,255,0.3),0 0 40px rgba(255,255,255,0.1);}
-.btn-tiktok svg{fill:#ffffff;filter:drop-shadow(0 0 10px rgba(255,255,255,0.3));}
-.btn-tiktok:hover{background:rgba(255,255,255,0.05);border-color:#ffffff;color:#ffffff;box-shadow:0 0 40px rgba(255,255,255,0.15),inset 0 0 30px rgba(255,255,255,0.05);}
-
-.btn-youtube{background:transparent;border:1px solid #ff0000;color:#ff0000;text-shadow:0 0 20px rgba(255,0,0,0.3),0 0 40px rgba(255,0,0,0.1);}
-.btn-youtube svg{fill:#ff0000;filter:drop-shadow(0 0 10px rgba(255,0,0,0.4));}
-.btn-youtube:hover{background:rgba(255,0,0,0.08);border-color:#ff0000;color:#ff0000;box-shadow:0 0 40px rgba(255,0,0,0.2),inset 0 0 30px rgba(255,0,0,0.05);}
-
-.btn-privilege{background:transparent;border:1px solid #ffd700;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.4),0 0 40px rgba(255,215,0,0.15);font-weight:700;animation:privilege-pulse 2s ease-in-out infinite;}
-.btn-privilege svg{fill:#ffd700;filter:drop-shadow(0 0 15px rgba(255,215,0,0.5));}
-.btn-privilege:hover{background:rgba(255,215,0,0.08);border-color:#ffd700;color:#ffd700;box-shadow:0 0 60px rgba(255,215,0,0.25),inset 0 0 30px rgba(255,215,0,0.05);}
-@keyframes privilege-pulse{0%,100%{text-shadow:0 0 20px rgba(255,215,0,0.4),0 0 40px rgba(255,215,0,0.15);}50%{text-shadow:0 0 30px rgba(255,215,0,0.6),0 0 60px rgba(255,215,0,0.25);}}
-
-.btn svg{width:16px;height:16px;flex-shrink:0;}
-.btn .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.btn .lang-text.hidden{display:none;}
-.admin-btn-wrap{margin:10px 0 4px;text-align:center;}
-.admin-btn-wrap .btn-admin{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 24px;border-radius:30px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.3s ease;font-family:'Inter',sans-serif;box-shadow:0 0 20px rgba(255,215,0,0.05);}
-.admin-btn-wrap .btn-admin:hover{background:var(--gold);color:#0a0a0f;box-shadow:0 0 40px rgba(255,215,0,0.3);transform:translateY(-2px);}
-.admin-btn-wrap .btn-admin:active{animation:btn-press 0.3s ease forwards;}
-.admin-btn-wrap .btn-admin .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.admin-btn-wrap .btn-admin .lang-text.hidden{display:none;}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:999;justify-content:center;align-items:center;animation:modalBg 0.3s ease;padding:20px;}
-.modal-overlay.active{display:flex;}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px 24px;max-width:500px;width:100%;max-height:80vh;overflow-y:auto;position:relative;animation:fadeInUp 0.4s ease;box-shadow:0 0 80px rgba(0,212,255,0.05);}
-.modal-close{position:absolute;top:12px;right:16px;background:transparent;border:none;color:var(--text-dim);font-size:24px;cursor:pointer;transition:color 0.3s ease;font-family:'Inter',sans-serif;}
-.modal-close:hover{color:var(--text-bright);}
-.modal-title{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;text-align:center;color:var(--gold);text-shadow:0 0 30px rgba(255,215,0,0.15);margin-bottom:24px;letter-spacing:0.02em;}
-.modal-title .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.modal-title .lang-text.hidden{display:none;}
-
-.privilege-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
-.privilege-card{background:rgba(255,255,255,0.02);border:2px solid var(--border);border-radius:16px;padding:20px 16px;text-align:center;cursor:pointer;transition:all 0.4s ease;position:relative;overflow:hidden;animation:privilege-card 0.5s ease forwards;}
-.privilege-card:nth-child(1){animation-delay:0.05s;}
-.privilege-card:nth-child(2){animation-delay:0.1s;}
-.privilege-card:nth-child(3){animation-delay:0.15s;}
-.privilege-card:hover{transform:translateY(-4px);box-shadow:0 8px 40px rgba(0,0,0,0.3);}
-.privilege-card .p-icon{font-size:28px;display:block;margin-bottom:4px;}
-.privilege-card .p-name{font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;letter-spacing:0.04em;margin-bottom:2px;}
-.privilege-card .p-sub{font-size:9px;color:var(--text-dim);letter-spacing:0.06em;text-transform:uppercase;}
-.privilege-card .p-price{font-size:11px;color:var(--green);margin-top:6px;font-weight:600;}
-.privilege-card .p-btn{display:inline-block;margin-top:8px;padding:4px 16px;border-radius:20px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border:1px solid;transition:all 0.3s ease;cursor:pointer;background:transparent;font-family:'Inter',sans-serif;}
-.privilege-card .p-btn:hover{background:currentColor;color:var(--bg) !important;}
-.privilege-card:active{animation:btn-press 0.3s ease forwards;}
-.privilege-card.deluxe{border-color:rgba(255,215,0,0.3);}
-.privilege-card.deluxe:hover{border-color:var(--gold);box-shadow:0 0 40px rgba(255,215,0,0.15);}
-.privilege-card.deluxe .p-name{color:var(--gold);}
-.privilege-card.deluxe .p-btn{border-color:var(--gold);color:var(--gold);}
-.privilege-card.deluxe .p-btn:hover{background:var(--gold);color:#0a0a0f !important;}
-.privilege-card.premium{border-color:rgba(192,192,192,0.2);}
-.privilege-card.premium:hover{border-color:var(--silver);box-shadow:0 0 40px rgba(192,192,192,0.1);}
-.privilege-card.premium .p-name{color:var(--silver);}
-.privilege-card.premium .p-btn{border-color:var(--silver);color:var(--silver);}
-.privilege-card.premium .p-btn:hover{background:var(--silver);color:#0a0a0f !important;}
-.privilege-card.vip{border-color:rgba(255,0,85,0.2);}
-.privilege-card.vip:hover{border-color:var(--red);box-shadow:0 0 40px rgba(255,0,85,0.1);}
-.privilege-card.vip .p-name{color:var(--red);}
-.privilege-card.vip .p-btn{border-color:var(--red);color:var(--red);}
-.privilege-card.vip .p-btn:hover{background:var(--red);color:#0a0a0f !important;}
-
-.privilege-detail{display:none;animation:fadeInUp 0.4s ease;}
-.privilege-detail.active{display:block;}
-.privilege-detail .detail-header{text-align:center;margin-bottom:16px;}
-.privilege-detail .detail-header .d-name{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;}
-.privilege-detail .detail-header .d-sub{font-size:11px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;margin-top:2px;}
-.privilege-detail .detail-section{margin-bottom:14px;}
-.privilege-detail .detail-section .section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:4px;}
-.privilege-detail .detail-section .section-title .lang-text{display:inline-block;}
-.privilege-detail .detail-section .section-title .lang-text.hidden{display:none;}
-.privilege-detail .detail-section .section-item{font-size:12px;color:var(--text);padding:2px 0 2px 12px;position:relative;line-height:1.6;}
-.privilege-detail .detail-section .section-item::before{content:"▸";position:absolute;left:0;color:var(--accent);}
-.privilege-detail .detail-section .section-item .cmd{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--accent);background:rgba(0,212,255,0.05);padding:1px 6px;border-radius:4px;}
-.privilege-detail .detail-section .section-item .highlight{font-weight:700;}
-.privilege-detail .detail-section .section-item .highlight.gold{color:var(--gold);}
-.privilege-detail .detail-section .section-item .highlight.silver{color:var(--silver);}
-.privilege-detail .detail-section .section-item .highlight.red{color:var(--red);}
-.privilege-detail .detail-section .section-item .highlight.green{color:var(--green);}
-.privilege-detail .detail-section .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;margin-top:4px;}
-.privilege-detail .detail-section .price-grid .price-item{display:flex;justify-content:space-between;font-size:12px;color:var(--text);padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.03);}
-.privilege-detail .detail-section .price-grid .price-item .days{color:var(--text-dim);}
-.privilege-detail .detail-section .price-grid .price-item .cost{font-weight:600;}
-.privilege-detail .detail-section .payment-method{font-size:12px;color:var(--text);padding:2px 0 2px 12px;position:relative;line-height:1.6;}
-.privilege-detail .detail-section .payment-method::before{content:"•";position:absolute;left:0;color:var(--green);}
-.privilege-detail .detail-section .contact-link{display:inline-block;margin-top:6px;padding:4px 14px;border:1px solid var(--accent);border-radius:20px;font-size:12px;color:var(--accent);text-decoration:none;transition:all 0.3s ease;font-weight:500;}
-.privilege-detail .detail-section .contact-link:hover{background:var(--accent);color:#0a0a0f;box-shadow:0 0 30px rgba(0,212,255,0.2);}
-.privilege-detail .detail-back{display:inline-block;margin-top:12px;font-size:10px;color:var(--text-dim);cursor:pointer;transition:color 0.3s ease;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;border-bottom:1px solid transparent;padding-bottom:2px;}
-.privilege-detail .detail-back:hover{color:var(--accent);border-bottom-color:var(--accent);}
-.privilege-detail .detail-back .lang-text{display:inline-block;}
-.privilege-detail .detail-back .lang-text.hidden{display:none;}
-
-.servers-card{background:linear-gradient(145deg, var(--card), rgba(17,17,24,0.95));border:1px solid var(--border);border-radius:20px;padding:20px 24px;margin-top:16px;box-shadow:0 0 60px rgba(0,212,255,0.03);}
-.servers-card .card-title{font-family:'Orbitron',sans-serif;font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.15em;text-align:center;margin-bottom:16px;}
-.servers-card .card-title .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.servers-card .card-title .lang-text.hidden{display:none;}
-.server-item{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding:12px 8px;border-bottom:1px solid rgba(255,255,255,0.03);gap:12px;position:relative;}
-.server-item:last-child{border-bottom:none;}
-.server-item .info{display:flex;flex-direction:column;gap:2px;flex:1;min-width:120px;}
-.server-item .info .name{font-size:13px;font-weight:500;color:var(--text-bright);}
-.server-item .info .ip{font-size:13px;font-weight:600;letter-spacing:0.03em;font-family:'Orbitron',sans-serif;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3),var(--accent));background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradient-shift 4s ease-in-out infinite;}
-.server-item .status-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px;}
-.server-item .status{font-size:9px;color:var(--green);display:flex;align-items:center;gap:4px;font-weight:600;letter-spacing:0.04em;}
-.server-item .status .dot{width:5px;height:5px;background:var(--green);border-radius:50%;display:inline-block;animation:pulse-dot 1.2s ease-in-out infinite;}
-.server-item .status .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.server-item .status .lang-text.hidden{display:none;}
-.server-item .actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.copy-btn{background:transparent;border:1px solid var(--border);color:rgba(255,255,255,0.3);padding:6px 14px;border-radius:20px;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all 0.3s ease;letter-spacing:0.05em;white-space:nowrap;}
-.copy-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px rgba(0,212,255,0.05);}
-.copy-btn.copied{border-color:var(--green);color:var(--green);}
-.copy-btn:active{animation:btn-press 0.3s ease forwards;}
-.copy-btn .lang-text{display:inline-block;transition:opacity 0.4s ease;}
-.copy-btn .lang-text.hidden{display:none;}
-
-.online-circle{flex-shrink:0;width:50px;height:50px;position:relative;display:flex;align-items:center;justify-content:center;}
-.online-circle svg{width:100%;height:100%;transform:rotate(-90deg);}
-.online-circle .bg{stroke:rgba(255,255,255,0.08);fill:none;stroke-width:3.5;}
-.online-circle .fill{fill:none;stroke-width:3.5;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(0.34,1.56,0.64,1);}
-.online-circle .center-text{position:absolute;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:var(--text-bright);letter-spacing:0.02em;text-align:center;line-height:1;display:flex;flex-direction:row;align-items:center;gap:0px;}
-.online-circle .center-text .num{font-size:11px;}
-.online-circle .center-text .sep{font-size:8px;opacity:0.5;margin:0 1px;}
-
-@media (max-width:400px){.online-circle{width:42px;height:42px;}.online-circle .center-text{font-size:7px;}.online-circle .center-text .num{font-size:9px;}}
-@media (max-width:500px){.privilege-grid{grid-template-columns:1fr;gap:10px;}.privilege-card{padding:16px;}}
-@media (max-width:400px){.container{padding:0;}.hero-card{padding:24px 16px;}.hero-card .title .avatar-wrap{width:60px;height:60px;}.cta-row{flex-direction:column;}.btn{width:100%;justify-content:center;}.server-item{padding:10px 0;flex-wrap:wrap;}.server-item .actions{width:100%;justify-content:flex-end;}.server-item .copy-btn{width:100%;text-align:center;padding:8px;}.header{flex-wrap:wrap;gap:8px;}.header .logo{font-size:18px;}.header-right{gap:6px;}.lang-toggle .lang-option{font-size:8px;padding:3px 10px;}.modal{padding:24px 16px;}.admin-card{padding:14px;}}
-.lang-text{transition:opacity 0.3s ease;}
-.lang-text.hidden{display:none;}
-.lang-text.active{display:inline-block;animation:lang-slide 0.3s ease forwards;}
-
-/* Admin styles */
-.admin-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
-.admin-card .name{font-family:'Orbitron',sans-serif;font-weight:700;font-size:15px;color:var(--text-bright);}
-.admin-card .role{font-size:11px;color:var(--accent);margin-top:2px;font-weight:500;letter-spacing:0.03em;}
-.admin-card .duty{font-size:11px;color:var(--text-dim);margin-top:4px;line-height:1.4;}
-.admin-card .contact{display:inline-block;margin-top:6px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:500;border-bottom:1px solid transparent;transition:border-color 0.3s ease;}
-.admin-card .contact:hover{border-bottom-color:var(--accent);}
-.admin-card .contact.locked{color:var(--text-dim);cursor:default;border-bottom:none;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KONTRA — Multiplayer FPS</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@400;600;700;900&display=swap');
+        :root { --bg:#0a0a12; --glass-bg:rgba(255,255,255,0.04); --glass-border:rgba(255,255,255,0.1); --text:#c0c0d8; --text-dim:#7a7a9a; --text-bright:#f0f0f0; --accent:#4cc9f0; --accent2:#9b7bff; --accent3:#ff6b9d; --green:#2ecc71; --red:#ff4757; --orange:#ff9f43; --gold:#ffd700; --silver:#e0e0e0; --vip-glow:0 0 18px rgba(255,107,157,0.7); --premium-glow:0 0 18px rgba(224,224,224,0.6); --deluxe-glow:0 0 18px rgba(255,215,0,0.7); }
+        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; justify-content:center; padding:25px 15px; background-image:radial-gradient(ellipse at 15% 25%,rgba(76,201,240,0.06),transparent 55%),radial-gradient(ellipse at 85% 75%,rgba(155,123,255,0.08),transparent 55%),radial-gradient(ellipse at 50% 50%,rgba(255,107,157,0.04),transparent 70%); }
+        @keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 8px rgba(46,204,113,0.5)} 50%{opacity:0.7;transform:scale(0.8);box-shadow:0 0 15px rgba(46,204,113,0.8)} }
+        @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes slideDown { from{opacity:0;max-height:0;transform:translateY(-10px)} to{opacity:1;max-height:800px;transform:translateY(0)} }
+        @keyframes avatarFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+        @keyframes btnPress { 0%{transform:scale(1)} 50%{transform:scale(0.96)} 100%{transform:scale(1)} }
+        @keyframes goldShine { 0%{filter:brightness(1) drop-shadow(0 0 3px gold)} 50%{filter:brightness(1.3) drop-shadow(0 0 10px gold)} 100%{filter:brightness(1) drop-shadow(0 0 3px gold)} }
+        .container { max-width:480px; width:100%; }
+        .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding:0 4px; gap:10px; }
+        .logo { font-family:'Orbitron',sans-serif; font-weight:900; font-size:20px; color:#fff; flex-shrink:0; text-shadow:0 0 15px rgba(255,255,255,0.3); }
+        .header-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+        .badge { background:rgba(46,204,113,0.15); color:#2ecc71; font-size:8px; font-weight:800; padding:3px 10px; border-radius:20px; letter-spacing:0.5px; text-transform:uppercase; border:1px solid rgba(46,204,113,0.4); }
+        .lang-toggle { display:flex; background:rgba(76,201,240,0.08); border:1px solid rgba(76,201,240,0.4); border-radius:30px; padding:2px; cursor:pointer; position:relative; overflow:hidden; }
+        .lang-option { padding:3px 10px; font-size:8px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-dim); transition:color 0.3s; position:relative; z-index:2; }
+        .lang-option.active { color:#e0f4ff; }
+        .lang-slider { position:absolute; top:2px; bottom:2px; width:calc(50% - 4px); background:linear-gradient(135deg,#4cc9f0 0%,#7b5cff 100%); border-radius:30px; transition:transform 0.4s; z-index:1; opacity:0.9; box-shadow:0 0 10px rgba(76,201,240,0.5); }
+        .lang-slider.right { transform:translateX(calc(100% + 2px)); }
+        .lang-slider.left { transform:translateX(0); }
+        .hero-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; padding:20px 16px 22px; text-align:center; margin-bottom:10px; backdrop-filter:blur(20px); }
+        .title { display:flex; justify-content:center; margin-bottom:8px; }
+        .avatar-wrap { display:inline-block; position:relative; width:60px; height:60px; animation:avatarFloat 3s ease-in-out infinite; }
+        .avatar-wrap svg { width:100%; height:100%; display:block; filter:drop-shadow(0 0 12px rgba(255,255,255,0.2)); }
+        .divider { width:50px; height:1px; margin:0 auto 12px; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3)); opacity:0.6; }
+        .cta-row { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+        .btn { font-weight:600; font-size:9px; letter-spacing:0.04em; text-transform:uppercase; text-decoration:none; padding:8px 13px; border-radius:30px; border:1px solid var(--glass-border); color:var(--text); background:rgba(255,255,255,0.03); transition:all 0.3s; display:inline-flex; align-items:center; gap:5px; cursor:pointer; font-family:'Inter',sans-serif; }
+        .btn svg { width:12px; height:12px; flex-shrink:0; }
+        .btn:hover { transform:translateY(-1px); }
+        .btn:active { animation:btnPress 0.3s; }
+        .btn-telegram { border-color:rgba(76,201,240,0.4); color:#4cc9f0; }
+        .btn-telegram svg { fill:#4cc9f0; }
+        .btn-telegram:hover { background:rgba(76,201,240,0.12); box-shadow:0 0 15px rgba(76,201,240,0.25); }
+        .btn-discord { border-color:rgba(88,101,242,0.4); color:#5865F2; }
+        .btn-discord svg { fill:#5865F2; }
+        .btn-discord:hover { background:rgba(88,101,242,0.12); box-shadow:0 0 15px rgba(88,101,242,0.25); }
+        .btn-tiktok { border-color:rgba(255,255,255,0.3); color:#ffffff; }
+        .btn-tiktok svg { fill:#ffffff; }
+        .btn-tiktok:hover { background:rgba(255,255,255,0.1); box-shadow:0 0 15px rgba(255,255,255,0.25); }
+        .btn-youtube { border-color:rgba(255,0,0,0.3); color:#ff4444; }
+        .btn-youtube svg { fill:#ff4444; }
+        .btn-youtube:hover { background:rgba(255,0,0,0.12); box-shadow:0 0 15px rgba(255,0,0,0.25); }
+        .btn-privilege { border-color:rgba(255,215,0,0.5); color:#ffd700; background:rgba(255,215,0,0.08); }
+        .btn-privilege svg { fill:#ffd700; animation:goldShine 2.5s ease-in-out infinite; filter:drop-shadow(0 0 4px gold); }
+        .btn-privilege:hover { background:rgba(255,215,0,0.2); box-shadow:0 0 20px rgba(255,215,0,0.35); }
+        .btn-admin { border-color:rgba(155,123,255,0.5); color:#9b7bff; background:rgba(155,123,255,0.08); }
+        .btn-admin svg { fill:#9b7bff; }
+        .btn-admin:hover { background:rgba(155,123,255,0.2); box-shadow:0 0 20px rgba(155,123,255,0.35); }
+        .toggle-panel { max-height:0; overflow:hidden; transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s; opacity:0; margin-top:0; }
+        .toggle-panel.open { max-height:1000px; opacity:1; margin-top:12px; animation:slideDown 0.5s ease; }
+        .privilege-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+        .privilege-card { border-radius:16px; padding:16px 10px; text-align:center; cursor:pointer; transition:all 0.3s; border:2px solid rgba(255,255,255,0.1); aspect-ratio:4/3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; backdrop-filter:blur(5px); }
+        .privilege-card:hover { transform:translateY(-3px); box-shadow:0 8px 25px rgba(0,0,0,0.5); }
+        .privilege-card svg { width:34px; height:34px; filter:drop-shadow(0 0 6px currentColor); }
+        .privilege-name { font-weight:800; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; }
+        .vip-card { background:linear-gradient(145deg, rgba(255,107,157,0.35) 0%, rgba(255,107,157,0.12) 50%, rgba(255,107,157,0.25) 100%); border-color:rgba(255,107,157,0.4); }
+        .vip-card svg { fill:#ff8aae; color:#ff8aae; }
+        .vip-card .privilege-name { color:#ffc2d4; text-shadow:var(--vip-glow); }
+        .premium-card { background:linear-gradient(145deg, rgba(192,192,192,0.3) 0%, rgba(192,192,192,0.1) 50%, rgba(192,192,192,0.2) 100%); border-color:rgba(224,224,224,0.35); }
+        .premium-card svg { fill:#f0f0f0; color:#f0f0f0; }
+        .premium-card .privilege-name { color:#ffffff; text-shadow:var(--premium-glow); }
+        .deluxe-card { background:linear-gradient(145deg, rgba(255,215,0,0.35) 0%, rgba(255,215,0,0.12) 50%, rgba(255,215,0,0.25) 100%); border-color:rgba(255,215,0,0.45); }
+        .deluxe-card svg { fill:#ffd700; color:#ffd700; }
+        .deluxe-card .privilege-name { color:#fff5cc; text-shadow:var(--deluxe-glow); }
+        .admin-list { display:flex; flex-direction:column; gap:8px; }
+        .admin-item { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:14px; padding:12px 14px; backdrop-filter:blur(8px); }
+        .admin-item .admin-name { font-weight:700; font-size:14px; color:#fff; }
+        .admin-item .admin-role { font-size:10px; color:var(--accent); font-weight:600; letter-spacing:0.04em; text-transform:uppercase; margin-top:3px; }
+        .admin-item .admin-duty { font-size:11px; color:var(--text-dim); margin-top:4px; line-height:1.4; }
+        .admin-item .admin-contact { display:inline-block; margin-top:6px; font-size:12px; color:var(--accent); text-decoration:none; font-weight:600; transition:color 0.3s; }
+        .admin-item .admin-contact:hover { color:#fff; }
+        .admin-item .admin-contact.locked { color:var(--text-dim); cursor:default; }
+        .servers-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; padding:14px 12px 6px; margin-top:10px; backdrop-filter:blur(20px); }
+        .server-item { margin-bottom:8px; }
+        .server-panel { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:8px 10px; }
+        .online-circle { flex-shrink:0; width:46px; height:46px; position:relative; display:flex; align-items:center; justify-content:center; }
+        .online-circle svg { width:100%; height:100%; transform:rotate(-90deg); }
+        .bg { stroke:rgba(255,255,255,0.15); fill:none; stroke-width:2.5; }
+        .fill { fill:none; stroke-width:2.5; stroke-linecap:round; transition:stroke-dashoffset 1.2s; }
+        .center-text { position:absolute; font-size:9px; font-weight:700; color:#fff; text-align:center; line-height:1.2; }
+        .center-text .num { font-size:12px; }
+        .sep { color:var(--text-dim); margin:0 1px; }
+        .info { display:flex; flex-direction:column; gap:1px; flex:1; min-width:0; }
+        .name { font-size:12px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .ip { font-size:11px; font-weight:600; letter-spacing:0.02em; font-family:'Orbitron',sans-serif; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3),var(--accent)); background-size:300% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:gradientShift 4s ease-in-out infinite; opacity:0.9; }
+        .status { font-size:8px; color:var(--green); display:flex; align-items:center; gap:3px; font-weight:600; }
+        .status .dot { width:5px; height:5px; background:var(--green); border-radius:50%; display:inline-block; animation:pulseDot 1.2s ease-in-out infinite; }
+        .copy-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:#d0d0d0; padding:3px 10px; border-radius:20px; font-family:'Inter',sans-serif; font-size:8px; font-weight:600; cursor:pointer; transition:all 0.3s; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; }
+        .copy-btn:hover { border-color:var(--accent); color:var(--accent); }
+        .copy-btn.copied { border-color:var(--green); color:var(--green); }
+        .copy-btn:active { animation:btnPress 0.3s; }
+        .hidden { display:none !important; }
+        @media (max-width:400px) { .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; } }
+    </style>
 </head>
 <body>
 <div class="container">
-<div class="header">
-<div class="logo">AVALON</div>
-<div class="header-right">
-<div class="lang-toggle" id="langToggle" onclick="toggleLang()">
-<div class="lang-slider right" id="langSlider"></div>
-<div class="lang-option" id="langRus">RUS</div>
-<div class="lang-option active" id="langEng">ENG</div>
-</div>
-<div class="badge">LIVE</div>
-</div>
-</div>
-<div class="hero-card">
-<div class="tag">
-<span class="lang-text hidden" data-lang="rus">Multiplayer FPS</span>
-<span class="lang-text active" data-lang="eng">Multiplayer FPS</span>
-</div>
-<div class="title">
-<span class="lang-text hidden" data-lang="rus">
-<div class="avatar-wrap">
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<radialGradient id="glowGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/><stop offset="50%" stop-color="#ffffff" stop-opacity="0.05"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
-<filter id="textGlow"><feGaussianBlur stdDeviation="1.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-</defs>
-<circle cx="50" cy="50" r="47" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
-<circle cx="50" cy="50" r="43" stroke="rgba(255,255,255,0.6)" stroke-width="1" fill="none"/>
-<circle cx="50" cy="50" r="41" fill="rgba(0,0,0,0.95)"/>
-<circle cx="50" cy="50" r="45" fill="url(#glowGrad)"/>
-<text x="50" y="52" text-anchor="middle" dominant-baseline="central" font-family="'Konstruct',sans-serif" font-weight="300" font-size="18" fill="#ffffff" filter="url(#textGlow)" letter-spacing="1.5">AVALON</text>
-</svg>
-</div>
-</span>
-<span class="lang-text active" data-lang="eng">
-<div class="avatar-wrap">
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<radialGradient id="glowGradEn" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/><stop offset="50%" stop-color="#ffffff" stop-opacity="0.05"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
-<filter id="textGlowEn"><feGaussianBlur stdDeviation="1.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-</defs>
-<circle cx="50" cy="50" r="47" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
-<circle cx="50" cy="50" r="43" stroke="rgba(255,255,255,0.6)" stroke-width="1" fill="none"/>
-<circle cx="50" cy="50" r="41" fill="rgba(0,0,0,0.95)"/>
-<circle cx="50" cy="50" r="45" fill="url(#glowGradEn)"/>
-<text x="50" y="52" text-anchor="middle" dominant-baseline="central" font-family="'Konstruct',sans-serif" font-weight="300" font-size="18" fill="#ffffff" filter="url(#textGlowEn)" letter-spacing="1.5">AVALON</text>
-</svg>
-</div>
-</span>
-</div>
-<div class="sub">
-<span class="lang-text hidden" data-lang="rus">Шутер от первого-лица</span>
-<span class="lang-text active" data-lang="eng">First‑Person Shooter</span>
-</div>
-<div class="divider"></div>
-<p class="desc">
-<span class="lang-text hidden" data-lang="rus"><strong>Kontra</strong> — мобильный шутер с разными режимами как: Deathmatch, Defuse, GunGame, Zombie Mode, Zombie Escape и JailBreak.</span>
-<span class="lang-text active" data-lang="eng"><strong>Kontra</strong> is a mobile shooter game with various modes like: Deathmatch, Defuse, GunGame, Zombie Mode, Zombie Escape and JailBreak.</span>
-</p>
-<div class="cta-row">
-<a href="https://t.me/avalon_hosting" target="_blank" rel="noopener" class="btn btn-telegram">
-<svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg>
-<span class="lang-text hidden" data-lang="rus">Телеграм</span>
-<span class="lang-text active" data-lang="eng">Telegram</span>
-</a>
-<a href="https://discord.gg/tdtUr9sM4p" target="_blank" rel="noopener" class="btn btn-discord">
-<svg viewBox="0 0 24 24"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.9-1.52.08.08 0 0 0-.08.04c-.21.38-.45.87-.61 1.26a18.3 18.3 0 0 0-5.48 0 12.6 12.6 0 0 0-.62-1.26.08.08 0 0 0-.08-.04c-1.7.29-3.36.8-4.9 1.52a.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .09-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1 0-.13c.13-.09.25-.19.37-.28a.08.08 0 0 1 .08 0c3.93 1.8 8.18 1.8 12.06 0a.08.08 0 0 1 .09 0c.12.1.24.19.37.28a.08.08 0 0 1 0 .13c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.11c.36.7.78 1.37 1.23 2a.08.08 0 0 0 .09.03 19.8 19.8 0 0 0 6.03-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"/></svg>
-<span class="lang-text hidden" data-lang="rus">Дискорд</span>
-<span class="lang-text active" data-lang="eng">Discord</span>
-</a>
-<a href="https://www.tiktok.com/@goofiyanskiy" target="_blank" rel="noopener" class="btn btn-tiktok">
-<svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.14 1.47.68 2.91 1.56 4.1.88 1.19 2.05 2.02 3.43 2.38v3.18c-1.12-.14-2.23-.46-3.25-1.09-.15-.09-.29-.18-.43-.28v5.22c0 2.14-.73 4.22-2.07 5.89-1.34 1.66-3.2 2.76-5.26 3.12-2.06.36-4.18-.03-5.96-1.09-1.78-1.06-3.14-2.72-3.72-4.82-.58-2.1-.3-4.33.77-6.22 1.07-1.89 2.8-3.24 4.83-3.78.38-.11.77-.18 1.16-.22v3.18c-.52.08-1.03.28-1.48.58-.45.3-.82.68-1.08 1.14-.26.45-.41.95-.42 1.47-.01.52.12 1.03.38 1.48.26.45.63.83 1.08 1.13.45.3.96.49 1.48.56.52.07 1.05.03 1.55-.13.5-.16.96-.44 1.34-.82.38-.38.66-.84.82-1.34.16-.5.2-1.03.13-1.55-.07-.52-.26-1.03-.56-1.48V.02z"/></svg>
-<span class="lang-text hidden" data-lang="rus">ТикТок</span>
-<span class="lang-text active" data-lang="eng">TikTok</span>
-</a>
-<a href="https://www.youtube.com/@Goofyanskiy" target="_blank" rel="noopener" class="btn btn-youtube">
-<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-<span class="lang-text hidden" data-lang="rus">Ютуб</span>
-<span class="lang-text active" data-lang="eng">YouTube</span>
-</a>
-<button class="btn btn-privilege" onclick="openPrivilegeModal()">
-<svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
-<span class="lang-text hidden" data-lang="rus">Привилегии</span>
-<span class="lang-text active" data-lang="eng">Privileges</span>
-</button>
-</div>
-</div>
-<div class="admin-btn-wrap">
-<button class="btn-admin" onclick="openModal()">
-<span class="lang-text hidden" data-lang="rus">Администрация проекта</span>
-<span class="lang-text active" data-lang="eng">Administration project</span>
-</button>
-</div>
-<div class="servers-card">
-<div class="card-title">
-<span class="lang-text hidden" data-lang="rus">— Сервера —</span>
-<span class="lang-text active" data-lang="eng">— Servers —</span>
-</div>
+    <div class="header">
+        <span class="logo">KONTRA</span>
+        <div class="header-right">
+            <span class="badge">BETA</span>
+            <div class="lang-toggle" onclick="toggleLang()">
+                <span class="lang-option" id="langRus">RU</span>
+                <span class="lang-option active" id="langEng">EN</span>
+                <span class="lang-slider right" id="langSlider"></span>
+            </div>
+        </div>
+    </div>
 
-<!-- Server 1: ZM & LVL SYSTEM (16/16) GREEN -->
-<div class="server-item">
-<div class="online-circle" data-players="16" data-max="16" data-color="#00ff88">
-<svg viewBox="0 0 50 50">
-<circle class="bg" cx="25" cy="25" r="20"/>
-<circle class="fill" cx="25" cy="25" r="20" stroke="#00ff88" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
-</svg>
-<span class="center-text"><span class="num">16</span><span class="sep">/</span>16</span>
-</div>
-<div class="info">
-<span class="name">CS 1.6 ZM & LVL SYSTEM</span>
-<span class="ip" id="serverIp1">5.141.89.34:5006</span>
-<div class="status-wrap">
-<span class="status"><span class="dot"></span><span class="lang-text hidden" data-lang="rus">Онлайн</span><span class="lang-text active" data-lang="eng">Online</span></span>
-</div>
-</div>
-<div class="actions">
-<button class="copy-btn" onclick="copyIP('serverIp1',this)"><span class="lang-text hidden" data-lang="rus">Копировать IP</span><span class="lang-text active" data-lang="eng">COPY IP</span></button>
-</div>
-</div>
+    <div class="hero-card">
+        <div class="title">
+            <div class="avatar-wrap">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+                        <filter id="textGlow"><feGaussianBlur stdDeviation="1.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                    </defs>
+                    <circle cx="50" cy="50" r="47" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
+                    <circle cx="50" cy="50" r="43" stroke="rgba(255,255,255,0.5)" stroke-width="1" fill="none"/>
+                    <circle cx="50" cy="50" r="41" fill="rgba(15,15,25,0.9)"/>
+                    <circle cx="50" cy="50" r="45" fill="url(#glowGrad)"/>
+                    <text x="50" y="52" text-anchor="middle" dominant-baseline="central" font-family="'Inter',sans-serif" font-weight="900" font-size="15" fill="#fff" filter="url(#textGlow)" letter-spacing="1">AVALON</text>
+                </svg>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="cta-row">
+            <a href="https://t.me/avalon_hosting" target="_blank" rel="noopener" class="btn btn-telegram"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> Telegram</a>
+            <a href="https://discord.gg/uSVVwrq22" target="_blank" rel="noopener" class="btn btn-discord"><svg viewBox="0 0 24 24"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.9-1.52.08.08 0 0 0-.08.04c-.21.38-.45.87-.61 1.26a18.3 18.3 0 0 0-5.48 0 12.6 12.6 0 0 0-.62-1.26.08.08 0 0 0-.08-.04c-1.7.29-3.36.8-4.9 1.52a.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .09-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1 0-.13c.13-.09.25-.19.37-.28a.08.08 0 0 1 .08 0c3.93 1.8 8.18 1.8 12.06 0a.08.08 0 0 1 .09 0c.12.1.24.19.37.28a.08.08 0 0 1 0 .13c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.11c.36.7.78 1.37 1.23 2a.08.08 0 0 0 .09.03 19.8 19.8 0 0 0 6.03-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"/></svg> Discord</a>
+            <a href="https://www.tiktok.com/@goofiyanskiy" target="_blank" rel="noopener" class="btn btn-tiktok"><svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.14 1.47.68 2.91 1.56 4.1.88 1.19 2.05 2.02 3.43 2.38v3.18c-1.12-.14-2.23-.46-3.25-1.09-.15-.09-.29-.18-.43-.28v5.22c0 2.14-.73 4.22-2.07 5.89-1.34 1.66-3.2 2.76-5.26 3.12-2.06.36-4.18-.03-5.96-1.09-1.78-1.06-3.14-2.72-3.72-4.82-.58-2.1-.3-4.33.77-6.22 1.07-1.89 2.8-3.24 4.83-3.78.38-.11.77-.18 1.16-.22v3.18c-.52.08-1.03.28-1.48.58-.45.3-.82.68-1.08 1.14-.26.45-.41.95-.42 1.47-.01.52.12 1.03.38 1.48.26.45.63.83 1.08 1.13.45.3.96.49 1.48.56.52.07 1.05.03 1.55-.13.5-.16.96-.44 1.34-.82.38-.38.66-.84.82-1.34.16-.5.2-1.03.13-1.55-.07-.52-.26-1.03-.56-1.48V.02z"/></svg> TikTok</a>
+            <a href="https://www.youtube.com/@Goofyanskiy" target="_blank" rel="noopener" class="btn btn-youtube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube</a>
+            <button class="btn btn-privilege" onclick="togglePrivilege()" data-lang="eng"><span style="font-size:14px;line-height:1;">🛒</span> BUY PRIVILEGE</button>
+            <button class="btn btn-privilege hidden" onclick="togglePrivilege()" data-lang="rus"><span style="font-size:14px;line-height:1;">🛒</span> КУПИТЬ ПРИВИЛЕГИЮ</button>
+            <button class="btn btn-admin" onclick="toggleAdmin()" data-lang="eng"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M12 7v5l3 2" stroke="#9b7bff" stroke-width="1.5" fill="none"/></svg> ADMINISTRATION</button>
+            <button class="btn btn-admin hidden" onclick="toggleAdmin()" data-lang="rus"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M12 7v5l3 2" stroke="#9b7bff" stroke-width="1.5" fill="none"/></svg> АДМИНИСТРАЦИЯ</button>
+        </div>
 
-<!-- Server 2: ZE & NEMESIS MODE (8/16) YELLOW 50% -->
-<div class="server-item">
-<div class="online-circle" data-players="8" data-max="16" data-color="#ffd700">
-<svg viewBox="0 0 50 50">
-<circle class="bg" cx="25" cy="25" r="20"/>
-<circle class="fill" cx="25" cy="25" r="20" stroke="#ffd700" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
-</svg>
-<span class="center-text"><span class="num">8</span><span class="sep">/</span>16</span>
-</div>
-<div class="info">
-<span class="name">CS 1.6 ZE & NEMESIS MODE</span>
-<span class="ip" id="serverIp2">5.141.89.34:5005</span>
-<div class="status-wrap">
-<span class="status"><span class="dot"></span><span class="lang-text hidden" data-lang="rus">Онлайн</span><span class="lang-text active" data-lang="eng">Online</span></span>
-</div>
-</div>
-<div class="actions">
-<button class="copy-btn" onclick="copyIP('serverIp2',this)"><span class="lang-text hidden" data-lang="rus">Копировать IP</span><span class="lang-text active" data-lang="eng">COPY IP</span></button>
-</div>
-</div>
+        <div class="toggle-panel" id="privilegePanel">
+            <div class="privilege-grid">
+                <div class="privilege-card vip-card">
+                    <svg viewBox="0 0 50 50">
+                        <text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♚</text>
+                    </svg>
+                    <span class="privilege-name">VIP+</span>
+                </div>
+                <div class="privilege-card premium-card">
+                    <svg viewBox="0 0 50 50">
+                        <text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♕</text>
+                    </svg>
+                    <span class="privilege-name">PREMIUM</span>
+                </div>
+                <div class="privilege-card deluxe-card">
+                    <svg viewBox="0 0 50 50">
+                        <text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♛</text>
+                    </svg>
+                    <span class="privilege-name">DELUXE</span>
+                </div>
+            </div>
+        </div>
 
-<!-- Server 3: DEATHMATCH (2/16) RED 12.5% -->
-<div class="server-item">
-<div class="online-circle" data-players="2" data-max="16" data-color="#ff0055">
-<svg viewBox="0 0 50 50">
-<circle class="bg" cx="25" cy="25" r="20"/>
-<circle class="fill" cx="25" cy="25" r="20" stroke="#ff0055" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
-</svg>
-<span class="center-text"><span class="num">2</span><span class="sep">/</span>16</span>
-</div>
-<div class="info">
-<span class="name">CS 1.6 DEATHMATCH</span>
-<span class="ip" id="serverIp3">5.141.89.34:5002</span>
-<div class="status-wrap">
-<span class="status"><span class="dot"></span><span class="lang-text hidden" data-lang="rus">Онлайн</span><span class="lang-text active" data-lang="eng">Online</span></span>
-</div>
-</div>
-<div class="actions">
-<button class="copy-btn" onclick="copyIP('serverIp3',this)"><span class="lang-text hidden" data-lang="rus">Копировать IP</span><span class="lang-text active" data-lang="eng">COPY IP</span></button>
-</div>
-</div>
+        <div class="toggle-panel" id="adminPanel">
+            <div class="admin-list" id="adminListContent"></div>
+        </div>
+    </div>
 
-<!-- Server 4: JAIL (5/16) ORANGE 31.25% -->
-<div class="server-item">
-<div class="online-circle" data-players="5" data-max="16" data-color="#ff8800">
-<svg viewBox="0 0 50 50">
-<circle class="bg" cx="25" cy="25" r="20"/>
-<circle class="fill" cx="25" cy="25" r="20" stroke="#ff8800" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
-</svg>
-<span class="center-text"><span class="num">5</span><span class="sep">/</span>16</span>
-</div>
-<div class="info">
-<span class="name">JAIL | Побег из Ада 12+</span>
-<span class="ip" id="serverIp4">5.141.89.34:5003</span>
-<div class="status-wrap">
-<span class="status"><span class="dot"></span><span class="lang-text hidden" data-lang="rus">Онлайн</span><span class="lang-text active" data-lang="eng">Online</span></span>
-</div>
-</div>
-<div class="actions">
-<button class="copy-btn" onclick="copyIP('serverIp4',this)"><span class="lang-text hidden" data-lang="rus">Копировать IP</span><span class="lang-text active" data-lang="eng">COPY IP</span></button>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="modal-overlay" id="adminModal" onclick="closeModalOutside(event)">
-<div class="modal">
-<button class="modal-close" onclick="closeModal()">&times;</button>
-<div class="modal-title">
-<span class="lang-text hidden" data-lang="rus">Администрация проекта</span>
-<span class="lang-text active" data-lang="eng">Administration project</span>
-</div>
-<div class="admin-card"><div class="name">Mr.Whiskus</div><div class="role"><span class="lang-text hidden" data-lang="rus">Глава проекта</span><span class="lang-text active" data-lang="eng">Project Leader</span></div><div class="duty"><span class="lang-text hidden" data-lang="rus">Управление проектами Avalon Hosting</span><span class="lang-text active" data-lang="eng">Managing Avalon Hosting projects</span></div><span class="contact locked">Связаться: Доступ закрыт</span></div>
-<div class="admin-card"><div class="name">GooFiyan</div><div class="role"><span class="lang-text hidden" data-lang="rus">Координатор</span><span class="lang-text active" data-lang="eng">Coordinator</span></div><div class="duty"><span class="lang-text hidden" data-lang="rus">Управление проектом Avalon Kontra Multiplayer FPS</span><span class="lang-text active" data-lang="eng">Managing Avalon Kontra Multiplayer FPS project</span></div><a href="https://t.me/emoj_11" target="_blank" class="contact">@emoj_11</a></div>
-<div class="admin-card"><div class="name">Cobra ツ</div><div class="role"><span class="lang-text hidden" data-lang="rus">Гл.Админ (ZM&ZE серверов)</span><span class="lang-text active" data-lang="eng">Head Admin (ZM&ZE Servers)</span></div><div class="duty"><span class="lang-text hidden" data-lang="rus">Следить за Админами и за порядком серверов Avalon Kontra Multiplayer FPS</span><span class="lang-text active" data-lang="eng">Oversee Admins and order on Avalon Kontra Multiplayer FPS servers</span></div><a href="https://t.me/FrostyV" target="_blank" class="contact">@FrostyV</a></div>
-<div class="admin-card"><div class="name">♣DEPUTAT♣</div><div class="role"><span class="lang-text hidden" data-lang="rus">Гл.Админ (Джайл)</span><span class="lang-text active" data-lang="eng">Head Admin (JailBreak)</span></div><div class="duty"><span class="lang-text hidden" data-lang="rus">Следить за Админами и за порядком серверов Avalon Kontra Multiplayer FPS</span><span class="lang-text active" data-lang="eng">Oversee Admins and order on Avalon Kontra Multiplayer FPS servers</span></div><a href="https://t.me/VoinushS" target="_blank" class="contact">@VoinushS</a></div>
-<div class="admin-card"><div class="name">Meti</div><div class="role"><span class="lang-text hidden" data-lang="rus">Ассистент (ZM сервер)</span><span class="lang-text active" data-lang="eng">Assistant (ZM Server)</span></div><div class="duty"><span class="lang-text hidden" data-lang="rus">Управление серверами Avalon Kontra Multiplayer FPS</span><span class="lang-text active" data-lang="eng">Managing Avalon Kontra Multiplayer FPS servers</span></div><a href="https://t.me/meti_morina" target="_blank" class="contact">@meti_morina</a></div>
-</div>
-</div>
-
-<div class="modal-overlay" id="privilegeModal" onclick="closePrivilegeOutside(event)">
-<div class="modal" style="max-width:500px;">
-<button class="modal-close" onclick="closePrivilegeModal()">&times;</button>
-<div id="privilegeGrid">
-<div class="modal-title">
-<span class="lang-text hidden" data-lang="rus">Выберите привилегию</span>
-<span class="lang-text active" data-lang="eng">Select privilege</span>
-</div>
-<div class="privilege-grid">
-<div class="privilege-card deluxe" onclick="showPrivilegeDetail('deluxe')">
-<div class="p-name" style="font-size:18px;">DELUXE</div>
-<div class="p-sub"><span class="lang-text hidden" data-lang="rus">Золотой статус</span><span class="lang-text active" data-lang="eng">Gold status</span></div>
-<div class="p-price">450 ₽ / 5.78$</div>
-<button class="p-btn"><span class="lang-text hidden" data-lang="rus">Подробнее</span><span class="lang-text active" data-lang="eng">Details</span></button>
-</div>
-<div class="privilege-card premium" onclick="showPrivilegeDetail('premium')">
-<div class="p-name" style="font-size:18px;">PREMIUM</div>
-<div class="p-sub"><span class="lang-text hidden" data-lang="rus">Серебряный статус</span><span class="lang-text active" data-lang="eng">Silver status</span></div>
-<div class="p-price">350 ₽ / 4.49$</div>
-<button class="p-btn"><span class="lang-text hidden" data-lang="rus">Подробнее</span><span class="lang-text active" data-lang="eng">Details</span></button>
-</div>
-<div class="privilege-card vip" onclick="showPrivilegeDetail('vip')">
-<div class="p-name" style="font-size:18px;">VIP+</div>
-<div class="p-sub"><span class="lang-text hidden" data-lang="rus">Базовый статус</span><span class="lang-text active" data-lang="eng">Basic status</span></div>
-<div class="p-price">250 ₽ / 3.21$</div>
-<button class="p-btn"><span class="lang-text hidden" data-lang="rus">Подробнее</span><span class="lang-text active" data-lang="eng">Details</span></button>
-</div>
-</div>
-</div>
-<div id="privilegeDetail" class="privilege-detail"></div>
-</div>
+    <div class="servers-card">
+        <div class="server-item">
+            <div class="server-panel">
+                <div class="online-circle" data-server="zm" data-max="16" data-color="#2ecc71">
+                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#2ecc71" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+                    <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
+                </div>
+                                <div class="info"><span class="name">CS 1.6 ZM & LVL SYSTEM</span><span class="ip" id="serverIp1">5.141.89.34:5006</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
+                <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY IP</button>
+                <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+            </div>
+        </div>
+        <div class="server-item">
+            <div class="server-panel">
+                <div class="online-circle" data-server="ze" data-max="16" data-color="#ffd700">
+                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ffd700" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+                    <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
+                </div>
+                <div class="info"><span class="name">CS 1.6 ZE & NEMESIS MODE</span><span class="ip" id="serverIp2">5.141.89.34:5005</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
+                <button class="copy-btn" onclick="copyIP('serverIp2',this)" data-lang="eng">COPY IP</button>
+                <button class="copy-btn hidden" onclick="copyIP('serverIp2',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+            </div>
+        </div>
+        <div class="server-item">
+            <div class="server-panel">
+                <div class="online-circle" data-server="dm" data-max="16" data-color="#ff4757">
+                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff4757" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+                    <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
+                </div>
+                <div class="info"><span class="name">CS 1.6 DEATHMATCH</span><span class="ip" id="serverIp3">5.141.89.34:5002</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
+                <button class="copy-btn" onclick="copyIP('serverIp3',this)" data-lang="eng">COPY IP</button>
+                <button class="copy-btn hidden" onclick="copyIP('serverIp3',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+            </div>
+        </div>
+        <div class="server-item">
+            <div class="server-panel">
+                <div class="online-circle" data-server="jail" data-max="16" data-color="#ff9f43">
+                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff9f43" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+                    <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
+                </div>
+                <div class="info"><span class="name">JAIL | Побег из Ада 12+</span><span class="ip" id="serverIp4">5.141.89.34:5003</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
+                <button class="copy-btn" onclick="copyIP('serverIp4',this)" data-lang="eng">COPY IP</button>
+                <button class="copy-btn hidden" onclick="copyIP('serverIp4',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-let currentLang='eng';
-let privilegeData={};
+    let currentLang='eng';
+    const adminData={
+        eng:[
+            {name:'Mr.Whiskus',role:'Project Lead',duty:'Managing Avalon Hosting projects',contact:'',locked:true},
+            {name:'GooFiyan',role:'Coordinator',duty:'Managing Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'},
+            {name:'Cobra ツ',role:'Chief Admin (ZM&ZE servers)',duty:'Monitoring admins and server order',contact:'@FrostyV',href:'https://t.me/FrostyV'},
+            {name:'♣DEPUTAT♣',role:'Chief Admin (JailBreak)',duty:'Monitoring admins and server order',contact:'@VoinushS',href:'https://t.me/VoinushS'}
+        ],
+        rus:[
+            {name:'Mr.Whiskus',role:'Глава проекта',duty:'Управление проектами Avalon Hosting',contact:'',locked:true},
+            {name:'GooFiyan',role:'Координатор',duty:'Управление проектом Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'},
+            {name:'Cobra ツ',role:'Гл.Админ (ZM&ZE серверов)',duty:'Следить за Админами и за порядком серверов',contact:'@FrostyV',href:'https://t.me/FrostyV'},
+            {name:'♣DEPUTAT♣',role:'Гл.Админ (JailBreak)',duty:'Следить за Админами и за порядком серверов',contact:'@VoinushS',href:'https://t.me/VoinushS'}
+        ]
+    };
 
-privilegeData.deluxe={
-rus:{name:"DELUXE",menu:"/deluxe",prices:["30 дней = 450 руб.","15 дней = 230 руб.","10 дней = 160 руб.","7 дней = 115 руб.","3 дня = 45 руб."],payment:["Через Click [UZS].","Россия и СНГ: Т-Банк.","Международные переводы: Доступны переводы на карту VISA."],contact:"@emoj_11"},
-eng:{name:"DELUXE",menu:"/deluxe",prices:["30 days = 5.78$","15 days = 2.95$","10 days = 2.06$","7 days = 1.48$","3 days = 0.58$"],payment:["International transfers: Transfers to Visa card are available."],contact:"@emoj_11"}};
-privilegeData.premium={
-rus:{name:"PREMIUM",menu:"/premium",prices:["30 дней = 350 руб.","15 дней = 180 руб.","10 дней = 125 руб.","7 дней = 90 руб.","3 дня = 35 руб."],payment:["Через Click [UZS].","Россия и СНГ: Т-Банк.","Международные переводы: Доступны переводы на карту VISA."],contact:"@emoj_11"},
-eng:{name:"PREMIUM",menu:"/premium",prices:["30 days = 4.49$","15 days = 2.31$","10 days = 1.60$","7 days = 1.16$","3 days = 0.45$"],payment:["International transfers: Transfers to Visa card are available."],contact:"@emoj_11"}};
-privilegeData.vip={
-rus:{name:"VIP+",menu:"/vip",prices:["30 дней = 250 руб.","15 дней = 130 руб.","10 дней = 90 руб.","7 дней = 60 руб.","3 дня = 25 руб."],payment:["Через Click [UZS]","Россия и СНГ: Т-Банк.","Международные переводы: Доступны переводы на карту VISA."],contact:"@emoj_11"},
-eng:{name:"VIP+",menu:"/vip",prices:["30 days = 3.21$","15 days = 1.67$","10 days = 1.16$","7 days = 0.77$","3 days = 0.32$"],payment:["International transfers: Transfers to Visa card are available."],contact:"@emoj_11"}};
+    function toggleLang(){const s=document.getElementById('langSlider'),r=document.getElementById('langRus'),e=document.getElementById('langEng');if(currentLang==='eng'){currentLang='rus';e.classList.remove('active');r.classList.add('active');s.className='lang-slider left';}else{currentLang='eng';r.classList.remove('active');e.classList.add('active');s.className='lang-slider right';}document.querySelectorAll('[data-lang]').forEach(el=>{el.classList.toggle('hidden',el.getAttribute('data-lang')!==currentLang);});if(document.getElementById('adminPanel').classList.contains('open'))renderAdminList();}
+    function renderAdminList(){const container=document.getElementById('adminListContent');const list=adminData[currentLang];container.innerHTML=list.map(a=>`<div class="admin-item"><div class="admin-name">${a.name}</div><div class="admin-role">${a.role}</div><div class="admin-duty">${a.duty}</div>${a.locked?`<span class="admin-contact locked">${currentLang==='rus'?'Связаться: Доступ закрыт':'Contact: Access closed'}</span>`:`<a href="${a.href}" target="_blank" class="admin-contact">${a.contact}</a>`}</div>`).join('');}
+    function togglePrivilege(){const p=document.getElementById('privilegePanel');const a=document.getElementById('adminPanel');p.classList.toggle('open');if(a.classList.contains('open'))a.classList.remove('open');}
+    function toggleAdmin(){const a=document.getElementById('adminPanel');const p=document.getElementById('privilegePanel');a.classList.toggle('open');if(p.classList.contains('open'))p.classList.remove('open');if(a.classList.contains('open'))renderAdminList();}
+    function copyIP(id,btn){const ip=document.getElementById(id).textContent;if(navigator.clipboard){navigator.clipboard.writeText(ip).then(()=>{btn.textContent= currentLang==='rus'?'СКОПИРОВАН':'COPIED';btn.classList.add('copied');setTimeout(()=>{btn.textContent=currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP';btn.classList.remove('copied');},2000);}).catch(()=>fallbackCopy(ip,btn));}else{fallbackCopy(ip,btn);}}
+    function fallbackCopy(ip,btn){const t=document.createElement('input');t.value=ip;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);btn.textContent= currentLang==='rus'?'СКОПИРОВАН':'COPIED';btn.classList.add('copied');setTimeout(()=>{btn.textContent=currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP';btn.classList.remove('copied');},2000);}
 
-function toggleLang(){
-const slider=document.getElementById('langSlider');
-const rusOpt=document.getElementById('langRus');
-const engOpt=document.getElementById('langEng');
-if(currentLang==='eng'){currentLang='rus';engOpt.classList.remove('active');rusOpt.classList.add('active');slider.className='lang-slider left';}
-else{currentLang='eng';rusOpt.classList.remove('active');engOpt.classList.add('active');slider.className='lang-slider right';}
-document.querySelectorAll('[data-lang]').forEach(el=>{
-const lang=el.getAttribute('data-lang');
-if(lang===currentLang){el.classList.remove('hidden');el.classList.add('active');}
-else{el.classList.remove('active');el.classList.add('hidden');}
-});
-if(document.getElementById('privilegeDetail').classList.contains('active')){
-showPrivilegeDetail(window._currentPrivilege||'deluxe');
-}
-}
-function openModal(){document.getElementById('adminModal').classList.add('active');document.body.style.overflow='hidden';}
-function closeModal(){document.getElementById('adminModal').classList.remove('active');document.body.style.overflow='';}
-function closeModalOutside(e){if(e.target===e.currentTarget)closeModal();}
-function openPrivilegeModal(){
-document.getElementById('privilegeModal').classList.add('active');
-document.getElementById('privilegeGrid').style.display='block';
-document.getElementById('privilegeDetail').classList.remove('active');
-document.getElementById('privilegeDetail').style.display='none';
-document.body.style.overflow='hidden';
-}
-function closePrivilegeModal(){
-document.getElementById('privilegeModal').classList.remove('active');
-document.body.style.overflow='';
-}
-function closePrivilegeOutside(e){if(e.target===e.currentTarget)closePrivilegeModal();}
-function showPrivilegeDetail(type){
-window._currentPrivilege=type;
-const detail=document.getElementById('privilegeDetail');
-const grid=document.getElementById('privilegeGrid');
-const data=privilegeData[type];
-const lang=currentLang;
-const d=data[lang];
-grid.style.display='none';
-detail.style.display='block';
-detail.classList.add('active');
-let colorClass='';
-let colorStyle='';
-if(type==='deluxe'){colorClass='gold';colorStyle='var(--gold)';}
-else if(type==='premium'){colorClass='silver';colorStyle='var(--silver)';}
-else if(type==='vip'){colorClass='red';colorStyle='var(--red)';}
-let pricesHtml='';
-for(let i=0;i<d.prices.length;i++){
-pricesHtml+='<div class="price-item"><span class="days">'+d.prices[i].split('=')[0]+'=</span><span class="cost">'+d.prices[i].split('=')[1]+'</span></div>';
-}
-let paymentHtml='';
-for(let i=0;i<d.payment.length;i++){
-paymentHtml+='<div class="payment-method">'+d.payment[i]+'</div>';
-}
-let backText=lang==='rus'?'← Назад':'← Back';
-let detailsTitle=lang==='rus'?'Возможности':'Features';
-let pricesTitle=lang==='rus'?'Цены':'Prices';
-let paymentTitle=lang==='rus'?'Способы оплаты':'Payment methods';
-let contactTitle=lang==='rus'?'Связь':'Contact';
-let features=[];
-if(type==='deluxe'){
-features=lang==='rus'?[
-'Префикс: <span class="highlight gold">DELUXE</span>',
-'Цвет Префикса: <span class="highlight gold">Жёлтый</span>',
-'Цвет Сообщения: Серверный',
-'Выбор VIP зомби в магазине: Дает Скорость, ХП и Двойной прыжок',
-'При заходе на сервер ваш баланс будет 7050$',
-'<span class="highlight gold">CS 1.6 ZM & LVL SYSTEM</span>',
-'Меню <span class="highlight gold">DELUXE</span>: <span class="cmd">/bonus</span>',
-'<span class="highlight gold">200</span> брони в каждом раунде',
-'<span class="highlight gold">300</span> здоровья в каждом раунде',
-'<span class="cmd">/m id 30m</span> — Возможность мутить игрока от 30мин до 120мин',
-'<span class="cmd">/150ap</span> — 3 раза за карту +150 брони',
-'<span class="cmd">/150hp</span> — 3 раза за карту +150 здоровья',
-'<span class="cmd">/model</span> — Уникальная Deluxe модель',
-'<span class="cmd">/priv_money</span> — +3000$ [перезарядка: 60 сек]',
-'<span class="cmd">/anti</span> — 2 раза за карту Противоядие',
-'<span class="cmd">/give</span> — 1 раз за карту выдать оружие',
-'<span class="cmd">/radaron</span> — Радар обеих команд (ТТ/КТ)',
-'<span class="cmd">/nano</span> — 2 раза за карту Нано-Броня (6 сек)',
-'<span class="cmd">/force_sniper</span> — 1 раз за карту снайпер с АВП (20000 урона)',
-'Возможность видеть ХП и броню людей будучи зомби',
-'<span class="highlight gold">Улучшенные оружия:</span>',
-'<span class="highlight gold">Guitar-Gun:</span> Голд AK-47 (голова 680 | тело 170)',
-'<span class="highlight gold">Blaster-Gun:</span> G3SG1 (голова 800 | тело 200)',
-'<span class="highlight gold">Laser-Gun:</span> Scout (голова 2000 | тело 500)',
-'<span class="highlight gold">Axe:</span> Нож-топор (голова 1200 | тело 300)',
-'Урон всех оружий увеличен на 20-40%'
-]:[
-'Prefix: <span class="highlight gold">DELUXE</span>',
-'Prefix Color: <span class="highlight gold">Yellow</span>',
-'Message Color: Server default',
-'VIP zombie in shop: Speed, HP and Double Jump',
-'On join server balance: 7050$',
-'<span class="highlight gold">CS 1.6 ZM & LVL SYSTEM</span>',
-'<span class="highlight gold">DELUXE</span> menu: <span class="cmd">/bonus</span>',
-'<span class="highlight gold">200</span> armor every round',
-'<span class="highlight gold">300</span> HP every round',
-'<span class="cmd">/m id 30m</span> — Mute player 30-120min',
-'<span class="cmd">/150ap</span> — 3x per map +150 armor',
-'<span class="cmd">/150hp</span> — 3x per map +150 HP',
-'<span class="cmd">/model</span> — Unique Deluxe model',
-'<span class="cmd">/priv_money</span> — +3000$ [cooldown: 60 sec]',
-'<span class="cmd">/anti</span> — 2x per map Anti-dote',
-'<span class="cmd">/give</span> — 1x per map give weapon',
-'<span class="cmd">/radaron</span> — Radar both teams (TT/CT)',
-'<span class="cmd">/nano</span> — 2x per map Nano-Armor (6 sec)',
-'<span class="cmd">/force_sniper</span> — 1x per map Sniper with AWP (20000 dmg)',
-'See HP and armor of humans when zombie',
-'<span class="highlight gold">Enhanced weapons:</span>',
-'<span class="highlight gold">Guitar-Gun:</span> Gold AK-47 (head 680 | body 170)',
-'<span class="highlight gold">Blaster-Gun:</span> G3SG1 (head 800 | body 200)',
-'<span class="highlight gold">Laser-Gun:</span> Scout (head 2000 | body 500)',
-'<span class="highlight gold">Axe:</span> Axe-knife (head 1200 | body 300)',
-'All weapons damage increased by 20-40%'
-];
-}else if(type==='premium'){
-features=lang==='rus'?[
-'Префикс: <span class="highlight silver">PREMIUM</span>',
-'Цвет Префикса: <span class="highlight silver">Серебряный</span>',
-'Цвет Сообщения: Серверный',
-'Выбор VIP зомби в магазине: Дает Скорость, ХП и Двойной прыжок',
-'При заходе на сервер ваш баланс будет 7050$',
-'<span class="highlight silver">CS 1.6 ZM & LVL SYSTEM</span>',
-'Меню <span class="highlight silver">PREMIUM</span>: <span class="cmd">/bonus</span>',
-'<span class="highlight silver">200</span> брони в каждом раунде',
-'<span class="highlight silver">300</span> здоровья в каждом раунде',
-'<span class="cmd">/150ap</span> — 3 раза за карту +150 брони',
-'<span class="cmd">/150hp</span> — 3 раза за карту +150 здоровья',
-'<span class="cmd">/priv_money</span> — +3000$ [перезарядка: 60 сек]',
-'<span class="cmd">/anti</span> — 2 раза за карту Противоядие',
-'<span class="cmd">/give</span> — 1 раз за карту выдать оружие',
-'<span class="cmd">/nano</span> — 2 раза за карту Нано-Броня (6 сек)',
-'Возможность видеть ХП и броню людей будучи зомби'
-]:[
-'Prefix: <span class="highlight silver">PREMIUM</span>',
-'Prefix Color: <span class="highlight silver">Silver</span>',
-'Message Color: Server default',
-'VIP zombie in shop: Speed, HP and Double Jump',
-'On join server balance: 7050$',
-'<span class="highlight silver">CS 1.6 ZM & LVL SYSTEM</span>',
-'<span class="highlight silver">PREMIUM</span> menu: <span class="cmd">/bonus</span>',
-'<span class="highlight silver">200</span> armor every round',
-'<span class="highlight silver">300</span> HP every round',
-'<span class="cmd">/150ap</span> — 3x per map +150 armor',
-'<span class="cmd">/150hp</span> — 3x per map +150 HP',
-'<span class="cmd">/priv_money</span> — +3000$ [cooldown: 60 sec]',
-'<span class="cmd">/anti</span> — 2x per map Anti-dote',
-'<span class="cmd">/give</span> — 1x per map give weapon',
-'<span class="cmd">/nano</span> — 2x per map Nano-Armor (6 sec)',
-'See HP and armor of humans when zombie'
-];
-}else if(type==='vip'){
-features=lang==='rus'?[
-'Префикс: <span class="highlight red">VIP+</span>',
-'Цвет Префикса: <span class="highlight red">Красный</span>',
-'Цвет Сообщения: Серверный',
-'Выбор VIP зомби в магазине: Дает Скорость, ХП и Двойной прыжок',
-'При заходе на сервер ваш баланс будет 7050$',
-'<span class="highlight red">CS 1.6 ZM & LVL SYSTEM</span>',
-'Меню <span class="highlight red">VIP+</span>: <span class="cmd">/bonus</span>',
-'<span class="highlight red">100</span> брони в каждом раунде',
-'<span class="highlight red">200</span> здоровья в каждом раунде',
-'<span class="cmd">/150ap</span> — 1 раз за карту +150 брони',
-'<span class="cmd">/150hp</span> — 1 раз за карту +150 здоровья',
-'<span class="cmd">/priv_money</span> — +2000$ [перезарядка: 60 сек]',
-'<span class="cmd">/anti</span> — 1 раз за карту Противоядие'
-]:[
-'Prefix: <span class="highlight red">VIP+</span>',
-'Prefix Color: <span class="highlight red">Red</span>',
-'Message Color: Server default',
-'VIP zombie in shop: Speed, HP and Double Jump',
-'On join server balance: 7050$',
-'<span class="highlight red">CS 1.6 ZM & LVL SYSTEM</span>',
-'<span class="highlight red">VIP+</span> menu: <span class="cmd">/bonus</span>',
-'<span class="highlight red">100</span> armor every round',
-'<span class="highlight red">200</span> HP every round',
-'<span class="cmd">/150ap</span> — 1x per map +150 armor',
-'<span class="cmd">/150hp</span> — 1x per map +150 HP',
-'<span class="cmd">/priv_money</span> — +2000$ [cooldown: 60 sec]',
-'<span class="cmd">/anti</span> — 1x per map Anti-dote'
-];
-}
-let featuresHtml='';
-for(let i=0;i<features.length;i++){
-featuresHtml+='<div class="section-item">'+features[i]+'</div>';
-}
-detail.innerHTML=`
-<div class="detail-header">
-<div class="d-name" style="color:${colorStyle};">${d.name}</div>
-<div class="d-sub"><span class="lang-text hidden" data-lang="rus">Привилегия</span><span class="lang-text active" data-lang="eng">Privilege</span></div>
-</div>
-<div class="detail-section">
-<div class="section-title"><span class="lang-text hidden" data-lang="rus">Возможности</span><span class="lang-text active" data-lang="eng">Features</span></div>
-${featuresHtml}
-</div>
-<div class="detail-section">
-<div class="section-title"><span class="lang-text hidden" data-lang="rus">Цены</span><span class="lang-text active" data-lang="eng">Prices</span></div>
-<div class="price-grid">${pricesHtml}</div>
-</div>
-<div class="detail-section">
-<div class="section-title"><span class="lang-text hidden" data-lang="rus">Способы оплаты</span><span class="lang-text active" data-lang="eng">Payment methods</span></div>
-${paymentHtml}
-</div>
-<div class="detail-section">
-<div class="section-title"><span class="lang-text hidden" data-lang="rus">Связь</span><span class="lang-text active" data-lang="eng">Contact</span></div>
-<div style="margin-top:4px;">
-<a href="https://t.me/${d.contact.replace('@','')}" target="_blank" class="contact-link">@${d.contact.replace('@','')}</a>
-</div>
-</div>
-<div class="detail-back" onclick="backToGrid()"><span class="lang-text hidden" data-lang="rus">← Назад</span><span class="lang-text active" data-lang="eng">← Back</span></div>
-`;
-}
-function backToGrid(){
-document.getElementById('privilegeGrid').style.display='block';
-document.getElementById('privilegeDetail').classList.remove('active');
-document.getElementById('privilegeDetail').style.display='none';
-}
+    // ============ ЖИВОЙ ОНЛАЙН ============
+    const STATUS_URL = "https://kontra-status.avalon-kontra.workers.dev/api/status";
+    const REFRESH_INTERVAL = 10000;
 
-function copyIP(id,btn){
-var ip=document.getElementById(id).textContent;
-if(navigator.clipboard){
-navigator.clipboard.writeText(ip).then(function(){
-btn.textContent='✔ COPIED';
-btn.classList.add('copied');
-setTimeout(function(){btn.textContent='COPY IP';btn.classList.remove('copied');},2000);
-}).catch(function(){
-btn.textContent='✔ COPIED';
-btn.classList.add('copied');
-setTimeout(function(){btn.textContent='COPY IP';btn.classList.remove('copied');},2000);
-});
-}else{
-var temp=document.createElement('input');
-temp.value=ip;
-document.body.appendChild(temp);
-temp.select();
-document.execCommand('copy');
-document.body.removeChild(temp);
-btn.textContent='✔ COPIED';
-btn.classList.add('copied');
-setTimeout(function(){btn.textContent='COPY IP';btn.classList.remove('copied');},2000);
-}
-}
+    async function fetchServerStatus() {
+        try {
+            const response = await fetch(STATUS_URL);
+            const data = await response.json();
+            updateServerUI(data.servers);
+        } catch (e) {
+            console.error("Status fetch failed:", e);
+        }
+    }
 
-function animateCircles(){
-document.querySelectorAll('.online-circle').forEach(function(circle){
-var players=parseInt(circle.getAttribute('data-players'));
-var max=parseInt(circle.getAttribute('data-max'));
-var percent=players/max;
-var circumference=125.66;
-var offset=circumference*(1-percent);
-var fill=circle.querySelector('.fill');
-if(players===0){fill.style.strokeDashoffset=circumference;}
-else{fill.style.strokeDashoffset=offset;}
-});
-}
+    function updateServerUI(servers) {
+        document.querySelectorAll('.online-circle').forEach(circle => {
+            const serverId = circle.getAttribute('data-server');
+            const maxPlayers = parseInt(circle.getAttribute('data-max'));
+            const serverData = servers[serverId];
+            if (!serverData) return;
 
-document.addEventListener('DOMContentLoaded',function(){
-document.getElementById('langSlider').className='lang-slider right';
-document.getElementById('langRus').classList.remove('active');
-document.getElementById('langEng').classList.add('active');
-document.querySelectorAll('[data-lang]').forEach(el=>{
-if(el.getAttribute('data-lang')==='eng'){el.classList.add('active');el.classList.remove('hidden');}
-else{el.classList.remove('active');el.classList.add('hidden');}
-});
-setTimeout(animateCircles,300);
-});
+            const online = serverData.online;
+            const isOffline = serverData.offline;
+            const fill = circle.querySelector('.fill');
+            const numEl = circle.querySelector('.num');
+            numEl.textContent = isOffline ? '0' : online;
+
+            const circumference = 125.66;
+            const percent = isOffline ? 0 : online / maxPlayers;
+            fill.style.strokeDashoffset = circumference * (1 - percent);
+
+            const panel = circle.closest('.server-panel');
+            const dot = panel.querySelector('.status .dot');
+            const statusText = panel.querySelector('.status');
+            const statusLangEl = statusText.querySelector('[data-lang]:not(.hidden)');
+
+            if (isOffline) {
+                dot.style.background = '#555';
+                dot.style.boxShadow = 'none';
+                statusText.style.color = '#555';
+                if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Офлайн' : 'Offline';
+            } else {
+                const color = circle.getAttribute('data-color');
+                dot.style.background = color;
+                dot.style.boxShadow = `0 0 8px ${color}`;
+                statusText.style.color = color;
+                if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Онлайн' : 'Online';
+            }
+        });
+    }
+
+    fetchServerStatus();
+    setInterval(fetchServerStatus, REFRESH_INTERVAL);
+
+    const originalToggleLang = toggleLang;
+    toggleLang = function() {
+        originalToggleLang();
+        fetchServerStatus();
+    };
 </script>
 </body>
 </html>
