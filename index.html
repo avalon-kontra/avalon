@@ -99,6 +99,22 @@
         .copy-btn.copied { border-color:var(--green); color:var(--green); }
         .copy-btn:active { animation:btnPress 0.3s; }
         .hidden { display:none !important; }
+
+        /* Новые стили для вкладок */
+        .server-tabs-container { margin-top:14px; padding:10px 8px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.06); }
+        .server-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+        .server-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text); padding:6px 14px; border-radius:20px; font-size:9px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; white-space:nowrap; }
+        .server-tab:hover { border-color:var(--accent); color:var(--accent); }
+        .server-tab.active { background:linear-gradient(135deg, rgba(76,201,240,0.2), rgba(123,92,255,0.2)); border-color:var(--accent); color:#fff; box-shadow:0 0 15px rgba(76,201,240,0.3); }
+        .server-detail-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:12px; margin-bottom:10px; display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+        .detail-row { display:flex; justify-content:space-between; font-size:11px; padding:2px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+        .detail-row span:first-child { color:var(--text-dim); }
+        .detail-row span:last-child { color:var(--text-bright); font-weight:600; }
+        .players-table { width:100%; border-collapse:collapse; font-size:10px; }
+        .players-table th { background:rgba(255,255,255,0.05); color:var(--text-dim); padding:6px; text-align:left; font-weight:600; }
+        .players-table td { padding:6px; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--text); }
+        .players-table tr:hover td { background:rgba(255,255,255,0.02); }
+
         @media (max-width:400px) { .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; } }
     </style>
 </head>
@@ -147,21 +163,15 @@
         <div class="toggle-panel" id="privilegePanel">
             <div class="privilege-grid">
                 <div class="privilege-card vip-card">
-                    <svg viewBox="0 0 50 50">
-                        <text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♚</text>
-                    </svg>
+                    <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♚</text></svg>
                     <span class="privilege-name">VIP+</span>
                 </div>
                 <div class="privilege-card premium-card">
-                    <svg viewBox="0 0 50 50">
-                        <text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♕</text>
-                    </svg>
+                    <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♕</text></svg>
                     <span class="privilege-name">PREMIUM</span>
                 </div>
                 <div class="privilege-card deluxe-card">
-                    <svg viewBox="0 0 50 50">
-                        <text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♛</text>
-                    </svg>
+                    <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♛</text></svg>
                     <span class="privilege-name">DELUXE</span>
                 </div>
             </div>
@@ -172,9 +182,60 @@
         </div>
     </div>
 
-    <div class="servers-card">
-        <div id="serverTabs" class="server-tabs"></div>
-        <div id="serverDetails" class="server-details"></div>
+    <!-- Блок списка серверов (прежний дизайн) -->
+    <div class="servers-card" id="serverListCard">
+        <div class="server-item">
+            <div class="server-panel">
+                <div class="online-circle" data-server="zm" data-max="16" data-color="#2ecc71">
+                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#2ecc71" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+                    <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
+                </div>
+                <div class="info"><span class="name">CS 1.6 ZM & LVL SYSTEM</span><span class="ip" id="serverIp1">5.141.89.34:5006</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
+                <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY IP</button>
+                <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+            </div>
+        </div>
+        <div class="server-item">
+            <div class="server-panel">
+                <div class="online-circle" data-server="ze" data-max="16" data-color="#ffd700">
+                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ffd700" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+                    <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
+                </div>
+                <div class="info"><span class="name">CS 1.6 ZE & NEMESIS MODE</span><span class="ip" id="serverIp2">5.141.89.34:5005</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
+                <button class="copy-btn" onclick="copyIP('serverIp2',this)" data-lang="eng">COPY IP</button>
+                <button class="copy-btn hidden" onclick="copyIP('serverIp2',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+            </div>
+        </div>
+        <div class="server-item">
+            <div class="server-panel">
+                <div class="online-circle" data-server="dm" data-max="16" data-color="#ff4757">
+                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff4757" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+                    <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
+                </div>
+                <div class="info"><span class="name">CS 1.6 DEATHMATCH</span><span class="ip" id="serverIp3">5.141.89.34:5002</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
+                <button class="copy-btn" onclick="copyIP('serverIp3',this)" data-lang="eng">COPY IP</button>
+                <button class="copy-btn hidden" onclick="copyIP('serverIp3',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+            </div>
+        </div>
+        <div class="server-item">
+            <div class="server-panel">
+                <div class="online-circle" data-server="jail" data-max="16" data-color="#ff9f43">
+                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff9f43" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+                    <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
+                </div>
+                <div class="info"><span class="name">JAIL | Побег из Ада 12+</span><span class="ip" id="serverIp4">5.141.89.34:5003</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
+                <button class="copy-btn" onclick="copyIP('serverIp4',this)" data-lang="eng">COPY IP</button>
+                <button class="copy-btn hidden" onclick="copyIP('serverIp4',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок вкладок для онлайн-серверов (появится динамически) -->
+    <div class="servers-card" id="tabsCard" style="display:none; margin-top:10px;">
+        <div class="server-tabs-container">
+            <div class="server-tabs" id="serverTabs"></div>
+            <div id="serverDetails" class="server-details"></div>
+        </div>
     </div>
 </div>
 
@@ -202,7 +263,7 @@
     function copyIP(id,btn){const ip=document.getElementById(id).textContent;if(navigator.clipboard){navigator.clipboard.writeText(ip).then(()=>{btn.textContent= currentLang==='rus'?'СКОПИРОВАН':'COPIED';btn.classList.add('copied');setTimeout(()=>{btn.textContent=currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP';btn.classList.remove('copied');},2000);}).catch(()=>fallbackCopy(ip,btn));}else{fallbackCopy(ip,btn);}}
     function fallbackCopy(ip,btn){const t=document.createElement('input');t.value=ip;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);btn.textContent= currentLang==='rus'?'СКОПИРОВАН':'COPIED';btn.classList.add('copied');setTimeout(()=>{btn.textContent=currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP';btn.classList.remove('copied');},2000);}
 
-    // ============ ЖИВОЙ ОНЛАЙН С ТАБАМИ ============
+    // ============ ЖИВОЙ ОНЛАЙН + ВКЛАДКИ ============
     const STATUS_URL = "https://kontra-status.avalon-kontra.workers.dev/network";
     const REFRESH_INTERVAL = 10000;
     let activeServerId = null;
@@ -211,24 +272,63 @@
         try {
             const response = await fetch(STATUS_URL);
             const data = await response.json();
+            updateServerList(data.servers);
             renderServerTabs(data.servers);
         } catch (e) {
             console.error("Status fetch failed:", e);
         }
     }
 
+    function updateServerList(servers) {
+        document.querySelectorAll('.online-circle').forEach(circle => {
+            const serverId = circle.getAttribute('data-server');
+            const maxPlayers = parseInt(circle.getAttribute('data-max'));
+            const serverData = servers.find(s => s.id === serverId);
+            if (!serverData) return;
+
+            const online = serverData.online;
+            const isOffline = !serverData.serverOnline;
+            const fill = circle.querySelector('.fill');
+            const numEl = circle.querySelector('.num');
+            numEl.textContent = isOffline ? '0' : online;
+
+            const circumference = 125.66;
+            const percent = isOffline ? 0 : online / maxPlayers;
+            fill.style.strokeDashoffset = circumference * (1 - percent);
+
+            const panel = circle.closest('.server-panel');
+            const dot = panel.querySelector('.status .dot');
+            const statusText = panel.querySelector('.status');
+            const statusLangEl = statusText.querySelector('[data-lang]:not(.hidden)');
+
+            if (isOffline) {
+                dot.style.background = '#555';
+                dot.style.boxShadow = 'none';
+                statusText.style.color = '#555';
+                if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Офлайн' : 'Offline';
+            } else {
+                const color = circle.getAttribute('data-color');
+                dot.style.background = color;
+                dot.style.boxShadow = `0 0 8px ${color}`;
+                statusText.style.color = color;
+                if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Онлайн' : 'Online';
+            }
+        });
+    }
+
     function renderServerTabs(servers) {
         const onlineServers = servers.filter(s => s.serverOnline);
+        const tabsCard = document.getElementById('tabsCard');
         const tabsContainer = document.getElementById('serverTabs');
         const detailsContainer = document.getElementById('serverDetails');
 
-        tabsContainer.innerHTML = '';
-        detailsContainer.innerHTML = '';
-
         if (!onlineServers.length) {
-            tabsContainer.innerHTML = '<div style="text-align:center;color:var(--text-dim);padding:20px;">Нет онлайн серверов</div>';
+            tabsCard.style.display = 'none';
             return;
         }
+
+        tabsCard.style.display = 'block';
+        tabsContainer.innerHTML = '';
 
         onlineServers.forEach(server => {
             const tab = document.createElement('button');
