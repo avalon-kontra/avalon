@@ -173,50 +173,8 @@
     </div>
 
     <div class="servers-card">
-        <div class="server-item">
-            <div class="server-panel">
-                <div class="online-circle" data-server="zm" data-max="16" data-color="#2ecc71">
-                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#2ecc71" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
-                    <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
-                </div>
-                <div class="info"><span class="name">CS 1.6 ZM & LVL SYSTEM</span><span class="ip" id="serverIp1">5.141.89.34:5006</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
-                <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY IP</button>
-                <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
-            </div>
-        </div>
-        <div class="server-item">
-            <div class="server-panel">
-                <div class="online-circle" data-server="ze" data-max="16" data-color="#ffd700">
-                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ffd700" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
-                    <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
-                </div>
-                <div class="info"><span class="name">CS 1.6 ZE & NEMESIS MODE</span><span class="ip" id="serverIp2">5.141.89.34:5005</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
-                <button class="copy-btn" onclick="copyIP('serverIp2',this)" data-lang="eng">COPY IP</button>
-                <button class="copy-btn hidden" onclick="copyIP('serverIp2',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
-            </div>
-        </div>
-        <div class="server-item">
-            <div class="server-panel">
-                <div class="online-circle" data-server="dm" data-max="16" data-color="#ff4757">
-                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff4757" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
-                    <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
-                </div>
-                <div class="info"><span class="name">CS 1.6 DEATHMATCH</span><span class="ip" id="serverIp3">5.141.89.34:5002</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
-                <button class="copy-btn" onclick="copyIP('serverIp3',this)" data-lang="eng">COPY IP</button>
-                <button class="copy-btn hidden" onclick="copyIP('serverIp3',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
-            </div>
-        </div>
-        <div class="server-item">
-            <div class="server-panel">
-                <div class="online-circle" data-server="jail" data-max="16" data-color="#ff9f43">
-                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff9f43" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
-                    <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
-                </div>
-                <div class="info"><span class="name">JAIL | Побег из Ада 12+</span><span class="ip" id="serverIp4">5.141.89.34:5003</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
-                <button class="copy-btn" onclick="copyIP('serverIp4',this)" data-lang="eng">COPY IP</button>
-                <button class="copy-btn hidden" onclick="copyIP('serverIp4',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
-            </div>
-        </div>
+        <div id="serverTabs" class="server-tabs"></div>
+        <div id="serverDetails" class="server-details"></div>
     </div>
 </div>
 
@@ -244,55 +202,83 @@
     function copyIP(id,btn){const ip=document.getElementById(id).textContent;if(navigator.clipboard){navigator.clipboard.writeText(ip).then(()=>{btn.textContent= currentLang==='rus'?'СКОПИРОВАН':'COPIED';btn.classList.add('copied');setTimeout(()=>{btn.textContent=currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP';btn.classList.remove('copied');},2000);}).catch(()=>fallbackCopy(ip,btn));}else{fallbackCopy(ip,btn);}}
     function fallbackCopy(ip,btn){const t=document.createElement('input');t.value=ip;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);btn.textContent= currentLang==='rus'?'СКОПИРОВАН':'COPIED';btn.classList.add('copied');setTimeout(()=>{btn.textContent=currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP';btn.classList.remove('copied');},2000);}
 
-    // ============ ЖИВОЙ ОНЛАЙН ============
+    // ============ ЖИВОЙ ОНЛАЙН С ТАБАМИ ============
     const STATUS_URL = "https://kontra-status.avalon-kontra.workers.dev/network";
     const REFRESH_INTERVAL = 10000;
+    let activeServerId = null;
 
     async function fetchServerStatus() {
         try {
             const response = await fetch(STATUS_URL);
             const data = await response.json();
-            updateServerUI(data.servers);
+            renderServerTabs(data.servers);
         } catch (e) {
             console.error("Status fetch failed:", e);
         }
     }
 
-    function updateServerUI(servers) {
-        document.querySelectorAll('.online-circle').forEach(circle => {
-            const serverId = circle.getAttribute('data-server');
-            const maxPlayers = parseInt(circle.getAttribute('data-max'));
-            const serverData = servers.find(s => s.id === serverId);
-            if (!serverData) return;
+    function renderServerTabs(servers) {
+        const onlineServers = servers.filter(s => s.serverOnline);
+        const tabsContainer = document.getElementById('serverTabs');
+        const detailsContainer = document.getElementById('serverDetails');
 
-            const online = serverData.online;
-            const isOffline = !serverData.serverOnline;
-            const fill = circle.querySelector('.fill');
-            const numEl = circle.querySelector('.num');
-            numEl.textContent = isOffline ? '0' : online;
+        tabsContainer.innerHTML = '';
+        detailsContainer.innerHTML = '';
 
-            const circumference = 125.66;
-            const percent = isOffline ? 0 : online / maxPlayers;
-            fill.style.strokeDashoffset = circumference * (1 - percent);
+        if (!onlineServers.length) {
+            tabsContainer.innerHTML = '<div style="text-align:center;color:var(--text-dim);padding:20px;">Нет онлайн серверов</div>';
+            return;
+        }
 
-            const panel = circle.closest('.server-panel');
-            const dot = panel.querySelector('.status .dot');
-            const statusText = panel.querySelector('.status');
-            const statusLangEl = statusText.querySelector('[data-lang]:not(.hidden)');
-
-            if (isOffline) {
-                dot.style.background = '#555';
-                dot.style.boxShadow = 'none';
-                statusText.style.color = '#555';
-                if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Офлайн' : 'Offline';
-            } else {
-                const color = circle.getAttribute('data-color');
-                dot.style.background = color;
-                dot.style.boxShadow = `0 0 8px ${color}`;
-                statusText.style.color = color;
-                if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Онлайн' : 'Online';
-            }
+        onlineServers.forEach(server => {
+            const tab = document.createElement('button');
+            tab.className = 'server-tab';
+            tab.textContent = server.name;
+            tab.onclick = () => showServerDetails(server);
+            tabsContainer.appendChild(tab);
         });
+
+        if (!activeServerId || !onlineServers.find(s => s.id === activeServerId)) {
+            activeServerId = onlineServers[0].id;
+        }
+        const active = onlineServers.find(s => s.id === activeServerId);
+        if (active) showServerDetails(active);
+    }
+
+    function showServerDetails(server) {
+        activeServerId = server.id;
+        document.querySelectorAll('.server-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent === server.name);
+        });
+
+        const container = document.getElementById('serverDetails');
+        container.innerHTML = `
+            <div class="server-detail-card">
+                <div class="detail-row"><span>IP:</span><span>${server.address}</span></div>
+                <div class="detail-row"><span>Карта:</span><span>${server.map}</span></div>
+                <div class="detail-row"><span>Режим:</span><span>${server.mode}</span></div>
+                <div class="detail-row"><span>Онлайн:</span><span>${server.online}/${server.maxPlayers}</span></div>
+                <div class="detail-row"><span>Зомби:</span><span>${server.zombies}</span></div>
+                <div class="detail-row"><span>Выжившие:</span><span>${server.survivors}</span></div>
+                <div class="detail-row"><span>Состояние:</span><span>${server.roomState}</span></div>
+            </div>
+            <table class="players-table">
+                <thead><tr><th>#</th><th>Имя</th><th>Команда</th><th>HP</th><th>Броня</th><th>Счёт</th><th>Смерти</th></tr></thead>
+                <tbody>
+                    ${server.players.map(p => `
+                        <tr>
+                            <td>${p.slot}</td>
+                            <td>${p.name}</td>
+                            <td style="color:${p.team === 'T' ? '#aa5555' : '#5555aa'}">${p.team}</td>
+                            <td>${p.hp}</td>
+                            <td>${p.armor}</td>
+                            <td>${p.score}</td>
+                            <td>${p.deaths}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
     }
 
     fetchServerStatus();
