@@ -16,7 +16,8 @@
         @keyframes avatarFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
         @keyframes btnPress { 0%{transform:scale(1)} 50%{transform:scale(0.96)} 100%{transform:scale(1)} }
         @keyframes goldShine { 0%{filter:brightness(1) drop-shadow(0 0 3px gold)} 50%{filter:brightness(1.3) drop-shadow(0 0 10px gold)} 100%{filter:brightness(1) drop-shadow(0 0 3px gold)} }
-        @keyframes modalIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
+        @keyframes modalBg { from{opacity:0} to{opacity:1} }
+        @keyframes modalPop { from{opacity:0;transform:scale(0.95) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
         .container { max-width:480px; width:100%; }
         .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding:0 4px; gap:10px; }
         .logo { font-family:'Orbitron',sans-serif; font-weight:900; font-size:20px; color:#fff; flex-shrink:0; text-shadow:0 0 15px rgba(255,255,255,0.3); }
@@ -122,39 +123,31 @@
         .players-table td { padding:5px; border-bottom:1px solid rgba(255,255,255,0.04); }
         .players-table tr:last-child td { border-bottom:none; }
 
-        /* Стили модального окна привилегий */
-        .privilege-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); z-index:1000; justify-content:center; align-items:center; padding:20px; }
+        /* Модальное окно привилегий */
+        .privilege-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:999; justify-content:center; align-items:center; padding:20px; animation:modalBg 0.3s ease; }
         .privilege-modal-overlay.active { display:flex; }
-        .privilege-modal { background:var(--card, #14141f); border:1px solid var(--glass-border); border-radius:24px; padding:24px 20px; max-width:500px; width:100%; max-height:85vh; overflow-y:auto; position:relative; animation:modalIn 0.3s ease; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
-        .privilege-modal .modal-close { position:absolute; top:12px; right:16px; background:transparent; border:none; color:var(--text-dim); font-size:28px; cursor:pointer; transition:color 0.3s; }
-        .privilege-modal .modal-close:hover { color:#fff; }
-        .privilege-modal .modal-title { font-family:'Orbitron',sans-serif; font-size:18px; font-weight:900; text-align:center; margin-bottom:6px; }
-        .privilege-modal .modal-subtitle { text-align:center; font-size:11px; color:var(--text-dim); margin-bottom:20px; letter-spacing:0.05em; }
-        .privilege-modal .price-block { margin-bottom:16px; }
-        .privilege-modal .price-item { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:13px; }
-        .privilege-modal .price-item .days { color:var(--text-dim); }
-        .privilege-modal .price-item .cost { font-weight:700; }
-        .privilege-modal .payment-methods { margin-bottom:20px; }
-        .privilege-modal .payment-methods p { font-size:12px; margin-bottom:4px; }
-        .privilege-modal .contact-block { display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:20px; flex-wrap:wrap; }
-        .privilege-modal .contact-block a { color:var(--accent); text-decoration:none; display:flex; align-items:center; gap:6px; }
-        .privilege-modal .contact-block svg { fill:var(--accent); width:18px; height:18px; }
-        .privilege-modal .features-list { list-style:none; }
-        .privilege-modal .features-list li { padding:5px 0; font-size:13px; border-bottom:1px solid rgba(255,255,255,0.04); }
-        .privilege-modal .features-list li::before { content:"•"; color:var(--accent); margin-right:8px; }
-        .privilege-modal .weapons-block { margin-top:16px; }
-        .privilege-modal .weapon-item { background:rgba(255,255,255,0.03); border-radius:8px; padding:8px; margin-bottom:8px; }
-        .privilege-modal .weapon-name { font-weight:700; }
-        .privilege-modal .weapon-desc { font-size:11px; color:var(--text-dim); }
-        .privilege-modal .gallery { display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin:16px 0; }
-        .privilege-modal .gallery img { width:100%; border-radius:8px; border:1px solid rgba(255,255,255,0.1); }
-        .privilege-modal .gallery.single { grid-template-columns:1fr; }
+        .privilege-modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:480px; width:100%; max-height:80vh; overflow-y:auto; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; box-shadow:0 0 60px rgba(0,0,0,0.5); }
+        .privilege-modal-close { position:absolute; top:14px; right:16px; background:transparent; border:none; color:var(--text-dim); font-size:24px; cursor:pointer; transition:color 0.3s; font-family:'Inter',sans-serif; }
+        .privilege-modal-close:hover { color:#fff; }
+        .privilege-modal-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:18px; text-align:center; margin-bottom:12px; letter-spacing:0.02em; }
+        .privilege-modal-divider { width:60px; height:2px; margin:0 auto 20px; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3)); opacity:0.7; }
+        .privilege-section { margin-bottom:18px; }
+        .privilege-section-title { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin-bottom:8px; }
+        .privilege-price-item { display:flex; justify-content:space-between; font-size:13px; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+        .privilege-price-item span:first-child { color:var(--text-dim); }
+        .privilege-price-item span:last-child { color:var(--text-bright); font-weight:600; }
+        .privilege-feature { font-size:12px; padding:3px 0; line-height:1.4; position:relative; padding-left:16px; }
+        .privilege-feature::before { content:"▸"; position:absolute; left:0; color:var(--accent); }
+        .privilege-contact-link { display:inline-flex; align-items:center; gap:6px; color:var(--accent); text-decoration:none; font-weight:600; font-size:13px; transition:color 0.3s; }
+        .privilege-contact-link:hover { color:#fff; }
+        .privilege-contact-link svg { width:16px; height:16px; fill:var(--accent); }
+        .privilege-server-header { text-align:center; font-size:11px; color:var(--text-dim); margin-bottom:6px; letter-spacing:0.04em; }
+        .privilege-image { width:100%; border-radius:8px; margin-bottom:10px; }
 
         @media (max-width:400px) {
             .teams-container { flex-direction:column; }
             .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; }
-            .privilege-modal { padding:16px; }
-            .privilege-modal .gallery { grid-template-columns:1fr 1fr; gap:4px; }
+            .privilege-modal { padding:20px 14px; }
         }
     </style>
 </head>
@@ -185,7 +178,7 @@
                     <circle cx="50" cy="50" r="41" fill="rgba(15,15,25,0.9)"/>
                     <circle cx="50" cy="50" r="45" fill="url(#glowGrad)"/>
                     <text x="50" y="52" text-anchor="middle" dominant-baseline="central" font-family="'Inter',sans-serif" font-weight="900" font-size="15" fill="#fff" filter="url(#textGlow)" letter-spacing="1">AVALON</text>
-                      </svg>
+                         </svg>
             </div>
         </div>
         <div class="divider"></div>
@@ -202,15 +195,15 @@
 
         <div class="toggle-panel" id="privilegePanel">
             <div class="privilege-grid">
-                <div class="privilege-card vip-card" onclick="showPrivilegeDetail('vip')">
+                <div class="privilege-card vip-card" onclick="openPrivilegeModal('vip')">
                     <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♚</text></svg>
                     <span class="privilege-name">VIP+</span>
                 </div>
-                <div class="privilege-card premium-card" onclick="showPrivilegeDetail('premium')">
+                <div class="privilege-card premium-card" onclick="openPrivilegeModal('premium')">
                     <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♕</text></svg>
                     <span class="privilege-name">PREMIUM</span>
                 </div>
-                <div class="privilege-card deluxe-card" onclick="showPrivilegeDetail('deluxe')">
+                <div class="privilege-card deluxe-card" onclick="openPrivilegeModal('deluxe')">
                     <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♛</text></svg>
                     <span class="privilege-name">DELUXE</span>
                 </div>
@@ -280,28 +273,60 @@
 </div>
 
 <!-- Модальное окно привилегий -->
-<div class="privilege-modal-overlay" id="privilegeModalOverlay" onclick="closePrivilegeModalOutside(event)">
-    <div class="privilege-modal" id="privilegeModal">
-        <button class="modal-close" onclick="closePrivilegeModal()">&times;</button>
+<div class="privilege-modal-overlay" id="privilegeModal" onclick="closePrivilegeModalOutside(event)">
+    <div class="privilege-modal">
+        <button class="privilege-modal-close" onclick="closePrivilegeModal()">&times;</button>
         <div id="privilegeModalContent"></div>
     </div>
 </div>
 
 <script>
     let currentLang='eng';
-    const adminData={
-        eng:[
-            {name:'Mr.Whiskus',role:'Project Lead',duty:'Managing Avalon Hosting projects',contact:'',locked:true},
-            {name:'GooFiyan',role:'Coordinator',duty:'Managing Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'},
-            {name:'Cobra ツ',role:'Chief Admin (ZM&ZE servers)',duty:'Monitoring admins and server order',contact:'@FrostyV',href:'https://t.me/FrostyV'},
-            {name:'♣DEPUTAT♣',role:'Chief Admin (JailBreak)',duty:'Monitoring admins and server order',contact:'@VoinushS',href:'https://t.me/VoinushS'}
-        ],
-        rus:[
-            {name:'Mr.Whiskus',role:'Глава проекта',duty:'Управление проектами Avalon Hosting',contact:'',locked:true},
-            {name:'GooFiyan',role:'Координатор',duty:'Управление проектом Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'},
-            {name:'Cobra ツ',role:'Гл.Админ (ZM&ZE серверов)',duty:'Следить за Админами и за порядком серверов',contact:'@FrostyV',href:'https://t.me/FrostyV'},
-            {name:'♣DEPUTAT♣',role:'Гл.Админ (JailBreak)',duty:'Следить за Админами и за порядком серверов',contact:'@VoinushS',href:'https://t.me/VoinushS'}
-        ]
+    const adminData={ eng:[ {name:'Mr.Whiskus',role:'Project Lead',duty:'Managing Avalon Hosting projects',contact:'',locked:true}, {name:'GooFiyan',role:'Coordinator',duty:'Managing Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'}, {name:'Cobra ツ',role:'Chief Admin (ZM&ZE servers)',duty:'Monitoring admins and server order',contact:'@FrostyV',href:'https://t.me/FrostyV'}, {name:'♣DEPUTAT♣',role:'Chief Admin (JailBreak)',duty:'Monitoring admins and server order',contact:'@VoinushS',href:'https://t.me/VoinushS'} ], rus:[ {name:'Mr.Whiskus',role:'Глава проекта',duty:'Управление проектами Avalon Hosting',contact:'',locked:true}, {name:'GooFiyan',role:'Координатор',duty:'Управление проектом Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'}, {name:'Cobra ツ',role:'Гл.Админ (ZM&ZE серверов)',duty:'Следить за Админами и за порядком серверов',contact:'@FrostyV',href:'https://t.me/FrostyV'}, {name:'♣DEPUTAT♣',role:'Гл.Админ (JailBreak)',duty:'Следить за Админами и за порядком серверов',contact:'@VoinushS',href:'https://t.me/VoinushS'} ] };
+
+    const privilegeInfo = {
+        vip: {
+            eng: {
+                name: 'VIP+', server: 'CS 1.6 ZM & LVL SYSTEM',
+                prices: [['30 days','$3.21'],['15 days','$1.67'],['10 days','$1.16'],['7 days','$0.77'],['3 days','$0.32']],
+                features: ['Prefix: VIP+','Prefix Color: Red','Chat Color: Server','VIP zombie in shop: Speed, HP and Double Jump','Balance on join: $7050','Menu VIP+: /bonus','100 armor every round','200 HP every round','/150ap - +150 armor once per map','/150hp - +150 HP once per map','/priv_money - +$2000 [60 sec cooldown]','/anti - free Antidote once per map'],
+                images: ['images/IMG_20260828_092418_325.jpg']
+            },
+            rus: {
+                name: '𝚅𝙸𝙿+', server: 'CS 1.6 ZM & LVL SYSTEM',
+                prices: [['30 дней','250 руб.'],['15 дней','130 руб.'],['10 дней','90 руб.'],['7 дней','60 руб.'],['3 дня','25 руб.']],
+                features: ['Префикс: 𝚅𝙸𝙿+','Цвет Префикса: Красный','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝚅𝙸𝙿+: /bonus','100 брони в каждом раунде','200 здоровья в каждом раунде','/150ap - +150 брони 1 раз за карту','/150hp - +150 здоровья 1 раз за карту','/priv_money - +2000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 1 раз за карту'],
+                images: ['images/IMG_20260828_092418_325.jpg']
+            }
+        },
+        premium: {
+            eng: {
+                name: 'PREMIUM', server: 'CS 1.6 ZM & LVL SYSTEM',
+                prices: [['30 days','$4.49'],['15 days','$2.31'],['10 days','$1.60'],['7 days','$1.16'],['3 days','$0.45']],
+                features: ['Prefix: PREMIUM','Prefix Color: Silver','Chat Color: Server','VIP zombie in shop: Speed, HP and Double Jump','Balance on join: $7050','Menu PREMIUM: /bonus','200 armor every round','300 HP every round','/150ap - +150 armor 3 times per map','/150hp - +150 HP 3 times per map','/priv_money - +$3000 [60 sec cooldown]','/anti - free Antidote 2 times per map','/give - give weapon once per map','/nano - Nano-Armor 2 times per map','See HP/armor of players as zombie'],
+                images: ['images/IMG_20260828_092434_971.jpg','images/IMG_20260828_092436_168.jpg','images/IMG_20260828_092437_963.jpg']
+            },
+            rus: {
+                name: '𝙿𝚁𝙴𝙼𝙸𝚄𝙼', server: 'CS 1.6 ZM & LVL SYSTEM',
+                prices: [['30 дней','350 руб.'],['15 дней','180 руб.'],['10 дней','125 руб.'],['7 дней','90 руб.'],['3 дня','35 руб.']],
+                features: ['Префикс: 𝙿𝚁𝙴𝙼𝙸𝚄𝙼','Цвет Префикса: Серебряный','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝙿𝚁𝙴𝙼𝙸𝚄𝙼: /bonus','200 брони в каждом раунде','300 здоровья в каждом раунде','/150ap - +150 брони 3 раза за карту','/150hp - +150 здоровья 3 раза за карту','/priv_money - +3000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 2 раза за карту','/give - бесплатно выдать оружие 1 раз за карту','/nano - Нано-Броня 2 раза за карту','Видеть HP/броню людей будучи зомби'],
+                images: ['images/IMG_20260828_092434_971.jpg','images/IMG_20260828_092436_168.jpg','images/IMG_20260828_092437_963.jpg']
+            }
+        },
+        deluxe: {
+            eng: {
+                name: 'DELUXE', server: 'CS 1.6 ZM & LVL SYSTEM',
+                prices: [['30 days','$5.78'],['15 days','$2.95'],['10 days','$2.06'],['7 days','$1.48'],['3 days','$0.58']],
+                features: ['Prefix: DELUXE','Prefix Color: Yellow','Chat Color: Server','VIP zombie in shop: Speed, HP and Double Jump','Balance on join: $7050','Menu DELUXE: /bonus','200 armor every round','300 HP every round','/mid 30m - mute player from 30 to 120 min','/150ap - +150 armor 3 times per map','/150hp - +150 HP 3 times per map','/model - unique Deluxe model','/priv_money - +$3000 [60 sec cooldown]','/anti - free Antidote 2 times per map','/give - give weapon once per map','/radaron - radar showing both teams','/nano - Nano-Armor 2 times per map','/force_sniper - become sniper with improved AWP (body 20000)','See HP/armor of players as zombie','Improved weapons: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','All weapons +20-40% damage'],
+                images: ['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg']
+            },
+            rus: {
+                name: '𝙳𝙴𝙻𝚄𝚇𝙴', server: 'CS 1.6 ZM & LVL SYSTEM',
+                prices: [['30 дней','450 руб.'],['15 дней','230 руб.'],['10 дней','160 руб.'],['7 дней','115 руб.'],['3 дня','45 руб.']],
+                features: ['Префикс: 𝙳𝙴𝙻𝚄𝚇𝙴','Цвет Префикса: Жёлтый','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝙳𝙴𝙻𝚄𝚇𝙴: /bonus','200 брони в каждом раунде','300 здоровья в каждом раунде','/mid 30m - мут игрока от 30мин до 120мин','/150ap - +150 брони 3 раза за карту','/150hp - +150 здоровья 3 раза за карту','/model - уникальная Deluxe модель','/priv_money - +3000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 2 раза за карту','/give - бесплатно выдать оружие 1 раз за карту','/radaron - радар показывающий обе команды','/nano - Нано-Броня 2 раза за карту','/force_sniper - стать снайпером с улучшенным AWP (тело 20000)','Видеть HP/броню людей будучи зомби','Улучшенные оружия: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','Все оружия +20-40% урона'],
+                images: ['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg']
+            }
+        }
     };
 
     function toggleLang(){const s=document.getElementById('langSlider'),r=document.getElementById('langRus'),e=document.getElementById('langEng');if(currentLang==='eng'){currentLang='rus';e.classList.remove('active');r.classList.add('active');s.className='lang-slider left';}else{currentLang='eng';r.classList.remove('active');e.classList.add('active');s.className='lang-slider right';}document.querySelectorAll('[data-lang]').forEach(el=>{el.classList.toggle('hidden',el.getAttribute('data-lang')!==currentLang);});if(document.getElementById('adminPanel').classList.contains('open'))renderAdminList();}
@@ -312,7 +337,7 @@
     function fallbackCopy(ip,btn){const t=document.createElement('input');t.value=ip;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);btn.textContent= currentLang==='rus'?'СКОПИРОВАН':'COPIED';btn.classList.add('copied');setTimeout(()=>{btn.textContent=currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP';btn.classList.remove('copied');},2000);}
 
     // ============ ЖИВОЙ ОНЛАЙН + ВКЛАДКИ ============
-    const STATUS_URL = "https://kontra-status.avalon-kontra.workers.dev/network";
+     const STATUS_URL = "https://kontra-status.avalon-kontra.workers.dev/network";
     const REFRESH_INTERVAL = 10000;
     let activeServerId = null;
 
@@ -333,22 +358,18 @@
             const maxPlayers = parseInt(circle.getAttribute('data-max'));
             const serverData = servers.find(s => s.id === serverId);
             if (!serverData) return;
-
             const online = serverData.online;
             const isOffline = !serverData.serverOnline;
             const fill = circle.querySelector('.fill');
             const numEl = circle.querySelector('.num');
             numEl.textContent = isOffline ? '0' : online;
-
             const circumference = 125.66;
             const percent = isOffline ? 0 : online / maxPlayers;
             fill.style.strokeDashoffset = circumference * (1 - percent);
-
             const panel = circle.closest('.server-panel');
             const dot = panel.querySelector('.status .dot');
             const statusText = panel.querySelector('.status');
             const statusLangEl = statusText.querySelector('[data-lang]:not(.hidden)');
-
             if (isOffline) {
                 dot.style.background = '#555';
                 dot.style.boxShadow = 'none';
@@ -368,16 +389,9 @@
         const onlineServers = servers.filter(s => s.serverOnline);
         const tabsCard = document.getElementById('tabsCard');
         const tabsContainer = document.getElementById('serverTabs');
-        const detailsContainer = document.getElementById('serverDetails');
-
-        if (!onlineServers.length) {
-            tabsCard.style.display = 'none';
-            return;
-        }
-
+        if (!onlineServers.length) { tabsCard.style.display = 'none'; return; }
         tabsCard.style.display = 'block';
         tabsContainer.innerHTML = '';
-
         onlineServers.forEach(server => {
             const tab = document.createElement('button');
             tab.className = 'server-tab';
@@ -385,10 +399,7 @@
             tab.onclick = () => showServerDetails(server);
             tabsContainer.appendChild(tab);
         });
-
-        if (!activeServerId || !onlineServers.find(s => s.id === activeServerId)) {
-            activeServerId = onlineServers[0].id;
-        }
+        if (!activeServerId || !onlineServers.find(s => s.id === activeServerId)) { activeServerId = onlineServers[0].id; }
         const active = onlineServers.find(s => s.id === activeServerId);
         if (active) showServerDetails(active);
     }
@@ -398,10 +409,8 @@
         document.querySelectorAll('.server-tab').forEach(tab => {
             tab.classList.toggle('active', tab.textContent === server.name);
         });
-
         const ctPlayers = server.players.filter(p => p.team === 'CT').sort((a,b) => b.score - a.score);
         const tPlayers = server.players.filter(p => p.team === 'T').sort((a,b) => b.score - a.score);
-
         const container = document.getElementById('serverDetails');
         container.innerHTML = `
             <div class="server-detail-card">
@@ -409,325 +418,66 @@
                 <div class="detail-row"><span>Карта:</span><span>${server.map}</span></div>
                 <div class="detail-row"><span>Режим:</span><span>${server.mode}</span></div>
                 <div class="detail-row"><span>Онлайн:</span><span>${server.online}/${server.maxPlayers}</span></div>
-                <div class="detail-row" style="color:#aa5555">
-                    <span style="display:flex; align-items:center; gap:4px;">
-                        <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>
-                        Террористов:
-                    </span>
-                    <span>${server.zombies}</span>
-                </div>
-                <div class="detail-row" style="color:#5555aa">
-                    <span style="display:flex; align-items:center; gap:4px;">
-                        <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>
-                        Контр-террористов:
-                    </span>
-                    <span>${server.survivors}</span>
-                </div>
+                <div class="detail-row" style="color:#aa5555"><span style="display:flex;align-items:center;gap:4px;"><svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> Террористов:</span><span>${server.zombies}</span></div>
+                <div class="detail-row" style="color:#5555aa"><span style="display:flex;align-items:center;gap:4px;"><svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> Контр-террористов:</span><span>${server.survivors}</span></div>
             </div>
             <div class="teams-container">
                 <div class="team-column" style="border:1px solid rgba(85,85,170,0.3);">
-                    <div class="team-header" style="color:#5555aa">
-                        <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>
-                        Контр-террористы
-                    </div>
-                    <table class="players-table">
-                        <thead><tr><th>Имя</th><th>Убийств</th><th>Смертей</th></tr></thead>
-                        <tbody>
-                            ${ctPlayers.map((p, index) => `
-                                <tr style="color:#5555aa">
-                                    <td>${index+1}. ${p.name}</td>
-                                    <td>${p.score}</td>
-                                    <td>${p.deaths}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
+                    <div class="team-header" style="color:#5555aa"><svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> Контр-террористы</div>
+                    <table class="players-table"><thead><tr><th>Имя</th><th>Убийств</th><th>Смертей</th></tr></thead><tbody>${ctPlayers.map((p,i)=>`<tr style="color:#5555aa"><td>${i+1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
                 </div>
                 <div class="team-column" style="border:1px solid rgba(170,85,85,0.3);">
-                    <div class="team-header" style="color:#aa5555">
-                        <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>
-                        Террористы
-                    </div>
-                    <table class="players-table">
-                        <thead><tr><th>Имя</th><th>Убийств</th><th>Смертей</th></tr></thead>
-                        <tbody>
-                            ${tPlayers.map((p, index) => `
-                                <tr style="color:#aa5555">
-                                    <td>${index+1}. ${p.name}</td>
-                                    <td>${p.score}</td>
-                                    <td>${p.deaths}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
+                    <div class="team-header" style="color:#aa5555"><svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> Террористы</div>
+                    <table class="players-table"><thead><tr><th>Имя</th><th>Убийств</th><th>Смертей</th></tr></thead><tbody>${tPlayers.map((p,i)=>`<tr style="color:#aa5555"><td>${i+1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
                 </div>
             </div>
         `;
     }
 
-    // ============ ПРИВИЛЕГИИ: ДАННЫЕ И МОДАЛЬНОЕ ОКНО ============
-    const privilegeDetails = {
-        vip: {
-            title: { ru: '𝚅𝙸𝙿+', en: 'VIP+' },
-            images: ['images/IMG_20260828_092418_325.jpg'],
-            prices: {
-                ru: [
-                    { days: '30 дней', cost: '250 руб.' },
-                    { days: '15 дней', cost: '130 руб.' },
-                    { days: '10 дней', cost: '90 руб.' },
-                    { days: '7 дней', cost: '60 руб.' },
-                    { days: '3 дня', cost: '25 руб.' }
-                ],
-                en: [
-                    { days: '30 days', cost: '3.21$' },
-                    { days: '15 days', cost: '1.67$' },
-                    { days: '10 days', cost: '1.16$' },
-                    { days: '7 days', cost: '0.77$' },
-                    { days: '3 days', cost: '0.32$' }
-                ]
-            },
-            features: {
-                ru: [
-                    'Префикс: 𝚅𝙸𝙿+',
-                    'Цвет Префикса: Красный',
-                    'Цвет Сообщения: Серверный',
-                    'Выбор VIP зомби в магазине: Дает Скорость, ХП и Двойной прыжок',
-                    'При заходе на сервер ваш баланс будет 7050$',
-                    'Меню 𝚅𝙸𝙿+: /bonus.',
-                    '100 брони в каждом раунде.',
-                    '200 здоровья в каждом раунде.',
-                    '/150ap — Возможность 1 раз за карту взять +150 брони.',
-                    '/150hp — Возможность 1 раз за карту взять +150 здоровья.',
-                    '/priv_money — Возможность взять +2000$ [перезарядка: 60 сек]',
-                    '/anti — Возможность 1 раз за карту взять бесплатное Противоядие.'
-                ],
-                en: [
-                    'Prefix: VIP+',
-                    'Prefix Color: Red',
-                    'Message Color: Server',
-                    'VIP zombie selection in shop: Gives Speed, HP and Double Jump',
-                    'On join you receive 7050$',
-                    'Menu: /bonus.',
-                    '100 armor each round.',
-                    '200 health each round.',
-                    '/150ap — Once per map get +150 armor.',
-                    '/150hp — Once per map get +150 health.',
-                    '/priv_money — Get +2000$ [cooldown: 60 sec]',
-                    '/anti — Once per map get free Antidote.'
-                ]
-            },
-            payment: {
-                ru: ['Через Click [UZS]', 'Россия и СНГ: Т-Банк', 'Международные переводы: Доступны переводы на карту VISA'],
-                en: ['Click [UZS]', 'Russia & CIS: T-Bank', 'International: Visa card transfers available']
-            },
-            contact: '@emoj_11'
-        },
-        premium: {
-            title: { ru: '𝙿𝚁𝙴𝙼𝙸𝚄𝙼', en: 'PREMIUM' },
-            images: [
-                'images/IMG_20260828_092434_971.jpg',
-                'images/IMG_20260828_092436_168.jpg',
-                'images/IMG_20260828_092437_963.jpg'
-            ],
-            prices: {
-                ru: [
-                    { days: '30 дней', cost: '350 руб.' },
-                    { days: '15 дней', cost: '180 руб.' },
-                    { days: '10 дней', cost: '125 руб.' },
-                    { days: '7 дней', cost: '90 руб.' },
-                    { days: '3 дня', cost: '35 руб.' }
-                ],
-                en: [
-                    { days: '30 days', cost: '4.49$' },
-                    { days: '15 days', cost: '2.31$' },
-                    { days: '10 days', cost: '1.60$' },
-                    { days: '7 days', cost: '1.16$' },
-                    { days: '3 days', cost: '0.45$' }
-                ]
-            },
-            features: {
-                ru: [
-                    'Префикс: 𝙿𝚁𝙴𝙼𝙸𝚄𝙼',
-                    'Цвет Префикса: Серебряный',
-                    'Цвет Сообщения: Серверный',
-                    'Выбор VIP зомби в магазине: Дает Скорость, ХП и Двойной прыжок',
-                    'При заходе на сервер ваш баланс будет 7050$',
-                    'Меню 𝙿𝚁𝙴𝙼𝙸𝚄𝙼: /bonus.',
-                    '200 брони в каждом раунде.',
-                    '300 здоровья в каждом раунде.',
-                    '/150ap — 3 раза за карту взять +150 брони.',
-                    '/150hp — 3 раза за карту взять +150 здоровья.',
-                    '/priv_money — +3000$ [перезарядка: 60 сек]',
-                    '/anti — 2 раза за карту взять бесплатное Противоядие.',
-                    '/give — 1 раз за карту выдать оружие себе/кому-то.',
-                    '/nano — 2 раза за карту взять Нано-Броню (Непробиваемость брони на 6 сек)',
-                    'Видеть HP и броню людей будучи зомби.'
-                ],
-                en: [
-                    'Prefix: PREMIUM',
-                    'Prefix Color: Silver',
-                    'Message Color: Server',
-                    'VIP zombie selection: Speed, HP, Double Jump',
-                    'Start balance: 7050$',
-                    'Menu: /bonus.',
-                    '200 armor each round.',
-                    '300 health each round.',
-                    '/150ap — 3 times per map +150 armor.',
-                    '/150hp — 3 times per map +150 health.',
-                    '/priv_money — +3000$ [60 sec cooldown]',
-                    '/anti — 2 times free Antidote.',
-                    '/give — 1 time give weapon to self/team.',
-                    '/nano — 2 times Nano-Armor (6 sec invulnerability)',
-                    'See enemy HP/armor as zombie.'
-                ]
-            },
-            payment: {
-                ru: ['Через Click [UZS]', 'Россия и СНГ: Т-Банк', 'Международные переводы: Доступны переводы на карту VISA'],
-                en: ['Click [UZS]', 'Russia & CIS: T-Bank', 'International: Visa card transfers available']
-            },
-            contact: '@emoj_11'
-        },
-        deluxe: {
-            title: { ru: '𝙳𝙴𝙻𝚄𝚇𝙴', en: 'DELUXE' },
-            images: [
-                'images/IMG_20260828_092820_553.jpg',
-                'images/IMG_20260828_092819_879.jpg',
-                'images/IMG_20260828_092814_204.jpg',
-                'images/IMG_20260828_092817_895.jpg',
-                'images/IMG_20260828_092816_636.jpg',
-                'images/IMG_20260828_092805_496.jpg',
-                'images/IMG_20260828_092808_478.jpg',
-                'images/IMG_20260828_092806_748.jpg'
-            ],
-            prices: {
-                ru: [
-                    { days: '30 дней', cost: '450 руб.' },
-                    { days: '15 дней', cost: '230 руб.' },
-                    { days: '10 дней', cost: '160 руб.' },
-                    { days: '7 дней', cost: '115 руб.' },
-                    { days: '3 дня', cost: '45 руб.' }
-                ],
-                en: [
-                    { days: '30 days', cost: '5.78$' },
-                    { days: '15 days', cost: '2.95$' },
-                    { days: '10 days', cost: '2.06$' },
-                    { days: '7 days', cost: '1.48$' },
-                    { days: '3 days', cost: '0.58$' }
-                ]
-            },
-            features: {
-                ru: [
-                    'Префикс: 𝙳𝙴𝙻𝚄𝚇𝙴',
-                    'Цвет Префикса: Жёлтый',
-                    'Цвет Сообщения: Серверный',
-                    'Выбор VIP зомби в магазине: Дает Скорость, ХП и Двойной прыжок',
-                    'При заходе на сервер ваш баланс будет 7050$',
-                    'Меню 𝙳𝙴𝙻𝚄𝚇𝙴: /bonus.',
-                    '200 брони в каждом раунде.',
-                    '300 здоровья в каждом раунде.',
-                    '/m id 30m — мут игрока от 30мин до 120мин.',
-                    '/150ap — 3 раза за карту взять +150 брони.',
-                    '/150hp — 3 раза за карту взять +150 здоровья.',
-                    '/model — выбрать уникальную Deluxe модель.',
-                    '/priv_money — +3000$ [перезарядка: 60 сек]',
-                    '/anti — 2 раза за карту взять бесплатное Противоядие.',
-                    '/give — 1 раз за карту выдать оружие себе/кому-то.',
-                    '/radaron — радар показывает местоположение обеих команд (ТТ/КТ).',
-                    '/nano — 2 раза за карту взять Нано-Броню (Непробиваемость брони на 6 сек)',
-                    '/force_sniper — 1 раз за карту стать снайпером с улучшенным AWP: урон в тело 20000.',
-                    'Видеть HP и броню людей будучи зомби.',
-                    'Улучшенные оружия:',
-                    'Guitar-Gun: Золотой AK-47 с уникальными звуками гитары. Урон: голова 680, тело 170.',
-                    'Blaster-Gun: Скорострельная G3SG1 с звуками бластера. Урон: голова 800, тело 200.',
-                    'Laser-Gun: Scout с звуками лазера. Урон: голова 2000, тело 500.',
-                    'Axe: Нож-топор с регенерацией. Урон: голова 1200, тело 300.',
-                    'Урон всех оружий увеличен на 20-40%.'
-                ],
-                en: [
-                    'Prefix: DELUXE',
-                    'Prefix Color: Yellow',
-                    'Message Color: Server',
-                    'VIP zombie selection: Speed, HP, Double Jump',
-                    'Start balance: 7050$',
-                    'Menu: /bonus.',
-                    '200 armor each round.',
-                    '300 health each round.',
-                    '/m id 30m — mute player 30-120 min.',
-                    '/150ap — 3 times +150 armor per map.',
-                    '/150hp — 3 times +150 health per map.',
-                    '/model — choose unique Deluxe model.',
-                    '/priv_money — +3000$ [60 sec cooldown]',
-                    '/anti — 2 times free Antidote.',
-                    '/give — 1 time give weapon to self/team.',
-                    '/radaron — radar shows both teams (T/CT).',
-                    '/nano — 2 times Nano-Armor (6 sec invulnerability)',
-                    '/force_sniper — 1 time become sniper with improved AWP: body 20000 dmg.',
-                    'See enemy HP/armor as zombie.',
-                    'Improved weapons:',
-                    'Guitar-Gun: Golden AK-47 with guitar sounds. Dmg: head 680, body 170.',
-                    'Blaster-Gun: Fast G3SG1 with blaster sounds. Dmg: head 800, body 200.',
-                    'Laser-Gun: Scout with laser sounds. Dmg: head 2000, body 500.',
-                    'Axe: Axe knife with regen. Dmg: head 1200, body 300.',
-                    'All weapon damage increased by 20-40%.'
-                ]
-            },
-            payment: {
-                ru: ['Через Click [UZS]', 'Россия и СНГ: Т-Банк', 'Международные переводы: Доступны переводы на карту VISA'],
-                en: ['Click [UZS]', 'Russia & CIS: T-Bank', 'International: Visa card transfers available']
-            },
-            contact: '@emoj_11'
-        }
-    };
-
-    function showPrivilegeDetail(type) {
-        const data = privilegeDetails[type];
-        if (!data) return;
-        const lang = currentLang;
+    // ============ МОДАЛЬНОЕ ОКНО ПРИВИЛЕГИЙ ============
+    function openPrivilegeModal(type) {
+        const data = privilegeInfo[type][currentLang];
         const modal = document.getElementById('privilegeModal');
         const content = document.getElementById('privilegeModalContent');
-        const prices = data.prices[lang];
-        const features = data.features[lang];
-        const payments = data.payment[lang];
-        const title = data.title[lang];
-        const contact = data.contact;
-        const images = data.images || [];
-
-        let priceHtml = prices.map(p => `<div class="price-item"><span class="days">${p.days}</span><span class="cost">${p.cost}</span></div>`).join('');
-        let featuresHtml = features.map(f => `<li>${f}</li>`).join('');
-        let paymentHtml = payments.map(p => `<p>• ${p}</p>`).join('');
-        let imagesHtml = images.length ? `<div class="gallery ${images.length === 1 ? 'single' : ''}">${images.map(src => `<img src="${src}" alt="privilege image" loading="lazy">`).join('')}</div>` : '';
-
+        const textColorMap = { vip: '#ff8aae', premium: '#e0e0e0', deluxe: '#ffd700' };
         content.innerHTML = `
-            <div class="modal-title" style="color:${type === 'vip' ? 'var(--red)' : type === 'premium' ? 'var(--silver)' : 'var(--gold)'}">${title}</div>
-            <div class="modal-subtitle">CS 1.6 ZM & LVL SYSTEM</div>
-            <div class="price-block">${priceHtml}</div>
-            <div class="payment-methods">
-                <p style="font-weight:700; margin-bottom:4px;">${lang === 'rus' ? 'Способы оплаты:' : 'Payment methods:'}</p>
-                ${paymentHtml}
+            <div class="privilege-server-header">${data.server}</div>
+            <div class="privilege-modal-title" style="color:${textColorMap[type]}">${data.name}</div>
+            <div class="privilege-modal-divider"></div>
+            <div class="privilege-section">
+                <div class="privilege-section-title">${currentLang==='rus'?'Цены':'Prices'}</div>
+                ${data.prices.map(p=>`<div class="privilege-price-item"><span>${p[0]}</span><span>${p[1]}</span></div>`).join('')}
             </div>
-            <div class="contact-block">
-                <span>${lang === 'rus' ? 'Для приобретения свяжитесь:' : 'To purchase contact:'}</span>
-                <a href="https://t.me/${contact.replace('@','')}" target="_blank">
-                    <svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg>
-                    ${contact}
-                </a>
+            <div class="privilege-section">
+                <div class="privilege-section-title">${currentLang==='rus'?'Способы оплаты':'Payment methods'}</div>
+                <div class="privilege-feature">${currentLang==='rus'?'Через Click [UZS]':'Via Click [UZS]'}</div>
+                <div class="privilege-feature">${currentLang==='rus'?'Россия и СНГ: Т-Банк':'Russia & CIS: T-Bank'}</div>
+                <div class="privilege-feature">${currentLang==='rus'?'Международные переводы: VISA':'International transfers: VISA'}</div>
             </div>
-            ${imagesHtml}
-            <ul class="features-list">${featuresHtml}</ul>
+            <div class="privilege-section">
+                <div class="privilege-section-title">${currentLang==='rus'?'Связь':'Contact'}</div>
+                <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @emoj_11</a>
+            </div>
+            <div class="privilege-section">
+                <div class="privilege-section-title">| ${data.name} ${currentLang==='rus'?'Возможности':'Features'} |</div>
+                ${data.features.map(f=>`<div class="privilege-feature">${f}</div>`).join('')}
+            </div>
+            <div class="privilege-section">
+                ${data.images.map(img=>`<img src="${img}" class="privilege-image" alt="${data.name}">`).join('')}
+            </div>
         `;
-
-        document.getElementById('privilegeModalOverlay').classList.add('active');
+        modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        window.lastPrivilegeType = type;
+        window._currentPrivilegeType = type;
     }
 
     function closePrivilegeModal() {
-        document.getElementById('privilegeModalOverlay').classList.remove('active');
+        document.getElementById('privilegeModal').classList.remove('active');
         document.body.style.overflow = '';
     }
 
-    function closePrivilegeModalOutside(event) {
-        if (event.target === event.currentTarget) closePrivilegeModal();
+    function closePrivilegeModalOutside(e) {
+        if (e.target === e.currentTarget) closePrivilegeModal();
     }
 
     fetchServerStatus();
@@ -737,8 +487,8 @@
     toggleLang = function() {
         originalToggleLang();
         fetchServerStatus();
-        if (document.getElementById('privilegeModalOverlay').classList.contains('active') && window.lastPrivilegeType) {
-            showPrivilegeDetail(window.lastPrivilegeType);
+        if (document.getElementById('privilegeModal').classList.contains('active')) {
+            openPrivilegeModal(window._currentPrivilegeType || 'vip');
         }
     };
 </script>
