@@ -81,8 +81,7 @@
         .admin-item .admin-contact.locked { color:var(--text-dim); cursor:default; }
         .servers-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; padding:14px 12px 6px; margin-top:10px; backdrop-filter:blur(20px); }
         .server-item { margin-bottom:8px; }
-        .server-panel { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:8px 10px; cursor:pointer; transition: background 0.2s; }
-        .server-panel:hover { background:rgba(255,255,255,0.06); }
+        .server-panel { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:8px 10px; }
         .online-circle { flex-shrink:0; width:46px; height:46px; position:relative; display:flex; align-items:center; justify-content:center; }
         .online-circle svg { width:100%; height:100%; transform:rotate(-90deg); }
         .bg { stroke:rgba(255,255,255,0.15); fill:none; stroke-width:2.5; }
@@ -100,82 +99,7 @@
         .copy-btn.copied { border-color:var(--green); color:var(--green); }
         .copy-btn:active { animation:btnPress 0.3s; }
         .hidden { display:none !important; }
-
-        /* Стили для модалки таба игроков */
-        .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); z-index:999; justify-content:center; align-items:center; animation:modalBg 0.3s; padding:20px; }
-        .modal-overlay.active { display:flex; }
-        .modal { background:var(--card, #14141f); border:1px solid var(--border, #26263a); border-radius:20px; padding:28px 22px; max-width:500px; width:100%; max-height:80vh; overflow-y:auto; position:relative; animation:fadeInUp 0.4s; box-shadow:0 0 80px rgba(0,0,0,0.3); }
-        .modal-close { position:absolute; top:12px; right:16px; background:transparent; border:none; color:var(--text-dim); font-size:24px; cursor:pointer; transition:color 0.3s; font-family:'Inter',sans-serif; }
-        .modal-close:hover { color:var(--text-bright); }
-        .modal-title { font-family:'Orbitron',sans-serif; font-size:16px; font-weight:900; text-align:center; color:var(--gold); text-shadow:0 0 25px rgba(255,215,0,0.15); margin-bottom:18px; letter-spacing:0.02em; }
-
-        /* Таб игроков */
-        .players-tab {
-            display: flex;
-            gap: 20px;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-bright);
-        }
-        .players-column {
-            flex: 1;
-            min-width: 0;
-        }
-        .players-column h4 {
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-align: center;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-        .ct-column h4 { color: #5b9bd5; }
-        .t-column h4 { color: #ff6b6b; }
-        .player-row {
-            display: grid;
-            grid-template-columns: 24px 1fr 40px 40px 60px;
-            gap: 6px;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            align-items: center;
-        }
-        .player-row.header-row {
-            font-weight: 700;
-            color: var(--text-dim);
-            font-size: 10px;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-        .player-row .nick {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .player-row .nick.ct { color: #5b9bd5; }
-        .player-row .nick.t { color: #ff6b6b; }
-        .player-row .num {
-            color: var(--text-dim);
-            font-weight: 600;
-        }
-        .player-row .money {
-            text-align: right;
-            font-weight: 600;
-            color: #e0e0e0;
-        }
-        .no-players {
-            text-align: center;
-            color: var(--text-dim);
-            padding: 20px 0;
-        }
-
-        @media (max-width:400px) {
-            .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; }
-            .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; }
-            .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; }
-            .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; }
-            .players-tab { flex-direction: column; gap: 10px; }
-            .players-column h4 { font-size: 11px; }
-        }
+        @media (max-width:400px) { .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; } }
     </style>
 </head>
 <body>
@@ -214,7 +138,7 @@
             <a href="https://discord.gg/uSVVwrq22" target="_blank" rel="noopener" class="btn btn-discord"><svg viewBox="0 0 24 24"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.9-1.52.08.08 0 0 0-.08.04c-.21.38-.45.87-.61 1.26a18.3 18.3 0 0 0-5.48 0 12.6 12.6 0 0 0-.62-1.26.08.08 0 0 0-.08-.04c-1.7.29-3.36.8-4.9 1.52a.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .09-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1 0-.13c.13-.09.25-.19.37-.28a.08.08 0 0 1 .08 0c3.93 1.8 8.18 1.8 12.06 0a.08.08 0 0 1 .09 0c.12.1.24.19.37.28a.08.08 0 0 1 0 .13c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.11c.36.7.78 1.37 1.23 2a.08.08 0 0 0 .09.03 19.8 19.8 0 0 0 6.03-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"/></svg> Discord</a>
             <a href="https://www.tiktok.com/@goofiyanskiy" target="_blank" rel="noopener" class="btn btn-tiktok"><svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.14 1.47.68 2.91 1.56 4.1.88 1.19 2.05 2.02 3.43 2.38v3.18c-1.12-.14-2.23-.46-3.25-1.09-.15-.09-.29-.18-.43-.28v5.22c0 2.14-.73 4.22-2.07 5.89-1.34 1.66-3.2 2.76-5.26 3.12-2.06.36-4.18-.03-5.96-1.09-1.78-1.06-3.14-2.72-3.72-4.82-.58-2.1-.3-4.33.77-6.22 1.07-1.89 2.8-3.24 4.83-3.78.38-.11.77-.18 1.16-.22v3.18c-.52.08-1.03.28-1.48.58-.45.3-.82.68-1.08 1.14-.26.45-.41.95-.42 1.47-.01.52.12 1.03.38 1.48.26.45.63.83 1.08 1.13.45.3.96.49 1.48.56.52.07 1.05.03 1.55-.13.5-.16.96-.44 1.34-.82.38-.38.66-.84.82-1.34.16-.5.2-1.03.13-1.55-.07-.52-.26-1.03-.56-1.48V.02z"/></svg> TikTok</a>
             <a href="https://www.youtube.com/@Goofyanskiy" target="_blank" rel="noopener" class="btn btn-youtube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube</a>
-                        <button class="btn btn-privilege" onclick="togglePrivilege()" data-lang="eng"><span style="font-size:14px;line-height:1;">🛒</span> BUY PRIVILEGE</button>
+            <button class="btn btn-privilege" onclick="togglePrivilege()" data-lang="eng"><span style="font-size:14px;line-height:1;">🛒</span> BUY PRIVILEGE</button>
             <button class="btn btn-privilege hidden" onclick="togglePrivilege()" data-lang="rus"><span style="font-size:14px;line-height:1;">🛒</span> КУПИТЬ ПРИВИЛЕГИЮ</button>
             <button class="btn btn-admin" onclick="toggleAdmin()" data-lang="eng"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M12 7v5l3 2" stroke="#9b7bff" stroke-width="1.5" fill="none"/></svg> ADMINISTRATION</button>
             <button class="btn btn-admin hidden" onclick="toggleAdmin()" data-lang="rus"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M12 7v5l3 2" stroke="#9b7bff" stroke-width="1.5" fill="none"/></svg> АДМИНИСТРАЦИЯ</button>
@@ -223,15 +147,21 @@
         <div class="toggle-panel" id="privilegePanel">
             <div class="privilege-grid">
                 <div class="privilege-card vip-card">
-                    <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♚</text></svg>
+                    <svg viewBox="0 0 50 50">
+                        <text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♚</text>
+                    </svg>
                     <span class="privilege-name">VIP+</span>
                 </div>
                 <div class="privilege-card premium-card">
-                    <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♕</text></svg>
+                    <svg viewBox="0 0 50 50">
+                        <text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♕</text>
+                    </svg>
                     <span class="privilege-name">PREMIUM</span>
                 </div>
                 <div class="privilege-card deluxe-card">
-                    <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♛</text></svg>
+                    <svg viewBox="0 0 50 50">
+                        <text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♛</text>
+                    </svg>
                     <span class="privilege-name">DELUXE</span>
                 </div>
             </div>
@@ -244,7 +174,7 @@
 
     <div class="servers-card">
         <div class="server-item">
-            <div class="server-panel" data-server-id="zm">
+            <div class="server-panel">
                 <div class="online-circle" data-server="zm" data-max="16" data-color="#2ecc71">
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#2ecc71" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
                     <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
@@ -255,7 +185,7 @@
             </div>
         </div>
         <div class="server-item">
-            <div class="server-panel" data-server-id="ze">
+            <div class="server-panel">
                 <div class="online-circle" data-server="ze" data-max="16" data-color="#ffd700">
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ffd700" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
                     <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
@@ -266,7 +196,7 @@
             </div>
         </div>
         <div class="server-item">
-            <div class="server-panel" data-server-id="dm">
+            <div class="server-panel">
                 <div class="online-circle" data-server="dm" data-max="16" data-color="#ff4757">
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff4757" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
                     <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
@@ -277,7 +207,7 @@
             </div>
         </div>
         <div class="server-item">
-            <div class="server-panel" data-server-id="jail">
+            <div class="server-panel">
                 <div class="online-circle" data-server="jail" data-max="16" data-color="#ff9f43">
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff9f43" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
                     <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
@@ -290,19 +220,8 @@
     </div>
 </div>
 
-<!-- Модалка таба игроков -->
-<div class="modal-overlay" id="playersModal" onclick="closePlayersModalOutside(event)">
-    <div class="modal">
-        <button class="modal-close" onclick="closePlayersModal()">&times;</button>
-        <div class="modal-title" id="playersModalTitle">Игроки на сервере</div>
-        <div id="playersTabContent"></div>
-    </div>
-</div>
-
 <script>
     let currentLang='eng';
-    let lastNetworkData = null;
-
     const adminData={
         eng:[
             {name:'Mr.Whiskus',role:'Project Lead',duty:'Managing Avalon Hosting projects',contact:'',locked:true},
@@ -333,7 +252,6 @@
         try {
             const response = await fetch(STATUS_URL);
             const data = await response.json();
-            lastNetworkData = data;
             updateServerUI(data.servers);
         } catch (e) {
             console.error("Status fetch failed:", e);
@@ -377,90 +295,6 @@
         });
     }
 
-    // ============ ТАБ ИГРОКОВ ============
-    function openPlayersModal(serverId) {
-        const servers = lastNetworkData?.servers;
-        if (!servers) return;
-        const serverData = servers.find(s => s.id === serverId);
-        if (!serverData) return;
-
-        const modal = document.getElementById('playersModal');
-        const title = document.getElementById('playersModalTitle');
-        const content = document.getElementById('playersTabContent');
-
-        title.textContent = currentLang === 'rus' ? `Игроки на сервере: ${serverData.name}` : `Players on server: ${serverData.name}`;
-
-        const players = serverData.players || [];
-        const ctPlayers = players.filter(p => p.team === 'CT');
-        const tPlayers = players.filter(p => p.team === 'T');
-
-        const headerText = {
-            num: currentLang === 'rus' ? '№' : '#',
-            name: currentLang === 'rus' ? 'Ник' : 'Name',
-            kills: currentLang === 'rus' ? 'Убийств' : 'Kills',
-            deaths: currentLang === 'rus' ? 'Смертей' : 'Deaths',
-            money: currentLang === 'rus' ? 'Деньги' : 'Money',
-        };
-
-        function renderColumn(players, teamClass) {
-            if (players.length === 0) {
-                return `<div class="no-players">${currentLang === 'rus' ? 'Нет игроков' : 'No players'}</div>`;
-            }
-            let rows = `<div class="player-row header-row">
-                <span>${headerText.num}</span>
-                <span>${headerText.name}</span>
-                <span>${headerText.kills}</span>
-                <span>${headerText.deaths}</span>
-                <span>${headerText.money}</span>
-            </div>`;
-            players.forEach((p, idx) => {
-                rows += `<div class="player-row">
-                    <span class="num">${idx+1}</span>
-                    <span class="nick ${teamClass}">${p.name}</span>
-                    <span>${p.score || 0}</span>
-                    <span>${p.deaths || 0}</span>
-                    <span class="money">${p.score || 0}$</span>
-                </div>`;
-            });
-            return rows;
-        }
-
-        content.innerHTML = `
-            <div class="players-tab">
-                <div class="players-column ct-column">
-                    <h4>${currentLang === 'rus' ? 'Выжившие (CT)' : 'Survivors (CT)'}</h4>
-                    ${renderColumn(ctPlayers, 'ct')}
-                </div>
-                <div class="players-column t-column">
-                    <h4>${currentLang === 'rus' ? 'Зомби (T)' : 'Zombies (T)'}</h4>
-                    ${renderColumn(tPlayers, 't')}
-                </div>
-            </div>
-        `;
-
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closePlayersModal() {
-        document.getElementById('playersModal').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function closePlayersModalOutside(e) {
-        if (e.target === e.currentTarget) closePlayersModal();
-    }
-
-    // Навешиваем обработчики кликов на панели серверов
-    document.querySelectorAll('.server-panel').forEach(panel => {
-        panel.addEventListener('click', function(e) {
-            if (e.target.closest('.copy-btn')) return;
-            const serverId = this.getAttribute('data-server-id');
-            openPlayersModal(serverId);
-        });
-    });
-
-    // Запуск
     fetchServerStatus();
     setInterval(fetchServerStatus, REFRESH_INTERVAL);
 
@@ -468,10 +302,6 @@
     toggleLang = function() {
         originalToggleLang();
         fetchServerStatus();
-        if (document.getElementById('playersModal').classList.contains('active')) {
-            const serverId = document.querySelector('.server-panel.active')?.getAttribute('data-server-id');
-            if (serverId) openPlayersModal(serverId);
-        }
     };
 </script>
 </body>
