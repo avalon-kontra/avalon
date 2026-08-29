@@ -100,22 +100,31 @@
         .copy-btn:active { animation:btnPress 0.3s; }
         .hidden { display:none !important; }
 
-        /* Двухколоночная таблица игроков */
-        .players-columns { display:flex; gap:12px; margin-top:12px; flex-wrap:wrap; }
-        .players-column { flex:1; min-width:160px; background:rgba(255,255,255,0.02); border-radius:10px; padding:8px; border:1px solid rgba(255,255,255,0.05); }
-        .team-title { display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em; }
-        .team-title.ct { color:#5555aa; }
-        .team-title.t { color:#aa5555; }
-        .team-title svg { width:14px; height:14px; flex-shrink:0; }
-        .team-players { width:100%; border-collapse:collapse; }
-        .team-players th { font-size:9px; color:var(--text-dim); text-align:left; padding:4px 2px; border-bottom:1px solid rgba(255,255,255,0.1); }
-        .team-players td { font-size:10px; padding:4px 2px; border-bottom:1px solid rgba(255,255,255,0.03); }
-        .team-ct td { color:#5555aa; }
-        .team-t td { color:#aa5555; }
-        .team-players .name-col { text-align:left; }
-        .team-players .score-col, .team-players .deaths-col { text-align:center; }
+        /* Новые стили для вкладок */
+        .server-tabs-container { margin-top:14px; padding:10px 8px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.06); }
+        .server-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+        .server-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text); padding:6px 14px; border-radius:20px; font-size:9px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; white-space:nowrap; }
+        .server-tab:hover { border-color:var(--accent); color:var(--accent); }
+        .server-tab.active { background:linear-gradient(135deg, rgba(76,201,240,0.2), rgba(123,92,255,0.2)); border-color:var(--accent); color:#fff; box-shadow:0 0 15px rgba(76,201,240,0.3); }
+        .server-detail-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:12px; margin-bottom:10px; display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+        .detail-row { display:flex; justify-content:space-between; font-size:11px; padding:2px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+        .detail-row span:first-child { color:var(--text-dim); }
+        .detail-row span:last-child { color:var(--text-bright); font-weight:600; }
 
-        @media (max-width:400px) { .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; } }
+        /* Двухколоночная раскладка для команд */
+        .teams-container { display:flex; gap:12px; margin-top:12px; }
+        .team-column { flex:1; background:rgba(255,255,255,0.02); border-radius:10px; padding:8px; }
+        .team-header { display:flex; align-items:center; gap:5px; font-size:11px; font-weight:700; margin-bottom:6px; }
+        .team-header svg { width:14px; height:14px; }
+        .players-table { width:100%; border-collapse:collapse; font-size:10px; }
+        .players-table th { background:rgba(255,255,255,0.05); color:var(--text-dim); padding:5px; text-align:left; font-weight:600; }
+        .players-table td { padding:5px; border-bottom:1px solid rgba(255,255,255,0.04); }
+        .players-table tr:last-child td { border-bottom:none; }
+
+        @media (max-width:400px) {
+            .teams-container { flex-direction:column; }
+            .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; }
+        }
     </style>
 </head>
 <body>
@@ -351,35 +360,8 @@
             tab.classList.toggle('active', tab.textContent === server.name);
         });
 
-        // Разделяем игроков по командам и сортируем по убийствам (score)
-        const ctPlayers = server.players
-            .filter(p => p.team === 'CT')
-            .sort((a, b) => b.score - a.score);
-        const tPlayers = server.players
-            .filter(p => p.team === 'T')
-            .sort((a, b) => b.score - a.score);
-
-        // Иконки SVG для команд
-        const ctIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L20 6V12C20 17.52 16.42 21.62 12 22C7.58 21.62 4 17.52 4 12V6L12 2Z"/><path d="M12 8V14"/><path d="M9 11H15"/></svg>`;
-        const tIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L14 8L20 10L15 15L17 21L12 17L7 21L9 15L4 10L10 8L12 2Z"/></svg>`;
-
-        function playersTable(players, team) {
-            if (!players.length) return '<div style="color:var(--text-dim);font-size:10px;">Нет игроков</div>';
-            return `
-                <table class="team-players ${team}">
-                    <thead><tr><th>Имя</th><th>Убийств</th><th>Смертей</th></tr></thead>
-                    <tbody>
-                        ${players.map(p => `
-                            <tr>
-                                <td class="name-col">${p.name}</td>
-                                <td class="score-col">${p.score}</td>
-                                <td class="deaths-col">${p.deaths}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            `;
-        }
+        const ctPlayers = server.players.filter(p => p.team === 'CT').sort((a,b) => b.score - a.score);
+        const tPlayers = server.players.filter(p => p.team === 'T').sort((a,b) => b.score - a.score);
 
         const container = document.getElementById('serverDetails');
         container.innerHTML = `
@@ -388,24 +370,57 @@
                 <div class="detail-row"><span>Карта:</span><span>${server.map}</span></div>
                 <div class="detail-row"><span>Режим:</span><span>${server.mode}</span></div>
                 <div class="detail-row"><span>Онлайн:</span><span>${server.online}/${server.maxPlayers}</span></div>
-                <div class="detail-row">
-                    <span style="display:flex;align-items:center;gap:4px;color:#5555aa;">${ctIcon} Контр-террористов:</span>
-                    <span style="color:#5555aa;font-weight:700;">${server.survivors}</span>
+                <div class="detail-row" style="color:#aa5555">
+                    <span style="display:flex; align-items:center; gap:4px;">
+                        <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>
+                        Террористов:
+                    </span>
+                    <span>${server.zombies}</span>
                 </div>
-                <div class="detail-row">
-                    <span style="display:flex;align-items:center;gap:4px;color:#aa5555;">${tIcon} Террористов:</span>
-                    <span style="color:#aa5555;font-weight:700;">${server.zombies}</span>
+                <div class="detail-row" style="color:#5555aa">
+                    <span style="display:flex; align-items:center; gap:4px;">
+                        <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>
+                        Контр-террористов:
+                    </span>
+                    <span>${server.survivors}</span>
                 </div>
             </div>
-
-            <div class="players-columns">
-                <div class="players-column">
-                    <div class="team-title ct">${ctIcon} CT (${ctPlayers.length})</div>
-                    ${playersTable(ctPlayers, 'team-ct')}
+            <div class="teams-container">
+                <div class="team-column" style="border:1px solid rgba(85,85,170,0.3);">
+                    <div class="team-header" style="color:#5555aa">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>
+                        Контр-террористы
+                    </div>
+                    <table class="players-table">
+                        <thead><tr><th>Имя</th><th>Убийств</th><th>Смертей</th></tr></thead>
+                        <tbody>
+                            ${ctPlayers.map((p, index) => `
+                                <tr style="color:#5555aa">
+                                    <td>${index+1}. ${p.name}</td>
+                                    <td>${p.score}</td>
+                                    <td>${p.deaths}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
                 </div>
-                <div class="players-column">
-                    <div class="team-title t">${tIcon} T (${tPlayers.length})</div>
-                    ${playersTable(tPlayers, 'team-t')}
+                <div class="team-column" style="border:1px solid rgba(170,85,85,0.3);">
+                    <div class="team-header" style="color:#aa5555">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>
+                        Террористы
+                    </div>
+                    <table class="players-table">
+                        <thead><tr><th>Имя</th><th>Убийств</th><th>Смертей</th></tr></thead>
+                        <tbody>
+                            ${tPlayers.map((p, index) => `
+                                <tr style="color:#aa5555">
+                                    <td>${index+1}. ${p.name}</td>
+                                    <td>${p.score}</td>
+                                    <td>${p.deaths}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         `;
