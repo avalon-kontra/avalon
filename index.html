@@ -245,7 +245,7 @@
     function fallbackCopy(ip,btn){const t=document.createElement('input');t.value=ip;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);btn.textContent= currentLang==='rus'?'СКОПИРОВАН':'COPIED';btn.classList.add('copied');setTimeout(()=>{btn.textContent=currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP';btn.classList.remove('copied');},2000);}
 
     // ============ ЖИВОЙ ОНЛАЙН ============
-    const STATUS_URL = "https://kontra-status.avalon-kontra.workers.dev/api/status";
+    const STATUS_URL = "https://kontra-status.avalon-kontra.workers.dev/network";
     const REFRESH_INTERVAL = 10000;
 
     async function fetchServerStatus() {
