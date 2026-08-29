@@ -99,6 +99,20 @@
         .copy-btn.copied { border-color:var(--green); color:var(--green); }
         .copy-btn:active { animation:btnPress 0.3s; }
         .hidden { display:none !important; }
+        .btn-login, .btn-logout { font-weight:600; font-size:9px; letter-spacing:0.04em; text-transform:uppercase; padding:8px 13px; border-radius:30px; border:1px solid var(--glass-border); color:var(--text); background:rgba(255,255,255,0.03); cursor:pointer; transition:all 0.3s; display:inline-flex; align-items:center; gap:5px; }
+        .btn-login:hover, .btn-logout:hover { border-color:var(--accent); color:var(--accent); }
+        .user-balance { font-size:11px; color:var(--gold); font-weight:600; margin-left:8px; }
+        .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); z-index:999; justify-content:center; align-items:center; }
+        .modal-overlay.active { display:flex; }
+        .modal { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; padding:24px; max-width:400px; width:100%; max-height:80vh; overflow-y:auto; position:relative; animation:fadeInUp 0.4s; backdrop-filter:blur(20px); }
+        .modal-close { position:absolute; top:10px; right:14px; background:transparent; border:none; color:var(--text-dim); font-size:22px; cursor:pointer; }
+        .modal-title { font-family:'Orbitron',sans-serif; font-size:16px; font-weight:900; text-align:center; color:#fff; margin-bottom:16px; }
+        .form-group { margin-bottom:14px; }
+        .form-group label { display:block; font-size:11px; color:var(--text-dim); margin-bottom:4px; }
+        .form-group input { width:100%; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:10px; color:var(--text-bright); font-size:14px; }
+        .form-group input:focus { outline:none; border-color:var(--accent); }
+        .btn-submit { width:100%; padding:10px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border:none; border-radius:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; letter-spacing:0.05em; }
+        .btn-submit:hover { opacity:0.9; }
         @media (max-width:400px) { .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; } }
     </style>
 </head>
@@ -108,6 +122,11 @@
         <span class="logo">KONTRA</span>
         <div class="header-right">
             <span class="badge">BETA</span>
+            <button class="btn-login" onclick="openLoginModal()" data-lang="eng">LOGIN</button>
+            <button class="btn-login hidden" onclick="openLoginModal()" data-lang="rus">ВОЙТИ</button>
+            <span class="user-balance hidden" id="userBalance">Баланс: 0 ₽</span>
+            <button class="btn-logout hidden" onclick="logout()" data-lang="eng">LOGOUT</button>
+            <button class="btn-logout hidden" onclick="logout()" data-lang="rus">ВЫЙТИ</button>
             <div class="lang-toggle" onclick="toggleLang()">
                 <span class="lang-option" id="langRus">RU</span>
                 <span class="lang-option active" id="langEng">EN</span>
@@ -141,7 +160,7 @@
             <button class="btn btn-privilege" onclick="togglePrivilege()" data-lang="eng"><span style="font-size:14px;line-height:1;">🛒</span> BUY PRIVILEGE</button>
             <button class="btn btn-privilege hidden" onclick="togglePrivilege()" data-lang="rus"><span style="font-size:14px;line-height:1;">🛒</span> КУПИТЬ ПРИВИЛЕГИЮ</button>
             <button class="btn btn-admin" onclick="toggleAdmin()" data-lang="eng"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M12 7v5l3 2" stroke="#9b7bff" stroke-width="1.5" fill="none"/></svg> ADMINISTRATION</button>
-            <button class="btn btn-admin hidden" onclick="toggleAdmin()" data-lang="rus"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M12 7v5l3 2" stroke="#9b7bff" stroke-width="1.5" fill="none"/></svg> АДМИНИСТРАЦИЯ</button>
+              <button class="btn btn-admin hidden" onclick="toggleAdmin()" data-lang="rus"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M12 7v5l3 2" stroke="#9b7bff" stroke-width="1.5" fill="none"/></svg> АДМИНИСТРАЦИЯ</button>
         </div>
 
         <div class="toggle-panel" id="privilegePanel">
@@ -179,7 +198,7 @@
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#2ecc71" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
                     <span class="center-text"><span class="num">--</span><span class="sep">/</span>16</span>
                 </div>
-                                <div class="info"><span class="name">CS 1.6 ZM & LVL SYSTEM</span><span class="ip" id="serverIp1">5.141.89.34:5006</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
+                <div class="info"><span class="name">CS 1.6 ZM & LVL SYSTEM</span><span class="ip" id="serverIp1">5.141.89.34:5006</span><div class="status"><span class="dot"></span><span data-lang="eng">Online</span><span data-lang="rus" class="hidden">Онлайн</span></div></div>
                 <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY IP</button>
                 <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
             </div>
@@ -220,6 +239,28 @@
     </div>
 </div>
 
+<!-- Модальное окно входа -->
+<div class="modal-overlay" id="loginModal" onclick="closeLoginModalOutside(event)">
+    <div class="modal">
+        <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+        <div class="modal-title" data-lang="eng">LOGIN</div>
+        <div class="modal-title hidden" data-lang="rus">ВХОД</div>
+        <div class="form-group">
+            <label data-lang="eng">Username</label>
+            <label class="hidden" data-lang="rus">Никнейм</label>
+            <input type="text" id="loginUsername" placeholder="Введите ник" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label data-lang="eng">Password</label>
+            <label class="hidden" data-lang="rus">Пароль</label>
+            <input type="password" id="loginPassword" placeholder="Введите пароль" autocomplete="off">
+        </div>
+        <button class="btn-submit" onclick="login()" data-lang="eng">SUBMIT</button>
+        <button class="btn-submit hidden" onclick="login()" data-lang="rus">ВОЙТИ</button>
+        <div id="loginError" style="color:var(--red);font-size:11px;margin-top:8px;display:none;"></div>
+    </div>
+</div>
+
 <script>
     let currentLang='eng';
     const adminData={
@@ -237,7 +278,7 @@
         ]
     };
 
-    function toggleLang(){const s=document.getElementById('langSlider'),r=document.getElementById('langRus'),e=document.getElementById('langEng');if(currentLang==='eng'){currentLang='rus';e.classList.remove('active');r.classList.add('active');s.className='lang-slider left';}else{currentLang='eng';r.classList.remove('active');e.classList.add('active');s.className='lang-slider right';}document.querySelectorAll('[data-lang]').forEach(el=>{el.classList.toggle('hidden',el.getAttribute('data-lang')!==currentLang);});if(document.getElementById('adminPanel').classList.contains('open'))renderAdminList();}
+    function toggleLang(){const s=document.getElementById('langSlider'),r=document.getElementById('langRus'),e=document.getElementById('langEng');if(currentLang==='eng'){currentLang='rus';e.classList.remove('active');r.classList.add('active');s.className='lang-slider left';}else{currentLang='eng';r.classList.remove('active');e.classList.add('active');s.className='lang-slider right';}document.querySelectorAll('[data-lang]').forEach(el=>{el.classList.toggle('hidden',el.getAttribute('data-lang')!==currentLang);});if(document.getElementById('adminPanel').classList.contains('open'))renderAdminList();updateUserUI();}
     function renderAdminList(){const container=document.getElementById('adminListContent');const list=adminData[currentLang];container.innerHTML=list.map(a=>`<div class="admin-item"><div class="admin-name">${a.name}</div><div class="admin-role">${a.role}</div><div class="admin-duty">${a.duty}</div>${a.locked?`<span class="admin-contact locked">${currentLang==='rus'?'Связаться: Доступ закрыт':'Contact: Access closed'}</span>`:`<a href="${a.href}" target="_blank" class="admin-contact">${a.contact}</a>`}</div>`).join('');}
     function togglePrivilege(){const p=document.getElementById('privilegePanel');const a=document.getElementById('adminPanel');p.classList.toggle('open');if(a.classList.contains('open'))a.classList.remove('open');}
     function toggleAdmin(){const a=document.getElementById('adminPanel');const p=document.getElementById('privilegePanel');a.classList.toggle('open');if(p.classList.contains('open'))p.classList.remove('open');if(a.classList.contains('open'))renderAdminList();}
@@ -298,9 +339,129 @@
     fetchServerStatus();
     setInterval(fetchServerStatus, REFRESH_INTERVAL);
 
+    // ============ АВТОРИЗАЦИЯ ============
+    const AUTH_URL = "https://kontra-status.avalon-kontra.workers.dev";
+
+    function openLoginModal() {
+        document.getElementById('loginModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('loginError').style.display = 'none';
+    }
+
+    function closeLoginModal() {
+        document.getElementById('loginModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function closeLoginModalOutside(e) {
+        if (e.target === e.currentTarget) closeLoginModal();
+    }
+
+    async function login() {
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        if (!username || !password) {
+            showLoginError('Введите ник и пароль');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${AUTH_URL}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
+            if (!data.ok) {
+                showLoginError(data.error === 'invalid_credentials' ? 'Неверный ник или пароль' : 'Ошибка входа');
+                return;
+            }
+
+            localStorage.setItem('sessionToken', data.sessionToken);
+            localStorage.setItem('username', data.profile.username);
+            localStorage.setItem('balance', data.profile.balance);
+            closeLoginModal();
+            updateUserUI();
+        } catch (e) {
+            showLoginError('Ошибка сети');
+        }
+    }
+
+    function showLoginError(message) {
+        const errorEl = document.getElementById('loginError');
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
+    }
+
+    async function logout() {
+        const token = localStorage.getItem('sessionToken');
+        if (token) {
+            await fetch(`${AUTH_URL}/auth/logout`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+        }
+        localStorage.removeItem('sessionToken');
+        localStorage.removeItem('username');
+        localStorage.removeItem('balance');
+        updateUserUI();
+    }
+
+    async function checkAuth() {
+        const token = localStorage.getItem('sessionToken');
+        if (!token) {
+            updateUserUI();
+            return;
+        }
+
+        try {
+            const response = await fetch(`${AUTH_URL}/auth/me`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await response.json();
+            if (data.ok) {
+                localStorage.setItem('username', data.profile.username);
+                localStorage.setItem('balance', data.profile.balance);
+                updateUserUI();
+            } else {
+                logout();
+            }
+        } catch {
+            // если сеть недоступна, оставляем как есть
+        }
+    }
+
+    function updateUserUI() {
+        const username = localStorage.getItem('username');
+        const balance = localStorage.getItem('balance');
+        const loginBtnEn = document.querySelector('.btn-login[data-lang="eng"]');
+        const loginBtnRu = document.querySelector('.btn-login[data-lang="rus"]');
+        const logoutBtnEn = document.querySelector('.btn-logout[data-lang="eng"]');
+        const logoutBtnRu = document.querySelector('.btn-logout[data-lang="rus"]');
+        const balanceEl = document.getElementById('userBalance');
+
+        if (username && balance !== null) {
+            loginBtnEn.classList.add('hidden');
+            loginBtnRu.classList.add('hidden');
+            logoutBtnEn.classList.remove('hidden');
+            logoutBtnRu.classList.remove('hidden');
+            balanceEl.textContent = `Баланс: ${balance} ₽`;
+            balanceEl.classList.remove('hidden');
+        } else {
+            loginBtnEn.classList.remove('hidden');
+            loginBtnRu.classList.remove('hidden');
+            logoutBtnEn.classList.add('hidden');
+            logoutBtnRu.classList.add('hidden');
+            balanceEl.classList.add('hidden');
+        }
+    }
+
+    checkAuth();
+
     const originalToggleLang = toggleLang;
     toggleLang = function() {
         originalToggleLang();
+        updateUserUI();
         fetchServerStatus();
     };
 </script>
