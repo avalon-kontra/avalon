@@ -262,11 +262,11 @@
         document.querySelectorAll('.online-circle').forEach(circle => {
             const serverId = circle.getAttribute('data-server');
             const maxPlayers = parseInt(circle.getAttribute('data-max'));
-            const serverData = servers[serverId];
+            const serverData = servers.find(s => s.id === serverId);
             if (!serverData) return;
 
             const online = serverData.online;
-            const isOffline = serverData.offline;
+            const isOffline = !serverData.serverOnline;
             const fill = circle.querySelector('.fill');
             const numEl = circle.querySelector('.num');
             numEl.textContent = isOffline ? '0' : online;
