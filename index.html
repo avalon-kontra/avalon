@@ -106,7 +106,6 @@
         .copy-btn:active { animation:btnPress 0.3s; }
         .hidden { display:none !important; }
 
-        /* Новые стили для вкладок */
         .server-tabs-container { margin-top:14px; padding:10px 8px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.06); }
         .server-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
         .server-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text); padding:6px 14px; border-radius:20px; font-size:9px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; white-space:nowrap; }
@@ -116,8 +115,6 @@
         .detail-row { display:flex; justify-content:space-between; font-size:11px; padding:2px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
         .detail-row span:first-child { color:var(--text-dim); }
         .detail-row span:last-child { color:var(--text-bright); font-weight:600; }
-
-        /* Двухколоночная раскладка для команд */
         .teams-container { display:flex; gap:12px; margin-top:12px; }
         .team-column { flex:1; background:rgba(255,255,255,0.02); border-radius:10px; padding:8px; }
         .team-header { display:flex; align-items:center; gap:5px; font-size:11px; font-weight:700; margin-bottom:6px; }
@@ -127,7 +124,6 @@
         .players-table td { padding:5px; border-bottom:1px solid rgba(255,255,255,0.04); }
         .players-table tr:last-child td { border-bottom:none; }
 
-        /* Модальное окно привилегий */
         .privilege-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:999; justify-content:center; align-items:center; padding:20px; animation:modalBg 0.3s ease; }
         .privilege-modal-overlay.active { display:flex; }
         .privilege-modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:480px; width:100%; max-height:80vh; overflow-y:auto; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; box-shadow:0 0 60px rgba(0,0,0,0.5); }
@@ -154,7 +150,6 @@
         .plan-cancel { width:100%; background:transparent; border:1px solid rgba(255,0,0,0.4); border-radius:12px; padding:10px; color:#ff4444; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; margin-top:5px; transition:all 0.3s; }
         .plan-cancel:hover { background:rgba(255,0,0,0.1); }
 
-        /* Модалка авторизации */
         .auth-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:998; justify-content:center; align-items:center; padding:20px; }
         .auth-modal-overlay.active { display:flex; }
         .auth-modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:400px; width:100%; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; }
@@ -165,6 +160,7 @@
         .auth-input:focus { border-color:var(--accent); }
         .auth-submit { width:100%; background:linear-gradient(135deg, var(--accent), var(--accent2)); border:none; border-radius:12px; padding:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.05em; text-transform:uppercase; transition:opacity 0.3s; }
         .auth-submit:hover { opacity:0.9; }
+
         @media (max-width:400px) {
             .teams-container { flex-direction:column; }
             .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; }
@@ -239,7 +235,7 @@
         </div>
     </div>
 
-    <!-- Блок списка серверов (прежний дизайн) -->
+    <!-- Блок списка серверов -->
     <div class="servers-card" id="serverListCard">
         <div class="server-item">
             <div class="server-panel">
@@ -287,7 +283,7 @@
         </div>
     </div>
 
-    <!-- Блок вкладок для онлайн-серверов (появится динамически) -->
+    <!-- Блок вкладок для онлайн-серверов -->
     <div class="servers-card" id="tabsCard" style="display:none; margin-top:10px;">
         <div class="server-tabs-container">
             <div class="server-tabs" id="serverTabs"></div>
@@ -320,9 +316,18 @@
 </div>
 
 <script>
-    let currentLang='eng';
+    let currentLang = localStorage.getItem('kontra_lang') || 'eng';
     let isLoggedIn = false;
     let currentUser = null;
+
+    // Загрузка сохранённого пользователя
+    try {
+        const savedUser = localStorage.getItem('kontra_user');
+        if (savedUser) {
+            currentUser = JSON.parse(savedUser);
+            isLoggedIn = true;
+        }
+    } catch (e) {}
 
     const adminData={ eng:[ {name:'Mr.Whiskus',role:'Project Lead',duty:'Managing Avalon Hosting projects',contact:'',locked:true}, {name:'GooFiyan',role:'Coordinator',duty:'Managing Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'}, {name:'Cobra ツ',role:'Chief Admin (ZM&ZE servers)',duty:'Monitoring admins and server order',contact:'@FrostyV',href:'https://t.me/FrostyV'}, {name:'♣DEPUTAT♣',role:'Chief Admin (JailBreak)',duty:'Monitoring admins and server order',contact:'@VoinushS',href:'https://t.me/VoinushS'} ], rus:[ {name:'Mr.Whiskus',role:'Глава проекта',duty:'Управление проектами Avalon Hosting',contact:'',locked:true}, {name:'GooFiyan',role:'Координатор',duty:'Управление проектом Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'}, {name:'Cobra ツ',role:'Гл.Админ (ZM&ZE серверов)',duty:'Следить за Админами и за порядком серверов',contact:'@FrostyV',href:'https://t.me/FrostyV'}, {name:'♣DEPUTAT♣',role:'Гл.Админ (JailBreak)',duty:'Следить за Админами и за порядком серверов',contact:'@VoinushS',href:'https://t.me/VoinushS'} ] };
 
@@ -336,96 +341,11 @@
             rus: { name:'𝙿𝚁𝙴𝙼𝙸𝚄𝙼', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 дней','350 руб.'],['15 дней','180 руб.'],['10 дней','125 руб.'],['7 дней','90 руб.'],['3 дня','35 руб.']], features:['Префикс: 𝙿𝚁𝙴𝙼𝙸𝚄𝙼','Цвет Префикса: Серебряный','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝙿𝚁𝙴𝙼𝙸𝚄𝙼: /bonus','200 брони в каждом раунде','300 здоровья в каждом раунде','/150ap - +150 брони 3 раза за карту','/150hp - +150 здоровья 3 раза за карту','/priv_money - +3000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 2 раза за карту','/give - бесплатно выдать оружие 1 раз за карту','/nano - Нано-Броня 2 раза за карту','Видеть HP/броню людей будучи зомби'], images:['images/IMG_20260828_092434_971.jpg','images/IMG_20260828_092436_168.jpg','images/IMG_20260828_092437_963.jpg'] }
         },
         deluxe: {
-            eng: { name:'DELUXE', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 days','$5.78'],['15 days','$2.95'],['10 days','$2.06'],['7 days','$1.48'],['3 days','$0.58']], features:['Prefix: DELUXE','Prefix Color: Yellow','Chat Color: Server','VIP zombie in shop: Speed, HP and Double Jump','Balance on join: $7050','Menu DELUXE: /bonus','200 armor every round','300 HP every round','/mid 30m - mute player from 30 to 120 min','/150ap - +150 armor 3 times per map','/150hp - +150 HP 3 times per map','/model - unique Deluxe model','/priv_money - +$3000 [60 sec cooldown]','/anti - free Antidote 2 times per map','/give - give weapon once per map','/radaron - radar showing both teams','/nano - Nano-Armor 2 times per map','/force_sniper - become sniper with improved AWP (body 20000)','See HP/armor of players as zombie','Improved weapons: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','All weapons +20-40% damage'], images:['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg'] }, 
-            rus: { name:'𝙳𝙴𝙻𝚄𝚇𝙴', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 дней','450 руб.'],['15 дней','230 руб.'],['10 дней','160 руб.'],['7 дней','115 руб.'],['3 дня','45 руб.']], features:['Префикс: 𝙳𝙴𝙻𝚄𝚇𝙴','Цвет Префикса: Жёлтый','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝙳𝙴𝙻𝚄𝚇𝙴: /bonus','200 брони в каждом раунде','300 здоровья в каждом раунде','/mid 30m - мут игрока от 30мин до 120мин','/150ap - +150 брони 3 раза за карту','/150hp - +150 здоровья 3 раза за карту','/model - уникальная Deluxe модель','/priv_money - +3000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 2 раза за карту','/give - бесплатно выдать оружие 1 раз за карту','/radaron - радар показывающий обе команды','/nano - Нано-Броня 2 раза за карту','/force_sniper - стать снайпером с улучшенным AWP (тело 20000)','Видеть HP/броню людей будучи зомби','Улучшенные оружия: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','Все оружия +20-40% урона'], images:['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg'] }
+            eng: { name:'DELUXE', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 days','$5.78'],['15 days','$2.95'],['10 days','$2.06'],['7 days','$1.48'],['3 days','$0.58']], features:['Prefix: DELUXE','Prefix Color: Yellow','Chat Color: Server','VIP zombie in shop: Speed, HP and Double Jump','Balance on join: $7050','Menu DELUXE: /bonus','200 armor every round','300 HP every round','/mid 30m - mute player from 30 to 120 min','/150ap - +150 armor 3 times per map','/150hp - +150 HP 3 times per map','/model - unique Deluxe model','/priv_money - +$3000 [60 sec cooldown]','/anti - free Antidote 2 times per map','/give - give weapon once per map','/radaron - radar showing both teams','/nano - Nano-Armor 2 times per map','/force_sniper - become sniper with improved AWP (body 20000)','See HP/armor of players as zombie','Improved weapons: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','All weapons +20-40% damage'], images:['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg'] },
+                        rus: { name:'𝙳𝙴𝙻𝚄𝚇𝙴', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 дней','450 руб.'],['15 дней','230 руб.'],['10 дней','160 руб.'],['7 дней','115 руб.'],['3 дня','45 руб.']], features:['Префикс: 𝙳𝙴𝙻𝚄𝚇𝙴','Цвет Префикса: Жёлтый','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝙳𝙴𝙻𝚄𝚇𝙴: /bonus','200 брони в каждом раунде','300 здоровья в каждом раунде','/mid 30m - мут игрока от 30мин до 120мин','/150ap - +150 брони 3 раза за карту','/150hp - +150 здоровья 3 раза за карту','/model - уникальная Deluxe модель','/priv_money - +3000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 2 раза за карту','/give - бесплатно выдать оружие 1 раз за карту','/radaron - радар показывающий обе команды','/nano - Нано-Броня 2 раза за карту','/force_sniper - стать снайпером с улучшенным AWP (тело 20000)','Видеть HP/броню людей будучи зомби','Улучшенные оружия: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','Все оружия +20-40% урона'], images:['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg'] }
         }
     };
 
-    // ============ АВТОРИЗАЦИЯ ============
-    function toggleAuthModal() {
-        if (isLoggedIn) {
-            logout();
-            return;
-        }
-        document.getElementById('authModal').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeAuthModal() {
-        document.getElementById('authModal').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function closeAuthModalOutside(e) {
-        if (e.target === e.currentTarget) closeAuthModal();
-    }
-
-    async function login() {
-        const usernameInput = currentLang === 'eng' ? document.getElementById('authUsername') : document.getElementById('authUsernameRus');
-        const passwordInput = currentLang === 'eng' ? document.getElementById('authPassword') : document.getElementById('authPasswordRus');
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value.trim();
-
-        if (!username || !password) {
-            alert(currentLang === 'rus' ? 'Заполните все поля' : 'Fill all fields');
-            return;
-        }
-
-        try {
-            const response = await fetch('https://kontra-status.avalon-kontra.workers.dev/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            });
-            const data = await response.json();
-
-            if (data.ok) {
-                isLoggedIn = true;
-                currentUser = {
-                    deviceId: data.deviceId,
-                    username: data.username,
-                    balance: data.balance
-                };
-                updateAuthUI();
-                closeAuthModal();
-            } else {
-                alert(currentLang === 'rus' ? 'Неверный ник или пароль' : 'Wrong nickname or password');
-            }
-        } catch (e) {
-            alert('Ошибка соединения с сервером');
-        }
-    }
-
-    function logout() {
-        isLoggedIn = false;
-        currentUser = null;
-        updateAuthUI();
-    }
-
-    function updateAuthUI() {
-        const authBtn = document.getElementById('authButton');
-        const authBtnRus = document.getElementById('authButtonRus');
-        const balanceDisplay = document.getElementById('balanceDisplay');
-
-        if (isLoggedIn && currentUser) {
-            authBtn.textContent = currentLang === 'eng' ? 'Logout' : 'Выйти';
-            authBtnRus.textContent = currentLang === 'eng' ? 'Logout' : 'Выйти';
-            authBtn.classList.add('logged');
-            authBtnRus.classList.add('logged');
-            balanceDisplay.textContent = `${currentLang === 'rus' ? 'Баланс' : 'Balance'}: ${currentUser.balance} ₽`;
-            balanceDisplay.classList.remove('hidden');
-        } else {
-            authBtn.textContent = currentLang === 'eng' ? 'Login' : 'Войти';
-            authBtnRus.textContent = currentLang === 'eng' ? 'Login' : 'Войти';
-            authBtn.classList.remove('logged');
-            authBtnRus.classList.remove('logged');
-            balanceDisplay.classList.add('hidden');
-        }
-        document.getElementById('authButton').classList.toggle('hidden', currentLang !== 'eng');
-        document.getElementById('authButtonRus').classList.toggle('hidden', currentLang !== 'rus');
-    }
-
-    // ============ ЯЗЫКОВАЯ СИСТЕМА ============
     function toggleLang() {
         const s = document.getElementById('langSlider');
         const r = document.getElementById('langRus');
@@ -441,6 +361,7 @@
             e.classList.add('active');
             s.className = 'lang-slider right';
         }
+        localStorage.setItem('kontra_lang', currentLang);
         document.querySelectorAll('[data-lang]').forEach(el => {
             el.classList.toggle('hidden', el.getAttribute('data-lang') !== currentLang);
         });
@@ -502,6 +423,93 @@
             btn.textContent = currentLang === 'rus' ? 'КОПИРОВАТЬ IP' : 'COPY IP';
             btn.classList.remove('copied');
         }, 2000);
+    }
+
+    // ============ АВТОРИЗАЦИЯ ============
+    function toggleAuthModal() {
+        if (isLoggedIn) {
+            logout();
+            return;
+        }
+        document.getElementById('authModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAuthModal() {
+        document.getElementById('authModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function closeAuthModalOutside(e) {
+        if (e.target === e.currentTarget) closeAuthModal();
+    }
+
+    async function login() {
+        const usernameInput = currentLang === 'eng' ? document.getElementById('authUsername') : document.getElementById('authUsernameRus');
+        const passwordInput = currentLang === 'eng' ? document.getElementById('authPassword') : document.getElementById('authPasswordRus');
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!username || !password) {
+            alert(currentLang === 'rus' ? 'Заполните все поля' : 'Fill all fields');
+            return;
+        }
+
+        try {
+            const response = await fetch('https://kontra-status.avalon-kontra.workers.dev/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
+
+            if (data.ok) {
+                isLoggedIn = true;
+                currentUser = {
+                    deviceId: data.deviceId,
+                    username: data.username,
+                    balance: data.balance,
+                    password: password
+                };
+                localStorage.setItem('kontra_user', JSON.stringify(currentUser));
+                updateAuthUI();
+                closeAuthModal();
+            } else {
+                alert(currentLang === 'rus' ? 'Неверный ник или пароль' : 'Wrong nickname or password');
+            }
+        } catch (e) {
+            alert('Ошибка соединения с сервером');
+        }
+    }
+
+    function logout() {
+        isLoggedIn = false;
+        currentUser = null;
+        localStorage.removeItem('kontra_user');
+        updateAuthUI();
+    }
+
+    function updateAuthUI() {
+        const authBtn = document.getElementById('authButton');
+        const authBtnRus = document.getElementById('authButtonRus');
+        const balanceDisplay = document.getElementById('balanceDisplay');
+
+        if (isLoggedIn && currentUser) {
+            authBtn.textContent = currentLang === 'eng' ? 'Logout' : 'Выйти';
+            authBtnRus.textContent = currentLang === 'eng' ? 'Logout' : 'Выйти';
+            authBtn.classList.add('logged');
+            authBtnRus.classList.add('logged');
+            balanceDisplay.textContent = `${currentLang === 'rus' ? 'Баланс' : 'Balance'}: ${currentUser.balance} ₽`;
+            balanceDisplay.classList.remove('hidden');
+        } else {
+            authBtn.textContent = currentLang === 'eng' ? 'Login' : 'Войти';
+            authBtnRus.textContent = currentLang === 'eng' ? 'Login' : 'Войти';
+            authBtn.classList.remove('logged');
+            authBtnRus.classList.remove('logged');
+            balanceDisplay.classList.add('hidden');
+        }
+        document.getElementById('authButton').classList.toggle('hidden', currentLang !== 'eng');
+        document.getElementById('authButtonRus').classList.toggle('hidden', currentLang !== 'rus');
     }
 
     // ============ ЖИВОЙ ОНЛАЙН + ВКЛАДКИ ============
@@ -668,7 +676,7 @@
         `;
     }
 
-    function closePurchasePlans(type) {
+        function closePurchasePlans(type) {
         openPrivilegeModal(type);
     }
 
@@ -695,8 +703,8 @@
             if (data.ok) {
                 alert(currentLang === 'rus' ? 'Привилегия успешно куплена!' : 'Privilege purchased successfully!');
                 closePrivilegeModal();
-                // Обновляем баланс
                 currentUser.balance = data.newBalance !== undefined ? data.newBalance : currentUser.balance - data.price;
+                localStorage.setItem('kontra_user', JSON.stringify(currentUser));
                 updateAuthUI();
             } else {
                 if (data.error === 'insufficient_balance') {
@@ -719,10 +727,26 @@
         if (e.target === e.currentTarget) closePrivilegeModal();
     }
 
+    // ============ ИНИЦИАЛИЗАЦИЯ ============
+    // Установка языка при загрузке
+    if (currentLang === 'rus') {
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'rus');
+        });
+        document.getElementById('langRus').classList.add('active');
+        document.getElementById('langEng').classList.remove('active');
+        document.getElementById('langSlider').className = 'lang-slider left';
+    } else {
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'eng');
+        });
+        document.getElementById('langEng').classList.add('active');
+        document.getElementById('langRus').classList.remove('active');
+        document.getElementById('langSlider').className = 'lang-slider right';
+    }
+
     fetchServerStatus();
     setInterval(fetchServerStatus, REFRESH_INTERVAL);
-
-    // Инициализация
     updateAuthUI();
 </script>
 </body>
