@@ -18,7 +18,7 @@
         @keyframes goldShine { 0%{filter:brightness(1) drop-shadow(0 0 3px gold)} 50%{filter:brightness(1.3) drop-shadow(0 0 10px gold)} 100%{filter:brightness(1) drop-shadow(0 0 3px gold)} }
         @keyframes modalBg { from{opacity:0} to{opacity:1} }
         @keyframes modalPop { from{opacity:0;transform:scale(0.95) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
-        .container { max-width:480px; width:100%; }
+        .container { max-width:520px; width:100%; }
         .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding:0 4px; gap:10px; }
         .logo { font-family:'Orbitron',sans-serif; font-weight:900; font-size:20px; color:#fff; flex-shrink:0; text-shadow:0 0 15px rgba(255,255,255,0.3); }
         .header-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
@@ -89,26 +89,30 @@
         .admin-item .admin-contact { display:inline-block; margin-top:6px; font-size:12px; color:var(--accent); text-decoration:none; font-weight:600; transition:color 0.3s; }
         .admin-item .admin-contact:hover { color:#fff; }
         .admin-item .admin-contact.locked { color:var(--text-dim); cursor:default; }
-        .servers-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; padding:14px 12px 6px; margin-top:10px; backdrop-filter:blur(20px); }
-        .server-item { margin-bottom:8px; }
-        .server-panel { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:8px 10px; }
-        .online-circle { flex-shrink:0; width:46px; height:46px; position:relative; display:flex; align-items:center; justify-content:center; }
+        .servers-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; padding:18px 14px 8px; margin-top:10px; backdrop-filter:blur(20px); }
+        .server-item { margin-bottom:12px; }
+        .server-panel { display:flex; align-items:center; gap:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 12px; min-height:80px; }
+        .online-circle { flex-shrink:0; width:52px; height:52px; position:relative; display:flex; align-items:center; justify-content:center; }
         .online-circle svg { width:100%; height:100%; transform:rotate(-90deg); }
         .bg { stroke:rgba(255,255,255,0.15); fill:none; stroke-width:2.5; }
         .fill { fill:none; stroke-width:2.5; stroke-linecap:round; transition:stroke-dashoffset 1.2s; }
-        .center-text { position:absolute; font-size:9px; font-weight:700; color:#fff; text-align:center; line-height:1.2; }
-        .center-text .num { font-size:12px; }
+        .center-text { position:absolute; font-size:10px; font-weight:700; color:#fff; text-align:center; line-height:1.2; }
+        .center-text .num { font-size:13px; }
         .sep { color:var(--text-dim); margin:0 1px; }
-        .info { display:flex; flex-direction:column; gap:1px; flex:1; min-width:0; }
-        .name { font-size:12px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .ip { font-size:11px; font-weight:600; letter-spacing:0.02em; font-family:'Orbitron',sans-serif; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3),var(--accent)); background-size:300% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:gradientShift 4s ease-in-out infinite; opacity:0.9; }
-        .status { font-size:8px; color:var(--green); display:flex; align-items:center; gap:3px; font-weight:600; }
-        .status .dot { width:5px; height:5px; background:var(--green); border-radius:50%; display:inline-block; animation:pulseDot 1.2s ease-in-out infinite; }
-        .copy-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:#d0d0d0; padding:3px 10px; border-radius:20px; font-family:'Inter',sans-serif; font-size:8px; font-weight:600; cursor:pointer; transition:all 0.3s; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; }
+        .info { display:flex; flex-direction:column; gap:4px; flex:1; min-width:0; }
+        .name { font-size:13px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .ip-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+        .ip { font-size:12px; font-weight:600; letter-spacing:0.02em; font-family:'Orbitron',sans-serif; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3),var(--accent)); background-size:300% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:gradientShift 4s ease-in-out infinite; opacity:0.9; }
+        .status { font-size:9px; color:var(--green); display:flex; align-items:center; gap:4px; font-weight:600; }
+        .status .dot { width:6px; height:6px; background:var(--green); border-radius:50%; display:inline-block; animation:pulseDot 1.2s ease-in-out infinite; }
+        .copy-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:#d0d0d0; padding:4px 12px; border-radius:20px; font-family:'Inter',sans-serif; font-size:8px; font-weight:600; cursor:pointer; transition:all 0.3s; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; }
         .copy-btn:hover { border-color:var(--accent); color:var(--accent); }
         .copy-btn.copied { border-color:var(--green); color:var(--green); }
         .copy-btn:active { animation:btnPress 0.3s; }
         .hidden { display:none !important; }
+
+        /* Картинка карты на правом краю панели DM */
+        .map-image { width:56px; height:56px; border-radius:10px; object-fit:cover; border:1px solid rgba(255,255,255,0.25); flex-shrink:0; }
 
         .server-tabs-container { margin-top:14px; padding:10px 8px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.06); }
         .server-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
@@ -160,19 +164,17 @@
         .auth-modal-close { position:absolute; top:14px; right:16px; background:transparent; border:none; color:var(--text-dim); font-size:24px; cursor:pointer; }
         .auth-modal-close:hover { color:#fff; }
         .auth-modal-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:16px; text-align:center; margin-bottom:16px; }
-        .auth-input { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:8px 12px; color:var(--text-bright); font-size:13px; margin-bottom:10px; outline:none; font-family:'Inter',sans-serif; }
+             .auth-input { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:8px 12px; color:var(--text-bright); font-size:13px; margin-bottom:10px; outline:none; font-family:'Inter',sans-serif; }
         .auth-input:focus { border-color:var(--accent); }
-            .auth-submit { width:100%; background:linear-gradient(135deg, var(--accent), var(--accent2)); border:none; border-radius:12px; padding:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.05em; text-transform:uppercase; transition:opacity 0.3s; }
+        .auth-submit { width:100%; background:linear-gradient(135deg, var(--accent), var(--accent2)); border:none; border-radius:12px; padding:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.05em; text-transform:uppercase; transition:opacity 0.3s; }
         .auth-submit:hover { opacity:0.9; }
-
-        /* Картинка карты в панели DM */
-        .map-image { width:40px; height:40px; border-radius:8px; object-fit:cover; border:1px solid rgba(255,255,255,0.2); flex-shrink:0; }
 
         @media (max-width:400px) {
             .teams-container { flex-direction:column; }
-            .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; }
+            .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:44px; height:44px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:11px; } .name { font-size:12px; } .ip { font-size:11px; } .status { font-size:8px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; }
             .privilege-modal { padding:20px 14px; }
-            .map-image { width:32px; height:32px; }
+            .map-image { width:44px; height:44px; }
+            .server-panel { gap:10px; padding:10px 8px; }
         }
     </style>
 </head>
@@ -255,9 +257,15 @@
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#2ecc71" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
                     <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
                 </div>
-                <div class="info"><span class="name">CS 1.6 ZM & LVL SYSTEM</span><span class="ip" id="serverIp1">5.141.89.34:5006</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
-                <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY IP</button>
-                <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+                <div class="info">
+                    <span class="name">CS 1.6 ZM & LVL SYSTEM</span>
+                    <div class="ip-row">
+                        <span class="ip" id="serverIp1">5.141.89.34:5006</span>
+                        <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY IP</button>
+                        <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+                    </div>
+                    <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
+                </div>
             </div>
         </div>
         <div class="server-item">
@@ -266,9 +274,15 @@
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ffd700" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
                     <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
                 </div>
-                <div class="info"><span class="name">CS 1.6 ZE & NEMESIS MODE</span><span class="ip" id="serverIp2">5.141.89.34:5005</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
-                <button class="copy-btn" onclick="copyIP('serverIp2',this)" data-lang="eng">COPY IP</button>
-                <button class="copy-btn hidden" onclick="copyIP('serverIp2',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+                <div class="info">
+                    <span class="name">CS 1.6 ZE & NEMESIS MODE</span>
+                    <div class="ip-row">
+                        <span class="ip" id="serverIp2">5.141.89.34:5005</span>
+                        <button class="copy-btn" onclick="copyIP('serverIp2',this)" data-lang="eng">COPY IP</button>
+                        <button class="copy-btn hidden" onclick="copyIP('serverIp2',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+                    </div>
+                    <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
+                </div>
             </div>
         </div>
         <div class="server-item">
@@ -277,10 +291,16 @@
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff4757" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
                     <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
                 </div>
-                <img class="map-image hidden" id="dmMapImage" src="" alt="map" style="width:40px;height:40px;border-radius:8px;object-fit:cover;border:1px solid rgba(255,255,255,0.2);flex-shrink:0;">
-                <div class="info"><span class="name">CS 1.6 DEATHMATCH</span><span class="ip" id="serverIp3">5.141.89.34:5002</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
-                <button class="copy-btn" onclick="copyIP('serverIp3',this)" data-lang="eng">COPY IP</button>
-                <button class="copy-btn hidden" onclick="copyIP('serverIp3',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+                <div class="info">
+                    <span class="name">CS 1.6 DEATHMATCH</span>
+                    <div class="ip-row">
+                        <span class="ip" id="serverIp3">5.141.89.34:5002</span>
+                        <button class="copy-btn" onclick="copyIP('serverIp3',this)" data-lang="eng">COPY IP</button>
+                        <button class="copy-btn hidden" onclick="copyIP('serverIp3',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+                    </div>
+                    <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
+                </div>
+                <img class="map-image hidden" id="dmMapImage" src="" alt="map">
             </div>
         </div>
         <div class="server-item">
@@ -289,9 +309,15 @@
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ff9f43" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
                     <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
                 </div>
-                <div class="info"><span class="name">JAIL | Побег из Ада 12+</span><span class="ip" id="serverIp4">5.141.89.34:5003</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
-                <button class="copy-btn" onclick="copyIP('serverIp4',this)" data-lang="eng">COPY IP</button>
-                <button class="copy-btn hidden" onclick="copyIP('serverIp4',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+                <div class="info">
+                    <span class="name">JAIL | Побег из Ада 12+</span>
+                    <div class="ip-row">
+                        <span class="ip" id="serverIp4">5.141.89.34:5003</span>
+                        <button class="copy-btn" onclick="copyIP('serverIp4',this)" data-lang="eng">COPY IP</button>
+                        <button class="copy-btn hidden" onclick="copyIP('serverIp4',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+                    </div>
+                    <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
+                </div>
             </div>
         </div>
     </div>
@@ -350,10 +376,10 @@
         },
         premium: {
             eng: { name:'PREMIUM', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 days','$4.49'],['15 days','$2.31'],['10 days','$1.60'],['7 days','$1.16'],['3 days','$0.45']], features:['Prefix: PREMIUM','Prefix Color: Silver','Chat Color: Server','VIP zombie in shop: Speed, HP and Double Jump','Balance on join: $7050','Menu PREMIUM: /bonus','200 armor every round','300 HP every round','/150ap - +150 armor 3 times per map','/150hp - +150 HP 3 times per map','/priv_money - +$3000 [60 sec cooldown]','/anti - free Antidote 2 times per map','/give - give weapon once per map','/nano - Nano-Armor 2 times per map','See HP/armor of players as zombie'], images:['images/IMG_20260828_092434_971.jpg','images/IMG_20260828_092436_168.jpg','images/IMG_20260828_092437_963.jpg'] },
-            rus: { name:'𝙿𝚁𝙴𝙼𝙸𝚄𝙼', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 дней','350 руб.'],['15 дней','180 руб.'],['10 дней','125 руб.'],['7 дней','90 руб.'],['3 дня','35 руб.']], features:['Префикс: 𝙿𝚁𝙴𝙼𝙸𝚄𝙼','Цвет Префикса: Серебряный','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝙿𝚁𝙴𝙼𝙸𝚄𝙼: /bonus','200 брони в каждом раунде','300 здоровья в каждом раунде','/150ap - +150 брони 3 раза за карту','/150hp - +150 здоровья 3 раза за карту','/priv_money - +3000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 2 раза за карту','/give - бесплатно выдать оружие 1 раз за карту','/nano - Нано-Броня 2 раза за карту','Видеть HP/броню людей будучи зомби'], images:['images/IMG_20260828_092434_971.jpg','images/IMG_20260828_092436_168.jpg','images/IMG_20260828_092437_963.jpg'] }
+                        rus: { name:'𝙿𝚁𝙴𝙼𝙸𝚄𝙼', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 дней','350 руб.'],['15 дней','180 руб.'],['10 дней','125 руб.'],['7 дней','90 руб.'],['3 дня','35 руб.']], features:['Префикс: 𝙿𝚁𝙴𝙼𝙸𝚄𝙼','Цвет Префикса: Серебряный','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝙿𝚁𝙴𝙼𝙸𝚄𝙼: /bonus','200 брони в каждом раунде','300 здоровья в каждом раунде','/150ap - +150 брони 3 раза за карту','/150hp - +150 здоровья 3 раза за карту','/priv_money - +3000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 2 раза за карту','/give - бесплатно выдать оружие 1 раз за карту','/nano - Нано-Броня 2 раза за карту','Видеть HP/броню людей будучи зомби'], images:['images/IMG_20260828_092434_971.jpg','images/IMG_20260828_092436_168.jpg','images/IMG_20260828_092437_963.jpg'] }
         },
         deluxe: {
-                      eng: { name:'DELUXE', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 days','$5.78'],['15 days','$2.95'],['10 days','$2.06'],['7 days','$1.48'],['3 days','$0.58']], features:['Prefix: DELUXE','Prefix Color: Yellow','Chat Color: Server','VIP zombie in shop: Speed, HP and Double Jump','Balance on join: $7050','Menu DELUXE: /bonus','200 armor every round','300 HP every round','/mid 30m - mute player from 30 to 120 min','/150ap - +150 armor 3 times per map','/150hp - +150 HP 3 times per map','/model - unique Deluxe model','/priv_money - +$3000 [60 sec cooldown]','/anti - free Antidote 2 times per map','/give - give weapon once per map','/radaron - radar showing both teams','/nano - Nano-Armor 2 times per map','/force_sniper - become sniper with improved AWP (body 20000)','See HP/armor of players as zombie','Improved weapons: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','All weapons +20-40% damage'], images:['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg'] },
+            eng: { name:'DELUXE', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 days','$5.78'],['15 days','$2.95'],['10 days','$2.06'],['7 days','$1.48'],['3 days','$0.58']], features:['Prefix: DELUXE','Prefix Color: Yellow','Chat Color: Server','VIP zombie in shop: Speed, HP and Double Jump','Balance on join: $7050','Menu DELUXE: /bonus','200 armor every round','300 HP every round','/mid 30m - mute player from 30 to 120 min','/150ap - +150 armor 3 times per map','/150hp - +150 HP 3 times per map','/model - unique Deluxe model','/priv_money - +$3000 [60 sec cooldown]','/anti - free Antidote 2 times per map','/give - give weapon once per map','/radaron - radar showing both teams','/nano - Nano-Armor 2 times per map','/force_sniper - become sniper with improved AWP (body 20000)','See HP/armor of players as zombie','Improved weapons: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','All weapons +20-40% damage'], images:['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg'] },
             rus: { name:'𝙳𝙴𝙻𝚄𝚇𝙴', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 дней','450 руб.'],['15 дней','230 руб.'],['10 дней','160 руб.'],['7 дней','115 руб.'],['3 дня','45 руб.']], features:['Префикс: 𝙳𝙴𝙻𝚄𝚇𝙴','Цвет Префикса: Жёлтый','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝙳𝙴𝙻𝚄𝚇𝙴: /bonus','200 брони в каждом раунде','300 здоровья в каждом раунде','/mid 30m - мут игрока от 30мин до 120мин','/150ap - +150 брони 3 раза за карту','/150hp - +150 здоровья 3 раза за карту','/model - уникальная Deluxe модель','/priv_money - +3000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 2 раза за карту','/give - бесплатно выдать оружие 1 раз за карту','/radaron - радар показывающий обе команды','/nano - Нано-Броня 2 раза за карту','/force_sniper - стать снайпером с улучшенным AWP (тело 20000)','Видеть HP/броню людей будучи зомби','Улучшенные оружия: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','Все оружия +20-40% урона'], images:['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg'] }
         }
     };
@@ -679,13 +705,13 @@
             </div>
             <div class="privilege-section">
                 <div class="privilege-section-title">${currentLang === 'rus' ? 'Способы оплаты' : 'Payment methods'}</div>
-                <div class="privilege-feature">${currentLang === 'rus' ? 'Через Click [UZS]' : 'Via Click [UZS]'}</div>
+                            <div class="privilege-feature">${currentLang === 'rus' ? 'Через Click [UZS]' : 'Via Click [UZS]'}</div>
                 <div class="privilege-feature">${currentLang === 'rus' ? 'Россия и СНГ: Т-Банк' : 'Russia & CIS: T-Bank'}</div>
                 <div class="privilege-feature">${currentLang === 'rus' ? 'Международные переводы: VISA' : 'International transfers: VISA'}</div>
             </div>
             <div class="privilege-section">
                 <div class="privilege-section-title">${currentLang === 'rus' ? 'Связь' : 'Contact'}</div>
-                              <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @emoj_11</a>
+                <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @emoj_11</a>
             </div>
             <div class="privilege-section">
                 <div class="privilege-section-title">| ${data.name} ${currentLang === 'rus' ? 'Возможности' : 'Features'} |</div>
