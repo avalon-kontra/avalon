@@ -110,6 +110,14 @@
         .copy-btn.copied { border-color:var(--green); color:var(--green); }
         .copy-btn:active { animation:btnPress 0.3s; }
         .hidden { display:none !important; }
+        .map-image {
+    width: 72px;
+    height: 54px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.25);
+    flex-shrink: 0;
+}
 
         .server-tabs-container { margin-top:14px; padding:10px 8px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.06); }
         .server-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
@@ -222,6 +230,7 @@
             .teams-container { flex-direction:column; }
             .btn { padding:6px 10px; font-size:8px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; }
             .privilege-modal { padding:20px 14px; }
+.map-image { width:60px; height:45px; }
             .chat-window { height:400px; }
         }
     </style>
