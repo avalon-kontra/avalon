@@ -1,8 +1,8 @@
-<svg width="1200px" height="1200px" viewBox="0 0 512 512" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg">
+<svg width="1600px" height="1600px" viewBox="0 0 512 512" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <style>
 .cls-1{fill:#ffff00;}
-.cls-2{fill:#ffff00;stroke:#ffe700;stroke-linecap:round;stroke-linejoin:round;stroke-width:20px;}
+.cls-2{fill:none;stroke:#ffd700;stroke-linecap:round;stroke-linejoin:round;stroke-width:20px;}
 </style>
 </defs>
 <title/>
