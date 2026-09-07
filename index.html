@@ -511,12 +511,14 @@
     function closeAuthModalOutside(e) { if (e.target === e.currentTarget) closeAuthModal(); }
 
 async function login() {
-    const usernameInput = document.getElementById('authUsername');
-    const passwordInput = document.getElementById('authPassword');
+    let usernameInput, passwordInput;
     
-    if (!usernameInput || !passwordInput) {
-        alert('Поля не найдены!');
-        return;
+    if (currentLang === 'rus') {
+        usernameInput = document.getElementById('authUsernameRus');
+        passwordInput = document.getElementById('authPasswordRus');
+    } else {
+        usernameInput = document.getElementById('authUsername');
+        passwordInput = document.getElementById('authPassword');
     }
     
     const username = usernameInput.value.trim();
@@ -528,14 +530,14 @@ async function login() {
     }
     
     try {
+        const savedDeviceId = localStorage.getItem('kontra_device_id');
         const response = await fetch('https://kontra-status.avalon-kontra.workers.dev/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password, deviceId: savedDeviceId || undefined })
         });
         
         const data = await response.json();
-        alert(JSON.stringify(data));
         
         if (data.ok) {
             isLoggedIn = true;
