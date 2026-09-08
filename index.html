@@ -833,82 +833,85 @@
     }
 
     function updateMapImages(servers) {
-        const dmServer = servers.find(s => s.id === 'dm');
-        const zeServer = servers.find(s => s.id === 'ze');
-        const jailServer = servers.find(s => s.id === 'jail');
+    const dmServer = servers.find(s => s.id === 'dm');
+    const zeServer = servers.find(s => s.id === 'ze');
+    const jailServer = servers.find(s => s.id === 'jail');
+    
+    const dmImg = document.getElementById('dmMapImage');
+    const zeImg = document.getElementById('zeMapImage');
+    const jailImg = document.getElementById('jailMapImage');
+
+    // DM
+    if (dmServer && dmImg) {
+        const mapName = dmServer.map;
+        let src = '';
+        if (mapName === 'de_dust2_2x2_css') src = 'images/css.jpg';
+        else if (mapName === 'de_dust2_2x2') src = 'images/dust.jpg';
+        else if (mapName === 'de_dust2_3x3') src = 'images/dust.jpg';
+        else if (mapName === 'fy_iceworld') src = 'images/iceworld.jpg';
+        else if (mapName === 'fy_pool_day') src = 'images/pool.jpg';
+        else if (mapName === '$2000$') src = 'images/$2000$.jpg';
         
-        const dmImg = document.getElementById('dmMapImage');
-        const zeImg = document.getElementById('zeMapImage');
-        const jailImg = document.getElementById('jailMapImage');
-
-        if (dmServer && dmImg) {
-            const mapName = dmServer.map;
-            let src = '';
-            if (mapName === 'de_dust2_2x2_css') src = 'images/css.jpg';
-            else if (mapName === 'de_dust2_2x2') src = 'images/dust.jpg';
-            else if (mapName === 'de_dust2_3x3') src = 'images/dust.jpg';
-            else if (mapName === 'fy_iceworld') src = 'images/iceworld.jpg';
-            else if (mapName === 'fy_pool_day') src = 'images/pool.jpg';
-            else if (mapName === '$2000$') src = 'images/$2000$.jpg';
-            
-            if (src && dmServer.serverOnline) {
-                dmImg.src = src;
-                dmImg.classList.remove('hidden');
-            } else {
-                dmImg.classList.add('hidden');
-            }
-        }
-
-        if (zeServer && zeImg) {
-            const mapName = zeServer.map;
-            let src = '';
-            if (mapName === 'ze_area51_v1') src = 'images/ze_area51_v1.jpg';
-            else if (mapName === 'ze_bbworld_lvl1_b2') src = 'images/ze_bbworld_lvl1_b2.jpg';
-            else if (mapName === 'ze_blackmesa_v6') src = 'images/ze_blackmesa_v6.jpg';
-            else if (mapName === 'ze_campescape_lg') src = 'images/ze_campescape_lg.jpg';
-            else if (mapName === 'ze_dark_lab_dpfix') src = 'images/ze_dark_lab_dpfix.jpg';
-            else if (mapName === 'ze_darkprofessional_dp1') src = 'images/ze_darkprofessional_dp1.jpg';
-            else if (mapName === 'ze_dust_escape_remake_dpfix') src = 'images/ze_dust_escape_remake_dpfix.jpg';
-            else if (mapName === 'ze_dustwood_lb') src = 'images/ze_dustwood_lb.jpg';
-            else if (mapName === 'ze_etherworld_dp_final') src = 'images/ze_etherworld_dp_final.jpg';
-            else if (mapName === 'ze_freezy_xmas_b2') src = 'images/ze_freezy_xmas_b2.jpg';
-            else if (mapName === 'ze_frozen_hope_dpcs') src = 'images/ze_frozen_hope_dpcs.jpg';
-            else if (mapName === 'ze_imagineland_escape') src = 'images/ze_imagineland_escape.jpg';
-            else if (mapName === 'ze_isla_nublar_level3_dpfix') src = 'images/ze_isla_nublar_level3_dpfix.jpg';
-            else if (mapName === 'ze_jp4_reverse') src = 'images/ze_jp4_reverse.jpg';
-            else if (mapName === 'ze_jurassicpark_minecraft_fixv1') src = 'images/ze_jurassicpark_minecraft_fixv1.jpg';
-            else if (mapName === 'ze_lastway_tr') src = 'images/ze_lastway_tr.jpg';
-            else if (mapName === 'ze_minecraft_ms_dp') src = 'images/ze_minecraft_ms_dp.jpg';
-            else if (mapName === 'ze_minecraft_nether_fix_lgcs') src = 'images/ze_minecraft_nether_fix_lgcs.jpg';
-            else if (mapName === 'ze_radioactive_dp') src = 'images/ze_radioactive_dp.jpg';
-            
-            if (src && zeServer.serverOnline) {
-                zeImg.src = src;
-                zeImg.classList.remove('hidden');
-            } else {
-                zeImg.classList.add('hidden');
-            }
-        }
-
-        if (jailServer && jailImg) {
-            const mapName = jailServer.map;
-            let src = '';
-            if (mapName === 'jail_minecraft_v3') src = 'images/jail_minecraft.jpg';
-            else if (mapName === 'jail_warm') src = 'images/jail_warm.jpg';
-            else if (mapName === 'jail_xmf') src = 'images/jail_xmf.jpg';
-            else if (mapName === 'jail_west_v2') src = 'images/jail_west.jpg';
-            else if (mapName === 'jail_gravity') src = 'images/jail_gravity.jpg';
-            else if (mapName === 'jail_arena_city') src = 'images/jail_arena.jpg';
-            else if (mapName === 'jail_gemisi') src = 'images/jail_gemisi.jpg';
-            
-            if (src && jailServer.serverOnline) {
-                jailImg.src = src;
-                jailImg.classList.remove('hidden');
-            } else {
-                jailImg.classList.add('hidden');
-            }
+        if (dmServer.serverOnline) {
+            dmImg.src = src || 'images/officialmap.jpg';
+            dmImg.classList.remove('hidden');
+        } else {
+            dmImg.classList.add('hidden');
         }
     }
+
+    // ZE
+    if (zeServer && zeImg) {
+        const mapName = zeServer.map;
+        let src = '';
+        if (mapName === 'ze_area51_v1') src = 'images/ze_area51_v1.jpg';
+        else if (mapName === 'ze_bbworld_lvl1_b2') src = 'images/ze_bbworld_lvl1_b2.jpg';
+        else if (mapName === 'ze_blackmesa_v6') src = 'images/ze_blackmesa_v6.jpg';
+        else if (mapName === 'ze_campescape_lg') src = 'images/ze_campescape_lg.jpg';
+        else if (mapName === 'ze_dark_lab_dpfix') src = 'images/ze_dark_lab_dpfix.jpg';
+        else if (mapName === 'ze_darkprofessional_dp1') src = 'images/ze_darkprofessional_dp1.jpg';
+        else if (mapName === 'ze_dust_escape_remake_dpfix') src = 'images/ze_dust_escape_remake_dpfix.jpg';
+        else if (mapName === 'ze_dustwood_lb') src = 'images/ze_dustwood_lb.jpg';
+        else if (mapName === 'ze_etherworld_dp_final') src = 'images/ze_etherworld_dp_final.jpg';
+        else if (mapName === 'ze_freezy_xmas_b2') src = 'images/ze_freezy_xmas_b2.jpg';
+        else if (mapName === 'ze_frozen_hope_dpcs') src = 'images/ze_frozen_hope_dpcs.jpg';
+        else if (mapName === 'ze_imagineland_escape') src = 'images/ze_imagineland_escape.jpg';
+        else if (mapName === 'ze_isla_nublar_level3_dpfix') src = 'images/ze_isla_nublar_level3_dpfix.jpg';
+        else if (mapName === 'ze_jp4_reverse') src = 'images/ze_jp4_reverse.jpg';
+        else if (mapName === 'ze_jurassicpark_minecraft_fixv1') src = 'images/ze_jurassicpark_minecraft_fixv1.jpg';
+        else if (mapName === 'ze_lastway_tr') src = 'images/ze_lastway_tr.jpg';
+        else if (mapName === 'ze_minecraft_ms_dp') src = 'images/ze_minecraft_ms_dp.jpg';
+        else if (mapName === 'ze_minecraft_nether_fix_lgcs') src = 'images/ze_minecraft_nether_fix_lgcs.jpg';
+        else if (mapName === 'ze_radioactive_dp') src = 'images/ze_radioactive_dp.jpg';
+        
+        if (zeServer.serverOnline) {
+            zeImg.src = src || 'images/officialmap.jpg';
+            zeImg.classList.remove('hidden');
+        } else {
+            zeImg.classList.add('hidden');
+        }
+    }
+
+    // JAIL
+    if (jailServer && jailImg) {
+        const mapName = jailServer.map;
+        let src = '';
+        if (mapName === 'jail_minecraft_v3') src = 'images/jail_minecraft.jpg';
+        else if (mapName === 'jail_warm') src = 'images/jail_warm.jpg';
+        else if (mapName === 'jail_xmf') src = 'images/jail_xmf.jpg';
+        else if (mapName === 'jail_west_v2') src = 'images/jail_west.jpg';
+        else if (mapName === 'jail_gravity') src = 'images/jail_gravity.jpg';
+        else if (mapName === 'jail_arena_city') src = 'images/jail_arena.jpg';
+        else if (mapName === 'jail_gemisi') src = 'images/jail_gemisi.jpg';
+        
+        if (jailServer.serverOnline) {
+            jailImg.src = src || 'images/officialmap.jpg';
+            jailImg.classList.remove('hidden');
+        } else {
+            jailImg.classList.add('hidden');
+        }
+    }
+}
 
     function updateServerList(servers) {
         document.querySelectorAll('.online-circle').forEach(circle => {
