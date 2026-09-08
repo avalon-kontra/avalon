@@ -314,17 +314,18 @@
     </div>
 
     <div class="servers-card" id="serverListCard">
-        <div class="server-item">
-            <div class="server-panel">
-                <div class="online-circle" data-server="zm" data-max="16" data-color="#2ecc71">
-                    <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#2ecc71" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
-                    <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
-                </div>
-                <div class="info"><span class="name">CS 1.6 ZM & LVL SYSTEM</span><span class="ip" id="serverIp1">5.141.89.34:5006</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
-                <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY IP</button>
-                <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
-            </div>
+<div class="server-item">
+    <div class="server-panel">
+        <div class="online-circle" data-server="zm" data-max="16" data-color="#2ecc71">
+            <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#2ecc71" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+            <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
         </div>
+        <div class="info"><span class="name">CS 1.6 ZM & LVL SYSTEM</span><span class="ip" id="serverIp1">5.141.89.34:5006</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
+        <img class="map-image hidden" id="zmMapImage" src="" alt="map">
+        <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY IP</button>
+        <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
+    </div>
+</div>
         <div class="server-item">
             <div class="server-panel">
                 <div class="online-circle" data-server="ze" data-max="16" data-color="#ffd700">
@@ -831,15 +832,26 @@
             console.error("Status fetch failed:", e);
         }
     }
-
-    function updateMapImages(servers) {
+function updateMapImages(servers) {
+    const zmServer = servers.find(s => s.id === 'zm');
     const dmServer = servers.find(s => s.id === 'dm');
     const zeServer = servers.find(s => s.id === 'ze');
     const jailServer = servers.find(s => s.id === 'jail');
     
+    const zmImg = document.getElementById('zmMapImage');
     const dmImg = document.getElementById('dmMapImage');
     const zeImg = document.getElementById('zeMapImage');
     const jailImg = document.getElementById('jailMapImage');
+
+    // ZM — всегда officialmap.jpg
+    if (zmServer && zmImg) {
+        if (zmServer.serverOnline) {
+            zmImg.src = 'images/officialmap.jpg';
+            zmImg.classList.remove('hidden');
+        } else {
+            zmImg.classList.add('hidden');
+        }
+    }
 
     // DM
     if (dmServer && dmImg) {
