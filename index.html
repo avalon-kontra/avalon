@@ -1127,17 +1127,25 @@ function showPurchasePlans(type) {
     }
     const data = privilegeInfo[type][currentLang];
     const content = document.getElementById('privilegeModalContent');
+    
+    // Функция для поиска цены по количеству дней
+    function getPriceByDays(days) {
+        const daysLabel = currentLang === 'rus' ? days + ' д' : days + ' d';
+        const item = data.prices.find(p => p[0].startsWith(days + ' '));
+        return item ? item[1] : '?';
+    }
+    
     content.innerHTML = `
         <div class="privilege-server-header">${data.server}</div>
         <div class="privilege-modal-title" style="color:${type === 'vip' ? '#ff8aae' : type === 'premium' ? '#e0e0e0' : '#ffd700'}">${data.name}</div>
         <div class="privilege-modal-divider"></div>
         <div class="privilege-section">
             <div class="privilege-section-title">${currentLang === 'rus' ? 'Выберите тариф' : 'Choose plan'}</div>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 3)">3 ${currentLang === 'rus' ? 'дня' : 'days'}: ${data.prices.find(p => p[0].includes('3'))[1]}</button>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 7)">7 ${currentLang === 'rus' ? 'дней' : 'days'}: ${data.prices.find(p => p[0].includes('7'))[1]}</button>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 10)">10 ${currentLang === 'rus' ? 'дней' : 'days'}: ${data.prices.find(p => p[0].includes('10'))[1]}</button>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 15)">15 ${currentLang === 'rus' ? 'дней' : 'days'}: ${data.prices.find(p => p[0].includes('15'))[1]}</button>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 30)">30 ${currentLang === 'rus' ? 'дней' : 'days'}: ${data.prices.find(p => p[0].includes('30'))[1]}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 3)">3 ${currentLang === 'rus' ? 'дня' : 'days'}: ${getPriceByDays(3)}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 7)">7 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(7)}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 10)">10 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(10)}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 15)">15 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(15)}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 30)">30 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(30)}</button>
             <button class="plan-cancel" onclick="closePurchasePlans('${type}')">${currentLang === 'rus' ? 'Отменить' : 'Cancel'}</button>
         </div>
     `;
