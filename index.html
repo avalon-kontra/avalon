@@ -21,7 +21,6 @@
         @keyframes softGlowGreen { 0%,100%{text-shadow:0 0 8px rgba(46,204,113,0.6)} 50%{text-shadow:0 0 15px rgba(46,204,113,0.9)} }
         @keyframes softGlowGray { 0%,100%{text-shadow:0 0 8px rgba(192,192,192,0.5)} 50%{text-shadow:0 0 15px rgba(192,192,192,0.8)} }
         @keyframes softGlowLime { 0%,100%{text-shadow:0 0 8px rgba(57,255,20,0.6)} 50%{text-shadow:0 0 15px rgba(57,255,20,0.9)} }
-        @keyframes badgePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
         .container { max-width:500px; width:100%; }
         .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding:0 4px; gap:10px; }
         .logo { font-family:'Orbitron',sans-serif; font-weight:900; font-size:20px; color:#fff; flex-shrink:0; text-shadow:0 0 15px rgba(255,255,255,0.3); }
@@ -156,7 +155,8 @@
         .buy-now-btn:hover { opacity:0.9; }
         .plan-btn { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:10px; color:var(--text-bright); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; margin-bottom:8px; transition:all 0.3s; -webkit-tap-highlight-color: transparent; }
         .plan-btn:hover { border-color:var(--accent); background:rgba(76,201,240,0.1); }
-                .plan-cancel:hover { background:rgba(255,0,0,0.1); }
+        .plan-cancel { width:100%; background:transparent; border:1px solid rgba(255,0,0,0.4); border-radius:12px; padding:10px; color:#ff4444; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; margin-top:5px; transition:all 0.3s; -webkit-tap-highlight-color: transparent; }
+        .plan-cancel:hover { background:rgba(255,0,0,0.1); }
         .auth-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:998; justify-content:center; align-items:center; padding:20px; }
         .auth-modal-overlay.active { display:flex; }
         .auth-modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:400px; width:100%; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; }
@@ -179,56 +179,38 @@
         .user-item-avatar svg { width:20px; height:20px; fill:var(--text-bright); }
         .user-item-name { font-size:10px; font-weight:600; color:var(--text-bright); max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
         .user-item-prefix { font-size:8px; font-weight:700; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:center; }
+        .prefix-violet { color:#9b7bff; text-shadow:0 0 8px rgba(155,123,255,0.6); }
+        .prefix-gray { color:#c0c0c0; text-shadow:0 0 8px rgba(192,192,192,0.4); }
+        .prefix-red { color:#ff4757; text-shadow:0 0 8px rgba(255,71,87,0.6); }
         .status-online { color:var(--green); font-weight:700; animation:softGlowGreen 2s ease-in-out infinite; font-size:9px; }
         .status-today { color:var(--silver); font-weight:700; animation:softGlowGray 2s ease-in-out infinite; font-size:9px; }
         .status-ingame { color:var(--green); font-weight:700; animation:softGlowGreen 2s ease-in-out infinite; font-size:9px; }
-
-        /* ===== НОВОЕ v18: кружки-цифры непрочитанных ===== */
-        .unread-badge {
-            position:absolute;
-            top:-4px;
-            right:-4px;
-            min-width:16px;
-            height:16px;
-            padding:0 3px;
-            background:linear-gradient(135deg,#ff2d55,#ff4757);
-            color:#fff;
-            border-radius:50%;
-            font-size:10px;
-            line-height:16px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-weight:800;
-            font-family:'Inter',sans-serif;
-            box-shadow:0 0 8px rgba(255,45,85,0.9),0 0 3px rgba(255,255,255,0.4);
-            animation:badgePulse 1.6s ease-in-out infinite;
-            pointer-events:none;
-            z-index:5;
-            text-shadow:0 0 2px rgba(0,0,0,0.6);
-        }
-
-        /* ===== НОВОЕ v18: статус "Прочитано" белым ===== */
-        .msg-read-status {
-            color:#ffffff;
-            font-size:9px;
-            font-weight:600;
-            letter-spacing:0.02em;
-            opacity:0.95;
-            text-shadow:0 0 4px rgba(255,255,255,0.5);
-        }
-        .msg-read-status.unread {
-            color:rgba(255,255,255,0.45);
-            font-weight:400;
-            text-shadow:none;
-        }
-
+        .unread-badge { position:absolute; top:-4px; right:-4px; background:var(--red); color:#fff; width:16px; height:16px; border-radius:50%; font-size:9px; display:flex; align-items:center; justify-content:center; font-weight:700; box-shadow:0 0 6px rgba(255,0,0,0.6); }
+        .daily-reward-panel { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:16px; padding:12px; margin-top:12px; }
+        .daily-reward-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+        .daily-reward-header img { width:40px; height:40px; }
+        .daily-reward-header span { font-size:11px; font-weight:700; color:var(--text-bright); }
+        .reward-lime { color:var(--lime); font-weight:700; animation:softGlowLime 2s ease-in-out infinite; }
+        .reward-text { font-size:11px; color:var(--text); margin-bottom:4px; }
+        .chat-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:1000; justify-content:center; align-items:center; padding:20px; }
+        .chat-modal.active { display:flex; }
+        .chat-window { background:rgba(20,20,30,0.95); border:1px solid rgba(255,255,255,0.15); border-radius:20px; width:100%; max-width:400px; height:500px; display:flex; flex-direction:column; position:relative; overflow:hidden; }
+        .chat-header { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.1); }
+        .chat-user-info { display:flex; align-items:center; gap:8px; }
+        .chat-user-avatar { width:24px; height:24px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+        .chat-user-avatar img { width:100%; height:100%; object-fit:cover; }
+        .chat-user-avatar svg { width:16px; height:16px; fill:var(--text-bright); }
+        .chat-user-name { font-size:13px; font-weight:700; color:var(--text-bright); }
+        .chat-close { background:transparent; border:none; cursor:pointer; -webkit-tap-highlight-color: transparent; }
+        .chat-close img { width:24px; height:24px; }
+        .chat-messages { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:8px; }
         .chat-message { max-width:70%; padding:8px 12px; border-radius:12px; font-size:12px; word-wrap:break-word; position:relative; }
         .chat-message.mine { align-self:flex-end; background:rgba(76,201,240,0.2); }
         .chat-message.theirs { align-self:flex-start; background:rgba(255,255,255,0.05); }
         .chat-message .msg-text { margin-bottom:4px; }
-        .chat-message .msg-meta { display:flex; justify-content:space-between; align-items:center; gap:6px; font-size:9px; margin-top:2px; }
+        .chat-message .msg-meta { display:flex; justify-content:space-between; align-items:center; gap:6px; font-size:9px; }
         .chat-message .msg-time { color:var(--text-dim); }
+        .chat-message .msg-read { color:var(--green); font-size:8px; }
         .chat-message .delete-msg { position:absolute; top:2px; right:4px; background:transparent; border:none; cursor:pointer; display:none; }
         .chat-message:hover .delete-msg { display:block; }
         .chat-message .delete-msg img { width:14px; height:14px; }
@@ -243,7 +225,6 @@
             .chat-window { height:400px; }
             .users-grid { grid-template-columns:repeat(2, 1fr); }
             .map-image { width:60px; height:45px; }
-            .unread-badge { min-width:14px; height:14px; font-size:9px; line-height:14px; top:-3px; right:-3px; }
         }
     </style>
 </head>
@@ -371,7 +352,7 @@
                     <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
                 </div>
                 <div class="info"><span class="name">CS 1.6 DEATHMATCH</span><span class="ip" id="serverIp3">5.141.89.34:5002</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
-                <img class="map-image hidden" id="dmMapImage" src="" alt="map">
+                              <img class="map-image hidden" id="dmMapImage" src="" alt="map">
                 <button class="copy-btn" onclick="copyIP('serverIp3',this)" data-lang="eng">COPY IP</button>
                 <button class="copy-btn hidden" onclick="copyIP('serverIp3',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
             </div>
@@ -386,7 +367,7 @@
                 <img class="map-image hidden" id="jailMapImage" src="" alt="map">
                 <button class="copy-btn" onclick="copyIP('serverIp4',this)" data-lang="eng">COPY IP</button>
                 <button class="copy-btn hidden" onclick="copyIP('serverIp4',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
-                    </div>
+            </div>
         </div>
     </div>
 
@@ -487,7 +468,6 @@
     let currentUser = null;
     let chatPartnerId = null;
     let unreadMessages = {};
-    let unreadPollTimer = null;
 
     try {
         const savedUser = localStorage.getItem('kontra_user');
@@ -513,15 +493,6 @@
             rus: { name:'𝙳𝙴𝙻𝚄𝚇𝙴', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 дней','450 руб.'],['15 дней','230 руб.'],['10 дней','160 руб.'],['7 дней','115 руб.'],['3 дня','45 руб.']], features:['Префикс: 𝙳𝙴𝙻𝚄𝚇𝙴','Цвет Префикса: Жёлтый','Цвет Сообщения: Серверный','Выбор VIP зомби в магазине: Скорость, ХП и Двойной прыжок','Баланс при входе: 7050$','Меню 𝙳𝙴𝙻𝚄𝚇𝙴: /bonus','200 брони в каждом раунде','300 здоровья в каждом раунде','/mid 30m - мут игрока от 30мин до 120мин','/150ap - +150 брони 3 раза за карту','/150hp - +150 здоровья 3 раза за карту','/model - уникальная Deluxe модель','/priv_money - +3000$ [перезарядка: 60 сек]','/anti - бесплатное Противоядие 2 раза за карту','/give - бесплатно выдать оружие 1 раз за карту','/radaron - радар показывающий обе команды','/nano - Нано-Броня 2 раза за карту','/force_sniper - стать снайпером с улучшенным AWP (тело 20000)','Видеть HP/броню людей будучи зомби','Улучшенные оружия: Guitar-Gun, Blaster-Gun, Laser-Gun, Axe','Все оружия +20-40% урона'], images:['images/IMG_20260828_092805_496.jpg','images/IMG_20260828_092806_748.jpg','images/IMG_20260828_092808_478.jpg','images/IMG_20260828_092814_204.jpg','images/IMG_20260828_092816_636.jpg','images/IMG_20260828_092817_895.jpg','images/IMG_20260828_092819_879.jpg','images/IMG_20260828_092820_553.jpg'] }
         }
     };
-
-    // ============ КРУЖКИ-ЦИФРЫ ⓿-❾ ============
-    const CIRCLED = ['⓿','❶','❷','❸','❹','❺','❻','❼','❽','❾'];
-    function formatUnreadBadge(count) {
-        const n = Math.floor(Number(count) || 0);
-        if (n <= 0) return '';
-        if (n >= 10) return '❾+';
-        return CIRCLED[n];
-    }
 
     // ============ АВТОРИЗАЦИЯ ============
     function toggleAuthModal() {
@@ -553,7 +524,6 @@
                 loadUsersOnline();
                 loadDailyReward();
                 updateActivity();
-                startUnreadPolling();
             } else {
                 alert(currentLang === 'rus' ? 'Неверный ник или пароль' : 'Wrong nickname or password');
             }
@@ -569,7 +539,6 @@
         isLoggedIn = false;
         currentUser = null;
         localStorage.removeItem('kontra_user');
-        stopUnreadPolling();
         updateAuthUI();
         loadUsersOnline();
     }
@@ -636,7 +605,6 @@
         if (document.getElementById('adminPanel').classList.contains('open')) renderAdminList();
         if (document.getElementById('privilegeModal').classList.contains('active')) { openPrivilegeModal(window._currentPrivilegeType || 'vip'); }
         fetchServerStatus();
-        loadUsersOnline();
     }
 
     function renderAdminList() {
@@ -645,76 +613,42 @@
         container.innerHTML = list.map(a => `<div class="admin-item"><div class="admin-name">${a.name}</div><div class="admin-role">${a.role}</div><div class="admin-duty">${a.duty}</div>${a.locked ? `<span class="admin-contact locked">${currentLang === 'rus' ? 'Связаться: Доступ закрыт' : 'Contact: Access closed'}</span>` : `<a href="${a.href}" target="_blank" class="admin-contact">${a.contact}</a>`}</div>`).join('');
     }
 
-    function togglePrivilege() {
-        const p = document.getElementById('privilegePanel');
-        const a = document.getElementById('adminPanel');
-        p.classList.toggle('open');
-        if (a.classList.contains('open')) a.classList.remove('open');
-    }
+   function togglePrivilege() {
+    const p = document.getElementById('privilegePanel');
+    const a = document.getElementById('adminPanel');
+    p.classList.toggle('open');
+    if (a.classList.contains('open')) a.classList.remove('open');
+}
 
-    function toggleAdmin() {
-        const a = document.getElementById('adminPanel');
-        const p = document.getElementById('privilegePanel');
-        a.classList.toggle('open');
-        if (p.classList.contains('open')) p.classList.remove('open');
-        if (a.classList.contains('open')) renderAdminList();
-    }
+function toggleAdmin() {
+    const a = document.getElementById('adminPanel');
+    const p = document.getElementById('privilegePanel');
+    a.classList.toggle('open');
+    if (p.classList.contains('open')) p.classList.remove('open');
+    if (a.classList.contains('open')) renderAdminList();
+}
 
-    function copyIP(id, btn) {
-        const ip = document.getElementById(id).textContent;
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(ip).then(() => {
-                btn.textContent = currentLang === 'rus' ? 'СКОПИРОВАН' : 'COPIED';
-                btn.classList.add('copied');
+function copyIP(id, btn) {
+    const ip = document.getElementById(id).textContent;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(ip).then(() => {
+            btn.textContent = currentLang === 'rus' ? 'СКОПИРОВАН' : 'COPIED';
+            btn.classList.add('copied');
             setTimeout(() => { btn.textContent = currentLang === 'rus' ? 'КОПИРОВАТЬ IP' : 'COPY IP'; btn.classList.remove('copied'); }, 2000);
+        }).catch(() => fallbackCopy(ip, btn));
+    } else { fallbackCopy(ip, btn); }
 }
 
-// ============ НЕПРОЧИТАННЫЕ (v18) ============
-async function fetchUnreadCounts() {
-    if (!currentUser || !currentUser.deviceId) return {};
-    try {
-        const response = await fetch(`https://kontra-status.avalon-kontra.workers.dev/unread_counts?deviceId=${encodeURIComponent(currentUser.deviceId)}`);
-        const data = await response.json();
-        if (data.ok && data.counts) {
-            unreadMessages = data.counts;
-            return data.counts;
-        }
-    } catch (e) {}
-    return {};
-}
-
-function startUnreadPolling() {
-    stopUnreadPolling();
-    if (!currentUser) return;
-    unreadPollTimer = setInterval(async () => {
-        await fetchUnreadCounts();
-        renderUnreadBadges();
-    }, 8000);
-}
-function stopUnreadPolling() {
-    if (unreadPollTimer) { clearInterval(unreadPollTimer); unreadPollTimer = null; }
-}
-
-function renderUnreadBadges() {
-    document.querySelectorAll('.user-item').forEach(item => {
-        const deviceId = item.getAttribute('data-device-id');
-        if (!deviceId) return;
-        const avatarWrap = item.querySelector('.user-item-avatar');
-        if (!avatarWrap) return;
-        let badge = avatarWrap.querySelector('.unread-badge');
-        const count = unreadMessages[deviceId] || 0;
-        if (count > 0) {
-            const text = formatUnreadBadge(count);
-            if (!badge) {
-                badge = document.createElement('span');
-                badge.className = 'unread-badge';
-                avatarWrap.appendChild(badge);
-            }
-            badge.textContent = text;
-        } else if (badge) {
-            badge.remove();
-        }
-    });
+function fallbackCopy(ip, btn) {
+    const t = document.createElement('input');
+    t.value = ip;
+    document.body.appendChild(t);
+    t.select();
+    document.execCommand('copy');
+    document.body.removeChild(t);
+    btn.textContent = currentLang === 'rus' ? 'СКОПИРОВАН' : 'COPIED';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = currentLang === 'rus' ? 'КОПИРОВАТЬ IP' : 'COPY IP'; btn.classList.remove('copied'); }, 2000);
 }
 
 // ============ ПОЛЬЗОВАТЕЛИ ============
@@ -730,10 +664,6 @@ async function loadUsersOnline() {
         visitorsGrid.innerHTML = '';
         
         if (data.ok && data.users) {
-            if (currentUser && currentUser.deviceId) {
-                await fetchUnreadCounts();
-            }
-
             const now = Date.now();
             const threeMinutes = 3 * 60 * 1000;
             const todayStart = new Date();
@@ -752,18 +682,27 @@ async function loadUsersOnline() {
             });
             
             for (const user of sortedUsers) {
-                const unreadCount = unreadMessages[user.device_id] || 0;
-                const unreadBadge = unreadCount > 0 ? `<span class="unread-badge">${formatUnreadBadge(unreadCount)}</span>` : '';
-
+                // Получаем количество непрочитанных от этого пользователя
+                let unreadCount = 0;
+                if (currentUser && currentUser.deviceId) {
+                    try {
+                        const unreadResponse = await fetch(`https://kontra-status.avalon-kontra.workers.dev/get_unread?deviceId=${currentUser.deviceId}&fromDeviceId=${user.device_id}`);
+                        const unreadData = await unreadResponse.json();
+                        if (unreadData.ok) {
+                            unreadCount = unreadData.count || 0;
+                        }
+                    } catch (e) {}
+                }
+                
                 const item = document.createElement('div');
                 item.className = 'user-item';
-                item.setAttribute('data-device-id', user.device_id);
                 item.onclick = () => openChat(user);
                 const prefixHtml = user.prefix ? `<span class="user-item-prefix ${user.prefix_color === 'violet' ? 'prefix-violet' : user.prefix_color === 'red' ? 'prefix-red' : 'prefix-gray'}">${user.prefix}</span>` : '';
                 let statusHtml = '';
                 if (user.in_game) {
                     statusHtml = '<span class="status-ingame" data-lang="rus">"В игре"</span><span class="status-ingame hidden" data-lang="eng">"In game"</span>';
                 }
+                const unreadBadge = unreadCount > 0 ? `<span class="unread-badge">${unreadCount > 9 ? '9+' : unreadCount}</span>` : '';
                 
                 item.innerHTML = `
                     <div class="user-item-avatar">
@@ -779,7 +718,6 @@ async function loadUsersOnline() {
                 if (user.last_site_visit && user.last_site_visit >= todayStart.getTime()) {
                     const visitorItem = document.createElement('div');
                     visitorItem.className = 'user-item';
-                    visitorItem.setAttribute('data-device-id', user.device_id);
                     visitorItem.onclick = () => openChat(user);
                     const isOnline = (now - user.last_site_visit) <= threeMinutes;
                     const visitorStatusHtml = isOnline ? '<span class="status-online" data-lang="rus">"Онлайн"</span><span class="status-online hidden" data-lang="eng">"Online"</span>' : '<span class="status-today" data-lang="rus">"Сегодня"</span><span class="status-today hidden" data-lang="eng">"Today"</span>';
@@ -796,6 +734,7 @@ async function loadUsersOnline() {
                 }
             }
             
+            // Применяем текущий язык
             document.querySelectorAll('[data-lang]').forEach(el => {
                 el.classList.toggle('hidden', el.getAttribute('data-lang') !== currentLang);
             });
@@ -826,17 +765,14 @@ async function loadDailyReward() {
 // ============ ЧАТ ============
 function openChatList() { loadUsersOnline(); document.getElementById('usersPanel').scrollIntoView({ behavior: 'smooth' }); }
 
-async function openChat(user) {
+function openChat(user) {
     chatPartnerId = user.device_id;
     document.getElementById('chatUserName').textContent = user.username;
     document.getElementById('chatUserAvatar').innerHTML = user.avatar ? `<img src="${user.avatar}" alt="avatar">` : '<svg viewBox="0 0 20 20"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>';
     document.getElementById('chatModal').classList.add('active');
-    await loadMessages();
-    await markMessagesAsRead();
-    if (chatPartnerId) {
-        unreadMessages[chatPartnerId] = 0;
-        renderUnreadBadges();
-    }
+    loadMessages();
+    // Отмечаем сообщения от собеседника как прочитанные
+    markMessagesAsRead();
 }
 
 function closeChat() { document.getElementById('chatModal').classList.remove('active'); chatPartnerId = null; }
@@ -853,7 +789,7 @@ async function sendMessage() {
             body: JSON.stringify({ fromDeviceId: currentUser.deviceId, toDeviceId: chatPartnerId, message: message })
         });
         input.value = '';
-        await loadMessages();
+        loadMessages();
     } catch (e) {}
 }
 
@@ -878,27 +814,19 @@ async function loadMessages() {
         if (data.ok && data.messages) {
             data.messages.forEach(msg => {
                 const div = document.createElement('div');
-                const isMine = msg.from_device_id === currentUser.deviceId;
-                div.className = `chat-message ${isMine ? 'mine' : 'theirs'}`;
+                div.className = `chat-message ${msg.from_device_id === currentUser.deviceId ? 'mine' : 'theirs'}`;
                 
                 const time = new Date(msg.created_at);
                 const timeStr = time.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
                 
-                // НОВОЕ v18: белый статус "Прочитано" внизу моего сообщения
-                let readStatusHtml = '';
-                if (isMine) {
-                    if (msg.read === 1) {
-                        readStatusHtml = '<span class="msg-read-status">Прочитано</span>';
-                    } else {
-                        readStatusHtml = '<span class="msg-read-status unread">Отправлено</span>';
-                    }
-                }
+                const readStatus = msg.from_device_id === currentUser.deviceId ? 
+                    (msg.read === 1 ? '<span class="read-status">✓✓ Прочитано</span>' : '<span class="read-status">✓</span>') : '';
                 
                 div.innerHTML = `
-                    <div class="msg-text">${msg.message}</div>
+                    ${msg.message}
                     <div class="msg-meta">
                         <span class="msg-time">${timeStr}</span>
-                        ${readStatusHtml}
+                        ${readStatus}
                     </div>
                     <button class="delete-msg" onclick="deleteMessage('${msg.id}')"><img src="close.svg" alt="delete"></button>
                 `;
@@ -917,7 +845,7 @@ async function deleteMessage(messageId) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ messageId, deviceId: currentUser.deviceId })
         });
-        await loadMessages();
+        loadMessages();
     } catch (e) {}
 }
 
@@ -1105,207 +1033,208 @@ function renderServerTabs(servers) {
     const tabsCard = document.getElementById('tabsCard');
     const tabsContainer = document.getElementById('serverTabs');
     if (!onlineServers.length) { tabsCard.style.display = 'none'; return; }
-        tabsCard.style.display = 'block';
-        tabsContainer.innerHTML = '';
-        onlineServers.forEach(server => {
-            const tab = document.createElement('button');
-            tab.className = 'server-tab';
-            tab.textContent = server.name;
-            tab.onclick = () => showServerDetails(server);
-            tabsContainer.appendChild(tab);
-        });
-        if (!activeServerId || !onlineServers.find(s => s.id === activeServerId)) { activeServerId = onlineServers[0].id; }
-        const active = onlineServers.find(s => s.id === activeServerId);
-        if (active) showServerDetails(active);
-    }
-
-    function showServerDetails(server) {
-        activeServerId = server.id;
-        document.querySelectorAll('.server-tab').forEach(tab => {
-            tab.classList.toggle('active', tab.textContent === server.name);
-        });
-        const ctPlayers = server.players.filter(p => p.team === 'CT').sort((a, b) => b.score - a.score);
-        const tPlayers = server.players.filter(p => p.team === 'T').sort((a, b) => b.score - a.score);
-        const container = document.getElementById('serverDetails');
-        const lang = currentLang === 'rus' ? 'rus' : 'eng';
-        const labels = lang === 'rus'
-            ? { name: 'Имя', kills: 'Убийств', deaths: 'Смертей', ct: 'Контр-террористы', t: 'Террористы', ctShort: 'Контр-террористов:', tShort: 'Террористов:' }
-            : { name: 'Name', kills: 'Kills', deaths: 'Deaths', ct: 'Counter-Terrorists', t: 'Terrorists', ctShort: 'Counter-Terrorists:', tShort: 'Terrorists:' };
-
-        container.innerHTML = `
-            <div class="server-detail-card">
-                <div class="detail-row"><span>IP:</span><span>${server.address}</span></div>
-                <div class="detail-row"><span>${lang === 'rus' ? 'Карта' : 'Map'}:</span><span>${server.map}</span></div>
-                <div class="detail-row"><span>${lang === 'rus' ? 'Режим' : 'Mode'}:</span><span>${server.mode}</span></div>
-                <div class="detail-row"><span>${lang === 'rus' ? 'Онлайн' : 'Online'}:</span><span>${server.online}/${server.maxPlayers}</span></div>
-                <div class="detail-row" style="color:#aa5555"><span style="display:flex;align-items:center;gap:4px;"><svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.tShort}</span><span>${server.zombies}</span></div>
-                <div class="detail-row" style="color:#5555aa"><span style="display:flex;align-items:center;gap:4px;"><svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.ctShort}</span><span>${server.survivors}</span></div>
-            </div>
-            <div class="teams-container">
-                <div class="team-column" style="border:1px solid rgba(85,85,170,0.3);">
-                    <div class="team-header" style="color:#5555aa"><svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.ct}</div>
-                    <table class="players-table"><thead><tr><th>${labels.name}</th><th>${labels.kills}</th><th>${labels.deaths}</th></tr></thead><tbody>${ctPlayers.map((p, i) => `<tr style="color:#5555aa"><td>${i + 1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
-                </div>
-                <div class="team-column" style="border:1px solid rgba(170,85,85,0.3);">
-                    <div class="team-header" style="color:#aa5555"><svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.t}</div>
-                    <table class="players-table"><thead><tr><th>${labels.name}</th><th>${labels.kills}</th><th>${labels.deaths}</th></tr></thead><tbody>${tPlayers.map((p, i) => `<tr style="color:#aa5555"><td>${i + 1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
-                </div>
-            </div>
-        `;
-    }
-
-    // ============ МОДАЛЬНОЕ ОКНО ПРИВИЛЕГИЙ ============
-    function openPrivilegeModal(type) {
-        const data = privilegeInfo[type][currentLang];
-        const modal = document.getElementById('privilegeModal');
-        const content = document.getElementById('privilegeModalContent');
-        const textColorMap = { vip: '#ff8aae', premium: '#e0e0e0', deluxe: '#ffd700' };
-        content.innerHTML = `
-            <div class="privilege-server-header">${data.server}</div>
-            <div class="privilege-modal-title" style="color:${textColorMap[type]}">${data.name}</div>
-            <div class="privilege-modal-divider"></div>
-            <button class="buy-now-btn" onclick="showPurchasePlans('${type}')">${currentLang === 'rus' ? 'Купить сейчас' : 'Buy Now'}</button>
-            <div class="privilege-section">
-                <div class="privilege-section-title">${currentLang === 'rus' ? 'Цены' : 'Prices'}</div>
-                ${data.prices.map(p => `<div class="privilege-price-item"><span>${p[0]}</span><span>${p[1]}</span></div>`).join('')}
-            </div>
-            <div class="privilege-section">
-                <div class="privilege-section-title">${currentLang === 'rus' ? 'Способы оплаты' : 'Payment methods'}</div>
-                <div class="privilege-feature">${currentLang === 'rus' ? 'Через Click [UZS]' : 'Via Click [UZS]'}</div>
-                <div class="privilege-feature">${currentLang === 'rus' ? 'Россия и СНГ: Т-Банк' : 'Russia & CIS: T-Bank'}</div>
-                <div class="privilege-feature">${currentLang === 'rus' ? 'Международные переводы: VISA' : 'International transfers: VISA'}</div>
-            </div>
-            <div class="privilege-section">
-                <div class="privilege-section-title">${currentLang === 'rus' ? 'Связь' : 'Contact'}</div>
-                <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @emoj_11</a>
-            </div>
-            <div class="privilege-section">
-                <div class="privilege-section-title">| ${data.name} ${currentLang === 'rus' ? 'Возможности' : 'Features'} |</div>
-                ${data.features.map(f => `<div class="privilege-feature">${f}</div>`).join('')}
-            </div>
-            <div class="privilege-section">
-                ${data.images.map(img => `<img src="${img}" class="privilege-image" alt="${data.name}">`).join('')}
-            </div>
-        `;
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        window._currentPrivilegeType = type;
-    }
-
-    function showPurchasePlans(type) {
-        if (!isLoggedIn) {
-            alert(currentLang === 'rus' ? 'Сначала войдите в аккаунт' : 'Please login first');
-            return;
-        }
-        const data = privilegeInfo[type][currentLang];
-        const content = document.getElementById('privilegeModalContent');
-        
-        function getPriceByDays(days) {
-            const item = data.prices.find(p => p[0].startsWith(days + ' '));
-            return item ? item[1] : '?';
-        }
-        
-        content.innerHTML = `
-            <div class="privilege-server-header">${data.server}</div>
-            <div class="privilege-modal-title" style="color:${type === 'vip' ? '#ff8aae' : type === 'premium' ? '#e0e0e0' : '#ffd700'}">${data.name}</div>
-            <div class="privilege-modal-divider"></div>
-            <div class="privilege-section">
-                <div class="privilege-section-title">${currentLang === 'rus' ? 'Выберите тариф' : 'Choose plan'}</div>
-                <button class="plan-btn" onclick="purchasePrivilege('${type}', 3)">3 ${currentLang === 'rus' ? 'дня' : 'days'}: ${getPriceByDays(3)}</button>
-                <button class="plan-btn" onclick="purchasePrivilege('${type}', 7)">7 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(7)}</button>
-                <button class="plan-btn" onclick="purchasePrivilege('${type}', 10)">10 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(10)}</button>
-                <button class="plan-btn" onclick="purchasePrivilege('${type}', 15)">15 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(15)}</button>
-                <button class="plan-btn" onclick="purchasePrivilege('${type}', 30)">30 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(30)}</button>
-                <button class="plan-cancel" onclick="closePurchasePlans('${type}')">${currentLang === 'rus' ? 'Отменить' : 'Cancel'}</button>
-            </div>
-        `;
-    }
-
-    function closePurchasePlans(type) {
-        openPrivilegeModal(type);
-    }
-
-    async function purchasePrivilege(type, days) {
-        if (!isLoggedIn || !currentUser) {
-            alert(currentLang === 'rus' ? 'Сначала войдите в аккаунт' : 'Please login first');
-            return;
-        }
-
-        try {
-            const response = await fetch('https://kontra-status.avalon-kontra.workers.dev/purchase', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    deviceId: currentUser.deviceId,
-                    username: currentUser.username,
-                    password: currentUser.password || '',
-                    privilegeType: type,
-                    durationDays: days
-                })
-            });
-            const data = await response.json();
-
-            if (data.ok) {
-                alert(currentLang === 'rus' ? 'Привилегия успешно куплена!' : 'Privilege purchased successfully!');
-                closePrivilegeModal();
-                currentUser.balance = data.newBalance !== undefined ? data.newBalance : currentUser.balance - data.price;
-                localStorage.setItem('kontra_user', JSON.stringify(currentUser));
-                updateAuthUI();
-            } else {
-                if (data.error === 'insufficient_balance') {
-                    alert(currentLang === 'rus' ? 'Недостаточно средств на балансе' : 'Insufficient balance');
-                } else {
-                    alert(currentLang === 'rus' ? 'Ошибка покупки' : 'Purchase error');
-                }
-            }
-        } catch (e) {
-            alert('Ошибка соединения с сервером');
-        }
-    }
-
-    function closePrivilegeModal() {
-        document.getElementById('privilegeModal').classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function closePrivilegeModalOutside(e) {
-        if (e.target === e.currentTarget) closePrivilegeModal();
-    }
-
-    // ============ ИНИЦИАЛИЗАЦИЯ ============
-    if (currentLang === 'rus') {
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'rus');
-        });
-        document.getElementById('langRus').classList.add('active');
-        document.getElementById('langEng').classList.remove('active');
-        document.getElementById('langSlider').className = 'lang-slider left';
-    } else {
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'eng');
-        });
-        document.getElementById('langEng').classList.add('active');
-        document.getElementById('langRus').classList.remove('active');
-        document.getElementById('langSlider').className = 'lang-slider right';
-    }
-
-    fetchServerStatus();
-    setInterval(fetchServerStatus, REFRESH_INTERVAL);
-    setInterval(loadUsersOnline, 45000);
-    setInterval(loadDailyReward, 30000);
-    setInterval(updateActivity, 30000);
-    updateAuthUI();
-    loadUsersOnline();
-    loadDailyReward();
-    if (isLoggedIn) startUnreadPolling();
-
-    document.getElementById('avatarFile').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            uploadAvatar(file);
-        }
-        this.value = '';
+    tabsCard.style.display = 'block';
+    tabsContainer.innerHTML = '';
+    onlineServers.forEach(server => {
+        const tab = document.createElement('button');
+        tab.className = 'server-tab';
+        tab.textContent = server.name;
+        tab.onclick = () => showServerDetails(server);
+                tabsContainer.appendChild(tab);
     });
+    if (!activeServerId || !onlineServers.find(s => s.id === activeServerId)) { activeServerId = onlineServers[0].id; }
+    const active = onlineServers.find(s => s.id === activeServerId);
+    if (active) showServerDetails(active);
+}
+
+function showServerDetails(server) {
+    activeServerId = server.id;
+    document.querySelectorAll('.server-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.textContent === server.name);
+    });
+    const ctPlayers = server.players.filter(p => p.team === 'CT').sort((a, b) => b.score - a.score);
+    const tPlayers = server.players.filter(p => p.team === 'T').sort((a, b) => b.score - a.score);
+    const container = document.getElementById('serverDetails');
+    const lang = currentLang === 'rus' ? 'rus' : 'eng';
+    const labels = lang === 'rus'
+        ? { name: 'Имя', kills: 'Убийств', deaths: 'Смертей', ct: 'Контр-террористы', t: 'Террористы', ctShort: 'Контр-террористов:', tShort: 'Террористов:' }
+        : { name: 'Name', kills: 'Kills', deaths: 'Deaths', ct: 'Counter-Terrorists', t: 'Terrorists', ctShort: 'Counter-Terrorists:', tShort: 'Terrorists:' };
+
+    container.innerHTML = `
+        <div class="server-detail-card">
+            <div class="detail-row"><span>IP:</span><span>${server.address}</span></div>
+            <div class="detail-row"><span>${lang === 'rus' ? 'Карта' : 'Map'}:</span><span>${server.map}</span></div>
+            <div class="detail-row"><span>${lang === 'rus' ? 'Режим' : 'Mode'}:</span><span>${server.mode}</span></div>
+            <div class="detail-row"><span>${lang === 'rus' ? 'Онлайн' : 'Online'}:</span><span>${server.online}/${server.maxPlayers}</span></div>
+            <div class="detail-row" style="color:#aa5555"><span style="display:flex;align-items:center;gap:4px;"><svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.tShort}</span><span>${server.zombies}</span></div>
+            <div class="detail-row" style="color:#5555aa"><span style="display:flex;align-items:center;gap:4px;"><svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.ctShort}</span><span>${server.survivors}</span></div>
+        </div>
+        <div class="teams-container">
+            <div class="team-column" style="border:1px solid rgba(85,85,170,0.3);">
+                <div class="team-header" style="color:#5555aa"><svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.ct}</div>
+                <table class="players-table"><thead><tr><th>${labels.name}</th><th>${labels.kills}</th><th>${labels.deaths}</th></tr></thead><tbody>${ctPlayers.map((p, i) => `<tr style="color:#5555aa"><td>${i + 1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
+            </div>
+            <div class="team-column" style="border:1px solid rgba(170,85,85,0.3);">
+                <div class="team-header" style="color:#aa5555"><svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.t}</div>
+                <table class="players-table"><thead><tr><th>${labels.name}</th><th>${labels.kills}</th><th>${labels.deaths}</th></tr></thead><tbody>${tPlayers.map((p, i) => `<tr style="color:#aa5555"><td>${i + 1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
+            </div>
+        </div>
+    `;
+}
+
+// ============ МОДАЛЬНОЕ ОКНО ПРИВИЛЕГИЙ ============
+function openPrivilegeModal(type) {
+    const data = privilegeInfo[type][currentLang];
+    const modal = document.getElementById('privilegeModal');
+    const content = document.getElementById('privilegeModalContent');
+    const textColorMap = { vip: '#ff8aae', premium: '#e0e0e0', deluxe: '#ffd700' };
+    content.innerHTML = `
+        <div class="privilege-server-header">${data.server}</div>
+        <div class="privilege-modal-title" style="color:${textColorMap[type]}">${data.name}</div>
+        <div class="privilege-modal-divider"></div>
+        <button class="buy-now-btn" onclick="showPurchasePlans('${type}')">${currentLang === 'rus' ? 'Купить сейчас' : 'Buy Now'}</button>
+        <div class="privilege-section">
+            <div class="privilege-section-title">${currentLang === 'rus' ? 'Цены' : 'Prices'}</div>
+            ${data.prices.map(p => `<div class="privilege-price-item"><span>${p[0]}</span><span>${p[1]}</span></div>`).join('')}
+        </div>
+        <div class="privilege-section">
+            <div class="privilege-section-title">${currentLang === 'rus' ? 'Способы оплаты' : 'Payment methods'}</div>
+            <div class="privilege-feature">${currentLang === 'rus' ? 'Через Click [UZS]' : 'Via Click [UZS]'}</div>
+            <div class="privilege-feature">${currentLang === 'rus' ? 'Россия и СНГ: Т-Банк' : 'Russia & CIS: T-Bank'}</div>
+            <div class="privilege-feature">${currentLang === 'rus' ? 'Международные переводы: VISA' : 'International transfers: VISA'}</div>
+        </div>
+        <div class="privilege-section">
+            <div class="privilege-section-title">${currentLang === 'rus' ? 'Связь' : 'Contact'}</div>
+            <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @emoj_11</a>
+        </div>
+        <div class="privilege-section">
+            <div class="privilege-section-title">| ${data.name} ${currentLang === 'rus' ? 'Возможности' : 'Features'} |</div>
+            ${data.features.map(f => `<div class="privilege-feature">${f}</div>`).join('')}
+        </div>
+        <div class="privilege-section">
+            ${data.images.map(img => `<img src="${img}" class="privilege-image" alt="${data.name}">`).join('')}
+        </div>
+    `;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    window._currentPrivilegeType = type;
+}
+
+function showPurchasePlans(type) {
+    if (!isLoggedIn) {
+        alert(currentLang === 'rus' ? 'Сначала войдите в аккаунт' : 'Please login first');
+        return;
+    }
+    const data = privilegeInfo[type][currentLang];
+    const content = document.getElementById('privilegeModalContent');
+    
+    // Функция для поиска цены по количеству дней
+    function getPriceByDays(days) {
+        const daysLabel = currentLang === 'rus' ? days + ' д' : days + ' d';
+        const item = data.prices.find(p => p[0].startsWith(days + ' '));
+        return item ? item[1] : '?';
+    }
+    
+    content.innerHTML = `
+        <div class="privilege-server-header">${data.server}</div>
+        <div class="privilege-modal-title" style="color:${type === 'vip' ? '#ff8aae' : type === 'premium' ? '#e0e0e0' : '#ffd700'}">${data.name}</div>
+        <div class="privilege-modal-divider"></div>
+        <div class="privilege-section">
+            <div class="privilege-section-title">${currentLang === 'rus' ? 'Выберите тариф' : 'Choose plan'}</div>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 3)">3 ${currentLang === 'rus' ? 'дня' : 'days'}: ${getPriceByDays(3)}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 7)">7 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(7)}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 10)">10 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(10)}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 15)">15 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(15)}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}', 30)">30 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(30)}</button>
+            <button class="plan-cancel" onclick="closePurchasePlans('${type}')">${currentLang === 'rus' ? 'Отменить' : 'Cancel'}</button>
+        </div>
+    `;
+}
+
+function closePurchasePlans(type) {
+    openPrivilegeModal(type);
+}
+
+async function purchasePrivilege(type, days) {
+    if (!isLoggedIn || !currentUser) {
+        alert(currentLang === 'rus' ? 'Сначала войдите в аккаунт' : 'Please login first');
+        return;
+    }
+
+    try {
+        const response = await fetch('https://kontra-status.avalon-kontra.workers.dev/purchase', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                deviceId: currentUser.deviceId,
+                username: currentUser.username,
+                password: currentUser.password || '',
+                privilegeType: type,
+                durationDays: days
+            })
+        });
+        const data = await response.json();
+
+        if (data.ok) {
+            alert(currentLang === 'rus' ? 'Привилегия успешно куплена!' : 'Privilege purchased successfully!');
+            closePrivilegeModal();
+            currentUser.balance = data.newBalance !== undefined ? data.newBalance : currentUser.balance - data.price;
+            localStorage.setItem('kontra_user', JSON.stringify(currentUser));
+            updateAuthUI();
+        } else {
+            if (data.error === 'insufficient_balance') {
+                alert(currentLang === 'rus' ? 'Недостаточно средств на балансе' : 'Insufficient balance');
+            } else {
+                alert(currentLang === 'rus' ? 'Ошибка покупки' : 'Purchase error');
+            }
+        }
+    } catch (e) {
+        alert('Ошибка соединения с сервером');
+    }
+}
+
+function closePrivilegeModal() {
+    document.getElementById('privilegeModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function closePrivilegeModalOutside(e) {
+    if (e.target === e.currentTarget) closePrivilegeModal();
+}
+
+// ============ ИНИЦИАЛИЗАЦИЯ ============
+if (currentLang === 'rus') {
+    document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'rus');
+    });
+    document.getElementById('langRus').classList.add('active');
+    document.getElementById('langEng').classList.remove('active');
+    document.getElementById('langSlider').className = 'lang-slider left';
+} else {
+    document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'eng');
+    });
+    document.getElementById('langEng').classList.add('active');
+    document.getElementById('langRus').classList.remove('active');
+    document.getElementById('langSlider').className = 'lang-slider right';
+}
+
+fetchServerStatus();
+setInterval(fetchServerStatus, REFRESH_INTERVAL);
+setInterval(loadUsersOnline, 45000);
+setInterval(loadDailyReward, 30000);
+setInterval(updateActivity, 30000);
+updateAuthUI();
+loadUsersOnline();
+loadDailyReward();
+
+document.getElementById('avatarFile').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        uploadAvatar(file);
+    }
+    this.value = '';
+});
 </script>
 </body>
 </html>
