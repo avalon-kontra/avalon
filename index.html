@@ -21,6 +21,7 @@
         @keyframes softGlowGreen { 0%,100%{text-shadow:0 0 8px rgba(46,204,113,0.6)} 50%{text-shadow:0 0 15px rgba(46,204,113,0.9)} }
         @keyframes softGlowGray { 0%,100%{text-shadow:0 0 8px rgba(192,192,192,0.5)} 50%{text-shadow:0 0 15px rgba(192,192,192,0.8)} }
         @keyframes softGlowLime { 0%,100%{text-shadow:0 0 8px rgba(57,255,20,0.6)} 50%{text-shadow:0 0 15px rgba(57,255,20,0.9)} }
+        @keyframes softGlowRed { 0%,100%{text-shadow:0 0 6px rgba(255,71,87,0.7)} 50%{text-shadow:0 0 12px rgba(255,71,87,1)} }
         .container { max-width:500px; width:100%; }
         .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding:0 4px; gap:10px; }
         .logo { font-family:'Orbitron',sans-serif; font-weight:900; font-size:20px; color:#fff; flex-shrink:0; text-shadow:0 0 15px rgba(255,255,255,0.3); }
@@ -185,7 +186,7 @@
         .status-online { color:var(--green); font-weight:700; animation:softGlowGreen 2s ease-in-out infinite; font-size:9px; }
         .status-today { color:var(--silver); font-weight:700; animation:softGlowGray 2s ease-in-out infinite; font-size:9px; }
         .status-ingame { color:var(--green); font-weight:700; animation:softGlowGreen 2s ease-in-out infinite; font-size:9px; }
-        .unread-badge { position:absolute; top:-4px; right:-4px; background:var(--red); color:#fff; width:16px; height:16px; border-radius:50%; font-size:9px; display:flex; align-items:center; justify-content:center; font-weight:700; box-shadow:0 0 6px rgba(255,0,0,0.6); }
+        .unread-badge { position:absolute; top:-4px; right:-4px; color:var(--red); font-size:18px; font-weight:700; line-height:1; text-shadow:0 0 8px rgba(255,71,87,0.9), 0 0 14px rgba(255,71,87,0.6); animation:softGlowRed 1.8s ease-in-out infinite; pointer-events:none; }
         .daily-reward-panel { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:16px; padding:12px; margin-top:12px; }
         .daily-reward-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
         .daily-reward-header img { width:40px; height:40px; }
@@ -210,7 +211,7 @@
         .chat-message .msg-text { margin-bottom:4px; }
         .chat-message .msg-meta { display:flex; justify-content:space-between; align-items:center; gap:6px; font-size:9px; }
         .chat-message .msg-time { color:var(--text-dim); }
-        .chat-message .msg-read { color:var(--green); font-size:8px; }
+        .chat-message .msg-read { color:#ffffff; font-size:8px; font-weight:600; text-shadow:0 0 6px rgba(255,255,255,0.6); }
         .chat-message .delete-msg { position:absolute; top:2px; right:4px; background:transparent; border:none; cursor:pointer; display:none; }
         .chat-message:hover .delete-msg { display:block; }
         .chat-message .delete-msg img { width:14px; height:14px; }
@@ -309,7 +310,7 @@
                     <span class="privilege-name">PREMIUM</span>
                 </div>
                 <div class="privilege-card deluxe-card" onclick="openPrivilegeModal('deluxe')">
-                    <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" fill="currentColor" font-weight="900" font-family="Inter">♛</text></svg>
+                    <svg viewBox="0 0 50 50"><text x="25" y="38" text-anchor="middle" font-size="32" font-weight="900" font-family="Inter">♛</text></svg>
                     <span class="privilege-name">DELUXE</span>
                 </div>
             </div>
@@ -352,7 +353,7 @@
                     <span class="center-text"><span class="num">0</span><span class="sep">/</span>16</span>
                 </div>
                 <div class="info"><span class="name">CS 1.6 DEATHMATCH</span><span class="ip" id="serverIp3">5.141.89.34:5002</span><div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div></div>
-                              <img class="map-image hidden" id="dmMapImage" src="" alt="map">
+                <img class="map-image hidden" id="dmMapImage" src="" alt="map">
                 <button class="copy-btn" onclick="copyIP('serverIp3',this)" data-lang="eng">COPY IP</button>
                 <button class="copy-btn hidden" onclick="copyIP('serverIp3',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
             </div>
@@ -468,6 +469,19 @@
     let currentUser = null;
     let chatPartnerId = null;
     let unreadMessages = {};
+    let unreadCounts = {};
+    let chatPollTimer = null;
+    let usersPollTimer = null;
+
+    // ===== Красивые цифры для бейджей =====
+    const CIRCLED_DIGITS = ['⓿','❶','❷','❸','❹','❺','❻','❼','❽','❾'];
+    function toCircled(n) {
+        n = Math.floor(Number(n) || 0);
+        if (n <= 0) return '';
+        if (n <= 9) return CIRCLED_DIGITS[n];
+        // для больших чисел — просто 9+ обычными цифрами
+        return String(n);
+    }
 
     try {
         const savedUser = localStorage.getItem('kontra_user');
@@ -524,6 +538,7 @@
                 loadUsersOnline();
                 loadDailyReward();
                 updateActivity();
+                startChatPolling();
             } else {
                 alert(currentLang === 'rus' ? 'Неверный ник или пароль' : 'Wrong nickname or password');
             }
@@ -539,6 +554,8 @@
         isLoggedIn = false;
         currentUser = null;
         localStorage.removeItem('kontra_user');
+        unreadCounts = {};
+        stopChatPolling();
         updateAuthUI();
         loadUsersOnline();
     }
@@ -651,9 +668,28 @@ function fallbackCopy(ip, btn) {
     setTimeout(() => { btn.textContent = currentLang === 'rus' ? 'КОПИРОВАТЬ IP' : 'COPY IP'; btn.classList.remove('copied'); }, 2000);
 }
 
+// ============ НЕПРОЧИТАННЫЕ ============
+async function loadUnreadCounts() {
+    if (!currentUser || !currentUser.deviceId) { unreadCounts = {}; return; }
+    try {
+        const response = await fetch(`https://kontra-status.avalon-kontra.workers.dev/unread_counts?deviceId=${currentUser.deviceId}`);
+        const data = await response.json();
+        if (data.ok && data.counts) {
+            unreadCounts = data.counts;
+        } else {
+            unreadCounts = {};
+        }
+    } catch (e) {
+        unreadCounts = {};
+    }
+}
+
 // ============ ПОЛЬЗОВАТЕЛИ ============
 async function loadUsersOnline() {
     try {
+        if (currentUser && currentUser.deviceId) {
+            await loadUnreadCounts();
+        }
         const response = await fetch('https://kontra-status.avalon-kontra.workers.dev/users_online');
         const data = await response.json();
         
@@ -682,17 +718,8 @@ async function loadUsersOnline() {
             });
             
             for (const user of sortedUsers) {
-                // Получаем количество непрочитанных от этого пользователя
-                let unreadCount = 0;
-                if (currentUser && currentUser.deviceId) {
-                    try {
-                        const unreadResponse = await fetch(`https://kontra-status.avalon-kontra.workers.dev/get_unread?deviceId=${currentUser.deviceId}&fromDeviceId=${user.device_id}`);
-                        const unreadData = await unreadResponse.json();
-                        if (unreadData.ok) {
-                            unreadCount = unreadData.count || 0;
-                        }
-                    } catch (e) {}
-                }
+                const unreadCount = unreadCounts[user.device_id] || 0;
+                const unreadBadge = unreadCount > 0 ? `<span class="unread-badge">${toCircled(unreadCount)}</span>` : '';
                 
                 const item = document.createElement('div');
                 item.className = 'user-item';
@@ -702,7 +729,6 @@ async function loadUsersOnline() {
                 if (user.in_game) {
                     statusHtml = '<span class="status-ingame" data-lang="rus">"В игре"</span><span class="status-ingame hidden" data-lang="eng">"In game"</span>';
                 }
-                const unreadBadge = unreadCount > 0 ? `<span class="unread-badge">${unreadCount > 9 ? '9+' : unreadCount}</span>` : '';
                 
                 item.innerHTML = `
                     <div class="user-item-avatar">
@@ -734,7 +760,6 @@ async function loadUsersOnline() {
                 }
             }
             
-            // Применяем текущий язык
             document.querySelectorAll('[data-lang]').forEach(el => {
                 el.classList.toggle('hidden', el.getAttribute('data-lang') !== currentLang);
             });
@@ -773,9 +798,20 @@ function openChat(user) {
     loadMessages();
     // Отмечаем сообщения от собеседника как прочитанные
     markMessagesAsRead();
+    // Сбрасываем локальный счётчик и обновляем панель
+    if (unreadCounts[user.device_id]) {
+        delete unreadCounts[user.device_id];
+        loadUsersOnline();
+    }
+    // Запускаем быстрый поллинг пока чат открыт
+    startChatPolling(2000);
 }
 
-function closeChat() { document.getElementById('chatModal').classList.remove('active'); chatPartnerId = null; }
+function closeChat() { 
+    document.getElementById('chatModal').classList.remove('active'); 
+    chatPartnerId = null; 
+    startChatPolling(15000);
+}
 
 async function sendMessage() {
     if (!chatPartnerId || !currentUser) return;
@@ -819,11 +855,18 @@ async function loadMessages() {
                 const time = new Date(msg.created_at);
                 const timeStr = time.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
                 
-                const readStatus = msg.from_device_id === currentUser.deviceId ? 
-                    (msg.read === 1 ? '<span class="read-status">✓✓ Прочитано</span>' : '<span class="read-status">✓</span>') : '';
+                // Для своих сообщений показываем статус прочтения
+                let readStatus = '';
+                if (msg.from_device_id === currentUser.deviceId) {
+                    if (msg.read === 1) {
+                        readStatus = `<span class="msg-read">${currentLang === 'rus' ? 'Прочитано' : 'Read'}</span>`;
+                    } else {
+                        readStatus = `<span class="msg-read" style="opacity:0.5;">${currentLang === 'rus' ? 'Доставлено' : 'Delivered'}</span>`;
+                    }
+                }
                 
                 div.innerHTML = `
-                    ${msg.message}
+                    <div class="msg-text">${msg.message}</div>
                     <div class="msg-meta">
                         <span class="msg-time">${timeStr}</span>
                         ${readStatus}
@@ -847,6 +890,21 @@ async function deleteMessage(messageId) {
         });
         loadMessages();
     } catch (e) {}
+}
+
+// ============ ПОЛЛИНГ ЧАТА / ЮЗЕРОВ ============
+function startChatPolling(intervalMs = 15000) {
+    stopChatPolling();
+    chatPollTimer = setInterval(() => {
+        if (chatPartnerId) {
+            loadMessages();
+            markMessagesAsRead();
+        }
+        loadUsersOnline();
+    }, intervalMs);
+}
+function stopChatPolling() {
+    if (chatPollTimer) { clearInterval(chatPollTimer); chatPollTimer = null; }
 }
 
 // ============ НАСТРОЙКИ ============
@@ -1040,7 +1098,7 @@ function renderServerTabs(servers) {
         tab.className = 'server-tab';
         tab.textContent = server.name;
         tab.onclick = () => showServerDetails(server);
-                tabsContainer.appendChild(tab);
+        tabsContainer.appendChild(tab);
     });
     if (!activeServerId || !onlineServers.find(s => s.id === activeServerId)) { activeServerId = onlineServers[0].id; }
     const active = onlineServers.find(s => s.id === activeServerId);
@@ -1202,6 +1260,7 @@ function closePrivilegeModalOutside(e) {
     if (e.target === e.currentTarget) closePrivilegeModal();
 }
 
+
 // ============ ИНИЦИАЛИЗАЦИЯ ============
 if (currentLang === 'rus') {
     document.querySelectorAll('[data-lang]').forEach(el => {
@@ -1221,12 +1280,13 @@ if (currentLang === 'rus') {
 
 fetchServerStatus();
 setInterval(fetchServerStatus, REFRESH_INTERVAL);
-setInterval(loadUsersOnline, 45000);
+setInterval(loadUsersOnline, 15000);
 setInterval(loadDailyReward, 30000);
 setInterval(updateActivity, 30000);
 updateAuthUI();
 loadUsersOnline();
 loadDailyReward();
+if (isLoggedIn) startChatPolling(15000);
 
 document.getElementById('avatarFile').addEventListener('change', function(e) {
     const file = e.target.files[0];
