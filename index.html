@@ -185,7 +185,7 @@
         .status-online { color:var(--green); font-weight:700; animation:softGlowGreen 2s ease-in-out infinite; font-size:9px; }
         .status-today { color:var(--silver); font-weight:700; animation:softGlowGray 2s ease-in-out infinite; font-size:9px; }
         .status-ingame { color:var(--green); font-weight:700; animation:softGlowGreen 2s ease-in-out infinite; font-size:9px; }
-        .unread-badge-svg { position:absolute; top:-5px; right:-5px; width:18px; height:18px; filter:drop-shadow(0 0 3px rgba(255,0,0,0.7)); pointer-events:none; z-index:2; }
+        .unread-badge { position:absolute; top:-4px; right:-4px; background:var(--red); color:#fff; width:16px; height:16px; border-radius:50%; font-size:9px; display:flex; align-items:center; justify-content:center; font-weight:700; box-shadow:0 0 6px rgba(255,0,0,0.6); }
         .daily-reward-panel { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:16px; padding:12px; margin-top:12px; }
         .daily-reward-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
         .daily-reward-header img { width:40px; height:40px; }
@@ -210,7 +210,7 @@
         .chat-message .msg-text { margin-bottom:4px; }
         .chat-message .msg-meta { display:flex; justify-content:space-between; align-items:center; gap:6px; font-size:9px; }
         .chat-message .msg-time { color:var(--text-dim); }
-        .chat-message .read-status { color:#ffffff; font-size:9px; font-weight:600; opacity:0.85; }
+        .chat-message .msg-read { color:var(--green); font-size:8px; }
         .chat-message .delete-msg { position:absolute; top:2px; right:4px; background:transparent; border:none; cursor:pointer; display:none; }
         .chat-message:hover .delete-msg { display:block; }
         .chat-message .delete-msg img { width:14px; height:14px; }
@@ -467,7 +467,6 @@
     let isLoggedIn = false;
     let currentUser = null;
     let chatPartnerId = null;
-    let chatRefreshInterval = null;
     let unreadMessages = {};
 
     try {
@@ -670,18 +669,6 @@ async function loadUsersOnline() {
             const todayStart = new Date();
             todayStart.setHours(0, 0, 0, 0);
             
-            // ОДИН запрос — все счётчики непрочитанных
-            let unreadCounts = {};
-            if (currentUser && currentUser.deviceId) {
-                try {
-                    const unreadResponse = await fetch(`https://kontra-status.avalon-kontra.workers.dev/unread_counts?deviceId=${currentUser.deviceId}`);
-                    const unreadData = await unreadResponse.json();
-                    if (unreadData.ok && unreadData.counts) {
-                        unreadCounts = unreadData.counts;
-                    }
-                } catch (e) {}
-            }
-            
             const sortedUsers = data.users.sort((a, b) => {
                 const aPrivileged = a.prefix ? 0 : 1;
                 const bPrivileged = b.prefix ? 0 : 1;
@@ -695,7 +682,17 @@ async function loadUsersOnline() {
             });
             
             for (const user of sortedUsers) {
-                const unreadCount = Number(unreadCounts[user.device_id] || 0);
+                // Получаем количество непрочитанных от этого пользователя
+                let unreadCount = 0;
+                if (currentUser && currentUser.deviceId) {
+                    try {
+                        const unreadResponse = await fetch(`https://kontra-status.avalon-kontra.workers.dev/get_unread?deviceId=${currentUser.deviceId}&fromDeviceId=${user.device_id}`);
+                        const unreadData = await unreadResponse.json();
+                        if (unreadData.ok) {
+                            unreadCount = unreadData.count || 0;
+                        }
+                    } catch (e) {}
+                }
                 
                 const item = document.createElement('div');
                 item.className = 'user-item';
@@ -705,7 +702,7 @@ async function loadUsersOnline() {
                 if (user.in_game) {
                     statusHtml = '<span class="status-ingame" data-lang="rus">"В игре"</span><span class="status-ingame hidden" data-lang="eng">"In game"</span>';
                 }
-                const unreadBadge = unreadCount > 0 ? buildUnreadBadgeSVG(unreadCount) : '';
+                const unreadBadge = unreadCount > 0 ? `<span class="unread-badge">${unreadCount > 9 ? '9+' : unreadCount}</span>` : '';
                 
                 item.innerHTML = `
                     <div class="user-item-avatar">
@@ -737,23 +734,12 @@ async function loadUsersOnline() {
                 }
             }
             
+            // Применяем текущий язык
             document.querySelectorAll('[data-lang]').forEach(el => {
                 el.classList.toggle('hidden', el.getAttribute('data-lang') !== currentLang);
             });
         }
     } catch (e) {}
-}
-
-function buildUnreadBadgeSVG(count) {
-    const text = count > 9 ? '9+' : String(count);
-    return `
-        <svg class="unread-badge-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="9" fill="#ff0000" stroke="#0a0a12" stroke-width="1.5"/>
-            <text x="10" y="10" text-anchor="middle" dominant-baseline="central"
-                  font-family="Inter, sans-serif" font-size="${text.length > 1 ? 8 : 10}"
-                  font-weight="700" fill="#ffffff">${text}</text>
-        </svg>
-    `;
 }
 
 // ============ ЕЖЕДНЕВНАЯ НАГРАДА ============
@@ -796,13 +782,13 @@ async function sendMessage() {
     const input = document.getElementById('chatInput');
     const message = input.value.trim();
     if (!message) return;
-    input.value = '';
     try {
         await fetch('https://kontra-status.avalon-kontra.workers.dev/send_message', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ fromDeviceId: currentUser.deviceId, toDeviceId: chatPartnerId, message: message })
         });
+        input.value = '';
         loadMessages();
     } catch (e) {}
 }
@@ -824,8 +810,6 @@ async function loadMessages() {
         const response = await fetch(`https://kontra-status.avalon-kontra.workers.dev/get_messages?fromDeviceId=${currentUser.deviceId}&toDeviceId=${chatPartnerId}`);
         const data = await response.json();
         const chatMessages = document.getElementById('chatMessages');
-        // Запоминаем позицию скролла, чтобы не прыгало при автообновлении
-        const wasAtBottom = chatMessages.scrollHeight - chatMessages.scrollTop - chatMessages.clientHeight < 40;
         chatMessages.innerHTML = '';
         if (data.ok && data.messages) {
             data.messages.forEach(msg => {
@@ -835,13 +819,11 @@ async function loadMessages() {
                 const time = new Date(msg.created_at);
                 const timeStr = time.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
                 
-                let readStatus = '';
-                if (msg.from_device_id === currentUser.deviceId && Number(msg.read) === 1) {
-                    readStatus = '<span class="read-status" data-lang="rus">Прочитано</span><span class="read-status hidden" data-lang="eng">Read</span>';
-                }
+                const readStatus = msg.from_device_id === currentUser.deviceId ? 
+                    (msg.read === 1 ? '<span class="read-status">✓✓ Прочитано</span>' : '<span class="read-status">✓</span>') : '';
                 
                 div.innerHTML = `
-                    <div class="msg-text">${msg.message}</div>
+                    ${msg.message}
                     <div class="msg-meta">
                         <span class="msg-time">${timeStr}</span>
                         ${readStatus}
@@ -850,10 +832,7 @@ async function loadMessages() {
                 `;
                 chatMessages.appendChild(div);
             });
-            if (wasAtBottom) chatMessages.scrollTop = chatMessages.scrollHeight;
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                el.classList.toggle('hidden', el.getAttribute('data-lang') !== currentLang);
-            });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
     } catch (e) {}
 }
@@ -1119,14 +1098,23 @@ function openPrivilegeModal(type) {
             ${data.prices.map(p => `<div class="privilege-price-item"><span>${p[0]}</span><span>${p[1]}</span></div>`).join('')}
         </div>
         <div class="privilege-section">
-            <div class="privilege-section-title">${currentLang === 'rus' ? 'Способы оплаты' : 'Payment methods'}</div>
-            <div class="privilege-feature">${currentLang === 'rus' ? 'Через Click [UZS]' : 'Via Click [UZS]'}</div>
-            <div class="privilege-feature">${currentLang === 'rus' ? 'Россия и СНГ: Т-Банк' : 'Russia & CIS: T-Bank'}</div>
-            <div class="privilege-feature">${currentLang === 'rus' ? 'Международные переводы: VISA' : 'International transfers: VISA'}</div>
+            <div class="privilege-section-title">${currentLang === 'rus' ? 'Способы оплаты:' : 'Payment methods:'}</div>
+            <div class="privilege-feature">Click [UZS]</div>
+            <div class="privilege-feature">${currentLang === 'rus' ? 'Т-Банк (Россия и СНГ)' : 'T-Bank (Russia & CIS)'}</div>
+            <div class="privilege-feature">${currentLang === 'rus' ? 'VISA (международные переводы)' : 'VISA (international transfers)'}</div>
         </div>
         <div class="privilege-section">
-            <div class="privilege-section-title">${currentLang === 'rus' ? 'Связь' : 'Contact'}</div>
+            <div class="privilege-section-title">${currentLang === 'rus' ? 'Свяжитесь чтобы купить привилегию:' : 'Contact to buy privilege:'}</div>
             <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @emoj_11</a>
+        </div>
+        <div class="privilege-section">
+            <div class="privilege-section-title">${currentLang === 'rus' ? 'Другой способ оплаты:' : 'Other payment method:'}</div>
+            <div class="privilege-feature">Paypal</div>
+            <div class="privilege-feature">Ko-fi.com</div>
+        </div>
+        <div class="privilege-section">
+            <div class="privilege-section-title">${currentLang === 'rus' ? 'Свяжитесь чтобы купить привилегию:' : 'Contact to buy privilege:'}</div>
+            <a href="https://t.me/akythu" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @akythu</a>
         </div>
         <div class="privilege-section">
             <div class="privilege-section-title">| ${data.name} ${currentLang === 'rus' ? 'Возможности' : 'Features'} |</div>
