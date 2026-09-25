@@ -7,8 +7,8 @@
     <style>
         * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@400;600;700;900&display=swap');
-        :root { --bg:#0a0a12; --glass-bg:rgba(255,255,255,0.04); --glass-border:rgba(255,255,255,0.1); --text:#c0c0d8; --text-dim:#7a7a9a; --text-bright:#f0f0f0; --accent:#4cc9f0; --accent2:#9b7bff; --accent3:#ff6b9d; --green:#2ecc71; --red:#ff4757; --orange:#ff9f43; --gold:#ffd700; --silver:#e0e0e0; --lime:#39ff14; --vip-glow:0 0 18px rgba(255,107,157,0.7); --premium-glow:0 0 18px rgba(224,224,224,0.6); --deluxe-glow:0 0 18px rgba(255,215,0,0.7); }
-        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; justify-content:center; padding:25px 15px; background-image:radial-gradient(ellipse at 15% 25%,rgba(76,201,240,0.06),transparent 55%),radial-gradient(ellipse at 85% 75%,rgba(155,123,255,0.08),transparent 55%),radial-gradient(ellipse at 50% 50%,rgba(255,107,157,0.04),transparent 70%); }
+        :root { --bg:#0a0a12; --glass-bg:rgba(255,255,255,0.04); --glass-border:rgba(255,255,255,0.1); --text:#c0c0d8; --text-dim:#7a7a9a; --text-bright:#f0f0f0; --accent:#4cc9f0; --accent2:#9b7bff; --accent3:#ff6b9d; --green:#2ecc71; --red:#ff4757; --orange:#ff9f43; --gold:#ffd700; --silver:#e0e0e0; --lime:#39ff14; }
+        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; justify-content:center; padding:25px 15px 100px; background-image:radial-gradient(ellipse at 15% 25%,rgba(76,201,240,0.06),transparent 55%),radial-gradient(ellipse at 85% 75%,rgba(155,123,255,0.08),transparent 55%),radial-gradient(ellipse at 50% 50%,rgba(255,107,157,0.04),transparent 70%); }
         @keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 8px rgba(46,204,113,0.5)} 50%{opacity:0.7;transform:scale(0.8);box-shadow:0 0 15px rgba(46,204,113,0.8)} }
         @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
         @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
@@ -20,7 +20,7 @@
         @keyframes softGlowGreen { 0%,100%{text-shadow:0 0 8px rgba(46,204,113,0.6)} 50%{text-shadow:0 0 15px rgba(46,204,113,0.9)} }
         @keyframes softGlowGray { 0%,100%{text-shadow:0 0 8px rgba(192,192,192,0.5)} 50%{text-shadow:0 0 15px rgba(192,192,192,0.8)} }
         @keyframes softGlowLime { 0%,100%{text-shadow:0 0 8px rgba(57,255,20,0.6)} 50%{text-shadow:0 0 15px rgba(57,255,20,0.9)} }
-        @keyframes rconSlideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes consoleSlide { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
         .container { max-width:500px; width:100%; }
         .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding:0 4px; gap:10px; }
         .logo { font-family:'Orbitron',sans-serif; font-weight:900; font-size:20px; color:#fff; flex-shrink:0; text-shadow:0 0 15px rgba(255,255,255,0.3); }
@@ -52,11 +52,10 @@
         .avatar-wrap svg { width:100%; height:100%; display:block; filter:drop-shadow(0 0 12px rgba(255,255,255,0.2)); }
         .divider { width:50px; height:1px; margin:0 auto 12px; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3)); opacity:0.6; }
         .cta-row { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
-        .btn { font-weight:600; font-size:9px; letter-spacing:0.04em; text-transform:uppercase; text-decoration:none; padding:8px 13px; border-radius:30px; border:1px solid var(--glass-border); color:var(--text); background:rgba(255,255,255,0.03); transition:all 0.3s; display:inline-flex; align-items:center; gap:5px; cursor:pointer; font-family:'Inter',sans-serif; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+        .btn { font-weight:600; font-size:9px; letter-spacing:0.04em; text-transform:uppercase; text-decoration:none; padding:8px 13px; border-radius:30px; border:1px solid var(--glass-border); color:var(--text); background:rgba(255,255,255,0.03); transition:all 0.3s; display:inline-flex; align-items:center; gap:5px; cursor:pointer; font-family:'Inter',sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
         .btn img { width:12px; height:12px; flex-shrink:0; }
         .btn svg { width:12px; height:12px; flex-shrink:0; }
         .btn:hover { transform:translateY(-1px); }
-        .btn:active { animation:btnPress 0.3s; background: inherit; color: inherit; }
         .btn-telegram { border-color:rgba(76,201,240,0.4); color:#4cc9f0; }
         .btn-telegram svg { fill:#4cc9f0; }
         .btn-discord { border-color:rgba(88,101,242,0.4); color:#5865F2; }
@@ -66,7 +65,6 @@
         .btn-youtube { border-color:rgba(255,0,0,0.3); color:#ff4444; }
         .btn-youtube svg { fill:#ff4444; }
         .btn-privilege { border-color:rgba(255,215,0,0.5); color:#ffd700; background:rgba(255,215,0,0.08); }
-        .btn-privilege img { filter:drop-shadow(0 0 4px gold); }
         .btn-admin { border-color:rgba(155,123,255,0.5); color:#9b7bff; background:rgba(155,123,255,0.08); }
         .toggle-panel { max-height:0; overflow:hidden; transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s; opacity:0; margin-top:0; }
         .toggle-panel.open { max-height:1000px; opacity:1; margin-top:12px; animation:slideDown 0.5s ease; }
@@ -77,20 +75,19 @@
         .privilege-name { font-weight:800; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; }
         .vip-card { background:linear-gradient(145deg, rgba(255,107,157,0.35) 0%, rgba(255,107,157,0.12) 50%, rgba(255,107,157,0.25) 100%); border-color:rgba(255,107,157,0.4); }
         .vip-card svg { fill:#ff8aae; color:#ff8aae; }
-        .vip-card .privilege-name { color:#ffc2d4; text-shadow:var(--vip-glow); }
+        .vip-card .privilege-name { color:#ffc2d4; text-shadow:0 0 18px rgba(255,107,157,0.7); }
         .premium-card { background:linear-gradient(145deg, rgba(192,192,192,0.3) 0%, rgba(192,192,192,0.1) 50%, rgba(192,192,192,0.2) 100%); border-color:rgba(224,224,224,0.35); }
         .premium-card svg { fill:#f0f0f0; color:#f0f0f0; }
-        .premium-card .privilege-name { color:#ffffff; text-shadow:var(--premium-glow); }
+        .premium-card .privilege-name { color:#ffffff; text-shadow:0 0 18px rgba(224,224,224,0.6); }
         .deluxe-card { background:linear-gradient(145deg, rgba(255,215,0,0.35) 0%, rgba(255,215,0,0.12) 50%, rgba(255,215,0,0.25) 100%); border-color:rgba(255,215,0,0.45); }
         .deluxe-card svg { fill:#ffd700; color:#ffd700; }
-        .deluxe-card .privilege-name { color:#fff5cc; text-shadow:var(--deluxe-glow); }
+        .deluxe-card .privilege-name { color:#fff5cc; text-shadow:0 0 18px rgba(255,215,0,0.7); }
         .admin-list { display:flex; flex-direction:column; gap:8px; }
         .admin-item { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:14px; padding:12px 14px; backdrop-filter:blur(8px); }
         .admin-item .admin-name { font-weight:700; font-size:14px; color:#fff; }
         .admin-item .admin-role { font-size:10px; color:var(--accent); font-weight:600; letter-spacing:0.04em; text-transform:uppercase; margin-top:3px; }
         .admin-item .admin-duty { font-size:11px; color:var(--text-dim); margin-top:4px; line-height:1.4; }
-        .admin-item .admin-contact { display:inline-block; margin-top:6px; font-size:12px; color:var(--accent); text-decoration:none; font-weight:600; transition:color 0.3s; }
-        .admin-item .admin-contact:hover { color:#fff; }
+        .admin-item .admin-contact { display:inline-block; margin-top:6px; font-size:12px; color:var(--accent); text-decoration:none; font-weight:600; }
         .admin-item .admin-contact.locked { color:var(--text-dim); cursor:default; }
         .servers-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; padding:14px 12px 6px; margin-top:10px; backdrop-filter:blur(20px); }
         .server-item { margin-bottom:8px; }
@@ -115,7 +112,6 @@
         .server-tabs-container { margin-top:14px; padding:10px 8px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.06); }
         .server-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
         .server-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text); padding:6px 14px; border-radius:20px; font-size:9px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; white-space:nowrap; -webkit-tap-highlight-color: transparent; }
-        .server-tab:hover { border-color:var(--accent); color:var(--accent); }
         .server-tab.active { background:linear-gradient(135deg, rgba(76,201,240,0.2), rgba(123,92,255,0.2)); border-color:var(--accent); color:#fff; box-shadow:0 0 15px rgba(76,201,240,0.3); }
         .server-detail-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:12px; margin-bottom:10px; display:grid; grid-template-columns:1fr 1fr; gap:6px; }
         .detail-row { display:flex; justify-content:space-between; font-size:11px; padding:2px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
@@ -124,17 +120,14 @@
         .teams-container { display:flex; gap:12px; margin-top:12px; }
         .team-column { flex:1; background:rgba(255,255,255,0.02); border-radius:10px; padding:8px; }
         .team-header { display:flex; align-items:center; gap:5px; font-size:11px; font-weight:700; margin-bottom:6px; }
-        .team-header svg { width:14px; height:14px; }
         .players-table { width:100%; border-collapse:collapse; font-size:10px; }
         .players-table th { background:rgba(255,255,255,0.05); color:var(--text-dim); padding:5px; text-align:left; font-weight:600; }
         .players-table td { padding:5px; border-bottom:1px solid rgba(255,255,255,0.04); }
-        .players-table tr:last-child td { border-bottom:none; }
-        .privilege-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:999; justify-content:center; align-items:center; padding:20px; animation:modalBg 0.3s ease; }
+        .privilege-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:999; justify-content:center; align-items:center; padding:20px; }
         .privilege-modal-overlay.active { display:flex; }
-        .privilege-modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:480px; width:100%; max-height:80vh; overflow-y:auto; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; box-shadow:0 0 60px rgba(0,0,0,0.5); }
-        .privilege-modal-close { position:absolute; top:14px; right:16px; background:transparent; border:none; color:var(--text-dim); font-size:24px; cursor:pointer; transition:color 0.3s; font-family:'Inter',sans-serif; -webkit-tap-highlight-color: transparent; }
-        .privilege-modal-close:hover { color:#fff; }
-        .privilege-modal-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:18px; text-align:center; margin-bottom:12px; letter-spacing:0.02em; }
+        .privilege-modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:480px; width:100%; max-height:80vh; overflow-y:auto; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; }
+        .privilege-modal-close { position:absolute; top:14px; right:16px; background:transparent; border:none; color:var(--text-dim); font-size:24px; cursor:pointer; }
+        .privilege-modal-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:18px; text-align:center; margin-bottom:12px; }
         .privilege-modal-divider { width:60px; height:2px; margin:0 auto 20px; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3)); opacity:0.7; }
         .privilege-section { margin-bottom:18px; }
         .privilege-section-title { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-dim); margin-bottom:8px; }
@@ -143,35 +136,29 @@
         .privilege-price-item span:last-child { color:var(--text-bright); font-weight:600; }
         .privilege-feature { font-size:12px; padding:3px 0; line-height:1.4; position:relative; padding-left:16px; }
         .privilege-feature::before { content:"▸"; position:absolute; left:0; color:var(--accent); }
-        .privilege-contact-link { display:inline-flex; align-items:center; gap:6px; color:var(--accent); text-decoration:none; font-weight:600; font-size:13px; transition:color 0.3s; -webkit-tap-highlight-color: transparent; }
-        .privilege-contact-link:hover { color:#fff; }
+        .privilege-contact-link { display:inline-flex; align-items:center; gap:6px; color:var(--accent); text-decoration:none; font-weight:600; font-size:13px; }
         .privilege-contact-link svg { width:16px; height:16px; fill:var(--accent); }
-        .privilege-server-header { text-align:center; font-size:11px; color:var(--text-dim); margin-bottom:6px; letter-spacing:0.04em; }
+        .privilege-server-header { text-align:center; font-size:11px; color:var(--text-dim); margin-bottom:6px; }
         .privilege-image { width:100%; border-radius:8px; margin-bottom:10px; }
-        .buy-now-btn { width:100%; background:linear-gradient(135deg, var(--gold), var(--orange)); border:none; border-radius:12px; padding:12px; color:#fff; font-weight:800; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.08em; text-transform:uppercase; transition:opacity 0.3s; margin-bottom:15px; -webkit-tap-highlight-color: transparent; }
-        .buy-now-btn:hover { opacity:0.9; }
-        .plan-btn { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:10px; color:var(--text-bright); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; margin-bottom:8px; transition:all 0.3s; -webkit-tap-highlight-color: transparent; }
-        .plan-btn:hover { border-color:var(--accent); background:rgba(76,201,240,0.1); }
-        .plan-cancel { width:100%; background:transparent; border:1px solid rgba(255,0,0,0.4); border-radius:12px; padding:10px; color:#ff4444; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; margin-top:5px; transition:all 0.3s; -webkit-tap-highlight-color: transparent; }
-        .plan-cancel:hover { background:rgba(255,0,0,0.1); }
+        .buy-now-btn { width:100%; background:linear-gradient(135deg, var(--gold), var(--orange)); border:none; border-radius:12px; padding:12px; color:#fff; font-weight:800; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:15px; }
+        .plan-btn { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:10px; color:var(--text-bright); font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; margin-bottom:8px; }
+        .plan-cancel { width:100%; background:transparent; border:1px solid rgba(255,0,0,0.4); border-radius:12px; padding:10px; color:#ff4444; font-weight:600; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; margin-top:5px; }
         .auth-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:998; justify-content:center; align-items:center; padding:20px; }
         .auth-modal-overlay.active { display:flex; }
-                .auth-modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:400px; width:100%; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; }
-        .auth-modal-close { position:absolute; top:14px; right:16px; background:transparent; border:none; color:var(--text-dim); font-size:24px; cursor:pointer; -webkit-tap-highlight-color: transparent; }
-        .auth-modal-close:hover { color:#fff; }
+        .auth-modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:400px; width:100%; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; }
+        .auth-modal-close { position:absolute; top:14px; right:16px; background:transparent; border:none; color:var(--text-dim); font-size:24px; cursor:pointer; }
         .auth-modal-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:16px; text-align:center; margin-bottom:16px; }
         .auth-input { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:8px 12px; color:var(--text-bright); font-size:13px; margin-bottom:10px; outline:none; font-family:'Inter',sans-serif; }
         .auth-input:focus { border-color:var(--accent); }
-        .auth-submit { width:100%; background:linear-gradient(135deg, var(--accent), var(--accent2)); border:none; border-radius:12px; padding:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.05em; text-transform:uppercase; transition:opacity 0.3s; -webkit-tap-highlight-color: transparent; }
-        .auth-submit:hover { opacity:0.9; }
+        .auth-submit { width:100%; background:linear-gradient(135deg, var(--accent), var(--accent2)); border:none; border-radius:12px; padding:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.05em; text-transform:uppercase; }
         .users-panel { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:16px; padding:12px; margin-top:12px; }
         .users-panel-header { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
-        .users-panel-header img { width:40px; height:40px; }
+                .users-panel-header img { width:40px; height:40px; }
         .users-panel-header span { font-size:11px; font-weight:700; color:var(--text-bright); }
         .users-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; max-height:300px; overflow-y:auto; }
-        .user-item { display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px; border-radius:10px; background:rgba(255,255,255,0.03); cursor:pointer; transition:background 0.3s; position:relative; -webkit-tap-highlight-color: transparent; }
+        .user-item { display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px; border-radius:10px; background:rgba(255,255,255,0.03); cursor:pointer; position:relative; }
         .user-item:hover { background:rgba(255,255,255,0.08); }
-        .user-item-avatar { width:40px; height:40px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.2); position:relative; }
+        .user-item-avatar { width:40px; height:40px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.2); }
         .user-item-avatar img { width:100%; height:100%; object-fit:cover; }
         .user-item-avatar svg { width:20px; height:20px; fill:var(--text-bright); }
         .user-item-name { font-size:10px; font-weight:600; color:var(--text-bright); max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -194,83 +181,77 @@
         .chat-user-avatar img { width:100%; height:100%; object-fit:cover; }
         .chat-user-avatar svg { width:16px; height:16px; fill:var(--text-bright); }
         .chat-user-name { font-size:13px; font-weight:700; color:var(--text-bright); }
-        .chat-close { background:transparent; border:none; cursor:pointer; -webkit-tap-highlight-color: transparent; }
+        .chat-close { background:transparent; border:none; cursor:pointer; }
         .chat-close img { width:24px; height:24px; }
         .chat-messages { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:8px; }
         .chat-message { max-width:70%; padding:8px 12px; border-radius:12px; font-size:12px; word-wrap:break-word; position:relative; }
         .chat-message.mine { align-self:flex-end; background:rgba(76,201,240,0.2); }
         .chat-message.theirs { align-self:flex-start; background:rgba(255,255,255,0.05); }
-        .chat-message .msg-text { margin-bottom:4px; }
         .chat-message .msg-meta { display:flex; justify-content:space-between; align-items:center; gap:6px; font-size:9px; }
         .chat-message .msg-time { color:var(--text-dim); }
-        .chat-message .msg-read { color:var(--green); font-size:8px; }
         .chat-message .delete-msg { position:absolute; top:2px; right:4px; background:transparent; border:none; cursor:pointer; display:none; }
         .chat-message:hover .delete-msg { display:block; }
         .chat-message .delete-msg img { width:14px; height:14px; }
         .chat-input-area { display:flex; gap:8px; padding:12px; border-top:1px solid rgba(255,255,255,0.1); }
         .chat-input { flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:8px 12px; color:var(--text-bright); font-size:13px; outline:none; font-family:'Inter',sans-serif; }
-        .chat-send { background:var(--accent); border:none; border-radius:12px; padding:8px 14px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; -webkit-tap-highlight-color: transparent; }
+        .chat-send { background:var(--accent); border:none; border-radius:12px; padding:8px 14px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; }
 
-        /* ====== BOTTOM BAR (v18) ====== */
-        .bottom-bar { display:grid; grid-template-columns:repeat(4, 1fr); gap:6px; margin-top:14px; margin-bottom:6px; }
-        .bottom-btn { height:44px; display:flex; align-items:center; justify-content:center; padding:0 6px; border-radius:12px; border:1px solid rgba(155,123,255,0.45); background:rgba(155,123,255,0.1); color:#b9a4ff; font-family:'Inter',sans-serif; font-size:9px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; -webkit-tap-highlight-color: transparent; text-align:center; line-height:1.2; }
-        .bottom-btn:hover { background:rgba(155,123,255,0.25); color:#fff; box-shadow:0 0 15px rgba(155,123,255,0.3); }
-        .bottom-btn:active { animation:btnPress 0.3s; }
-        .bottom-btn.muted { border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.02); color:var(--text-dim); cursor:default; }
-        .bottom-btn.muted:hover { background:rgba(255,255,255,0.04); color:var(--text-dim); box-shadow:none; }
+        /* ===== НИЖНЯЯ ПАНЕЛЬ 4 КНОПКИ ===== */
+        .bottom-bar { position:fixed; left:0; right:0; bottom:0; background:rgba(15,15,25,0.95); backdrop-filter:blur(20px); border-top:1px solid rgba(255,255,255,0.1); display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px; padding:10px 12px; z-index:900; }
+        .bottom-btn { background:rgba(76,201,240,0.08); border:1px solid rgba(76,201,240,0.35); color:#4cc9f0; padding:12px 6px; border-radius:12px; font-family:'Inter',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; min-height:46px; display:flex; align-items:center; justify-content:center; text-align:center; user-select:none; }
+        .bottom-btn:hover { background:rgba(76,201,240,0.18); }
+        .bottom-btn.soon { background:rgba(255,255,255,0.03); border-color:rgba(255,255,255,0.12); color:var(--text-dim); cursor:default; }
+        .bottom-btn.soon:hover { background:rgba(255,255,255,0.03); }
+        .bottom-btn.console-btn { background:linear-gradient(135deg, rgba(155,123,255,0.15), rgba(76,201,240,0.15)); border-color:rgba(155,123,255,0.5); color:#c0b0ff; }
+        .bottom-btn.console-btn:hover { background:linear-gradient(135deg, rgba(155,123,255,0.3), rgba(76,201,240,0.3)); }
 
-        /* ====== ADMIN CONSOLE (v18) ====== */
-        .rcon-overlay { display:none; position:fixed; inset:0; background:rgba(8,8,16,0.98); backdrop-filter:blur(12px); z-index:2000; padding:20px; overflow-y:auto; }
-        .rcon-overlay.active { display:block; animation:modalBg 0.25s ease; }
-        .rcon-close { position:fixed; top:18px; right:18px; width:52px; height:52px; border-radius:50%; background:rgba(255,71,87,0.12); border:2px solid var(--red); color:var(--red); font-size:26px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.3s; font-family:'Inter',sans-serif; line-height:1; z-index:2010; -webkit-tap-highlight-color: transparent; }
-        .rcon-close:hover { background:var(--red); color:#fff; box-shadow:0 0 25px rgba(255,71,87,0.6); transform:scale(1.05); }
-        .rcon-container { max-width:900px; margin:0 auto; padding-top:70px; animation:rconSlideUp 0.4s ease; }
-        .rcon-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
-        .rcon-header-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:18px; color:#fff; letter-spacing:0.04em; }
-        .rcon-header-badge { font-size:10px; font-weight:700; color:var(--green); padding:3px 10px; border:1px solid var(--green); border-radius:20px; background:rgba(46,204,113,0.08); animation:softGlowGreen 2s ease-in-out infinite; }
-        .rcon-black-panel { background:#000; color:#00ff00; font-family:'Courier New','Consolas',monospace; font-size:12.5px; padding:14px 16px; border-radius:10px; border:1px solid rgba(0,255,0,0.25); min-height:340px; max-height:55vh; overflow-y:auto; line-height:1.65; box-shadow:inset 0 0 30px rgba(0,255,0,0.06); }
-        .rcon-black-panel::-webkit-scrollbar { width:8px; }
-        .rcon-black-panel::-webkit-scrollbar-track { background:rgba(0,255,0,0.05); }
-        .rcon-black-panel::-webkit-scrollbar-thumb { background:rgba(0,255,0,0.35); border-radius:4px; }
-        .rcon-line { white-space:pre-wrap; word-break:break-word; }
-        .rcon-line .c-ok { color:#39ff14; font-weight:700; }
-        .rcon-line .c-fail { color:#ff4757; font-weight:700; }
-        .rcon-line .c-dim { color:#4a7a4a; }
-        .rcon-line .c-user { color:#4cc9f0; font-weight:700; }
-        .rcon-line .c-cmd { color:#ffd700; font-weight:700; }
-        .rcon-empty { color:#2a5a2a; font-style:italic; }
-        .rcon-bindings { display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-top:14px; }
-        .rcon-bind-btn { height:52px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px; border-radius:12px; border:2px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.03); color:var(--text-dim); font-family:'Inter',sans-serif; font-size:10px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; -webkit-tap-highlight-color: transparent; }
-        .rcon-bind-btn .bind-name { font-size:12px; }
-        .rcon-bind-btn .bind-state { font-size:8px; font-weight:700; letter-spacing:0.06em; opacity:0.85; }
-        .rcon-bind-btn.bound { border-color:var(--green); color:#fff; background:rgba(46,204,113,0.12); box-shadow:0 0 18px rgba(46,204,113,0.25); }
-        .rcon-bind-btn.bound .bind-state { color:var(--green); }
-        .rcon-bind-btn.unbound { border-color:rgba(255,71,87,0.35); color:var(--text-dim); background:rgba(255,71,87,0.05); }
-        .rcon-bind-btn.unbound .bind-state { color:rgba(255,71,87,0.75); }
-        .rcon-bind-btn:hover { transform:translateY(-2px); }
-        .rcon-input-row { display:flex; gap:10px; margin-top:14px; }
-        .rcon-input { flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:12px 14px; color:var(--text-bright); font-size:13px; outline:none; font-family:'Courier New',monospace; letter-spacing:0.02em; }
-        .rcon-input:focus { border-color:var(--green); box-shadow:0 0 15px rgba(46,204,113,0.2); }
-        .rcon-send { background:linear-gradient(135deg,#2ecc71,#27ae60); border:none; border-radius:12px; padding:0 22px; color:#fff; font-weight:800; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.3s; -webkit-tap-highlight-color: transparent; }
-        .rcon-send:hover { transform:translateY(-1px); box-shadow:0 0 20px rgba(46,204,113,0.5); }
-        .rcon-send:active { animation:btnPress 0.3s; }
-        .rcon-hint { font-size:10px; color:var(--text-dim); margin-top:8px; text-align:center; letter-spacing:0.02em; }
+        /* ===== КОНСОЛЬ ===== */
+        .console-overlay { display:none; position:fixed; inset:0; background:#0a0a12; z-index:2000; flex-direction:column; padding:20px; animation:consoleSlide 0.3s ease; }
+        .console-overlay.active { display:flex; }
+        .console-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+        .console-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:20px; color:#fff; letter-spacing:0.05em; }
+        .console-close { background:rgba(255,71,87,0.15); border:1px solid rgba(255,71,87,0.5); color:#ff4757; width:48px; height:48px; border-radius:12px; font-size:28px; font-weight:300; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; transition:all 0.3s; line-height:1; }
+        .console-close:hover { background:rgba(255,71,87,0.3); color:#fff; }
+        .console-history { flex:1; background:#000; border:1px solid rgba(57,255,20,0.3); border-radius:12px; padding:14px; overflow-y:auto; font-family:'Courier New',monospace; font-size:13px; color:#39ff14; line-height:1.6; margin-bottom:12px; }
+        .console-history .empty { color:rgba(57,255,20,0.4); font-style:italic; }
+        .console-history .h-line { padding:3px 0; border-bottom:1px solid rgba(57,255,20,0.08); word-break:break-all; }
+        .console-history .h-line .h-time { color:rgba(57,255,20,0.5); }
+        .console-history .h-line .h-user { color:#39ff14; font-weight:700; }
+        .console-history .h-line .h-cmd { color:#b4ffb4; }
+        .console-history .h-line .h-status { color:rgba(57,255,20,0.7); }
+        .console-input-row { display:flex; gap:8px; margin-bottom:12px; }
+        .console-input { flex:1; background:rgba(57,255,20,0.05); border:1px solid rgba(57,255,20,0.4); border-radius:12px; padding:12px 16px; color:#39ff14; font-family:'Courier New',monospace; font-size:14px; outline:none; }
+        .console-input:focus { border-color:#39ff14; box-shadow:0 0 15px rgba(57,255,20,0.3); }
+        .console-input::placeholder { color:rgba(57,255,20,0.35); }
+        .console-exec { background:rgba(57,255,20,0.15); border:1px solid rgba(57,255,20,0.5); color:#39ff14; padding:12px 24px; border-radius:12px; font-family:'Orbitron',sans-serif; font-weight:700; font-size:13px; letter-spacing:0.05em; cursor:pointer; transition:all 0.3s; }
+        .console-exec:hover { background:rgba(57,255,20,0.3); }
+        .console-binds { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px; }
+        .bind-btn { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:12px 6px; font-family:'Inter',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.03em; cursor:pointer; transition:all 0.3s; color:var(--text-dim); text-align:center; user-select:none; min-height:50px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; }
+        .bind-btn .bind-name { font-size:11px; }
+        .bind-btn .bind-state { font-size:8px; opacity:0.8; }
+        .bind-btn.on { background:rgba(46,204,113,0.15); border-color:rgba(46,204,113,0.6); color:var(--green); }
+        .bind-btn.on .bind-state { color:var(--green); }
+        .bind-btn.off { background:rgba(255,71,87,0.08); border-color:rgba(255,71,87,0.4); color:var(--red); }
+        .bind-btn.off .bind-state { color:var(--red); }
 
         @media (max-width:400px) {
             .teams-container { flex-direction:column; }
-            .btn { padding:6px 10px; font-size:8px; } .btn img { width:10px; height:10px; } .btn svg { width:10px; height:10px; } .online-circle { width:40px; height:40px; } .online-circle .center-text { font-size:8px; } .online-circle .center-text .num { font-size:10px; } .name { font-size:11px; } .ip { font-size:10px; } .status { font-size:7px; } .privilege-grid { gap:5px; } .privilege-card { padding:8px 5px; } .privilege-card svg { width:26px; height:26px; } .privilege-name { font-size:9px; }
+            .btn { padding:6px 10px; font-size:8px; }
+            .online-circle { width:40px; height:40px; }
+            .name { font-size:11px; }
+            .privilege-grid { gap:5px; }
+            .privilege-card svg { width:26px; height:26px; }
+            .privilege-name { font-size:9px; }
             .privilege-modal { padding:20px 14px; }
             .chat-window { height:400px; }
             .users-grid { grid-template-columns:repeat(2, 1fr); }
             .map-image { width:60px; height:45px; }
-            .bottom-bar { gap:5px; }
-            .bottom-btn { height:42px; font-size:8px; padding:0 4px; }
-            .rcon-close { width:44px; height:44px; font-size:22px; top:12px; right:12px; }
-            .rcon-container { padding-top:60px; }
-            .rcon-bindings { gap:6px; }
-            .rcon-bind-btn { height:48px; font-size:9px; }
-            .rcon-bind-btn .bind-name { font-size:11px; }
-            .rcon-black-panel { font-size:11px; padding:10px 12px; min-height:260px; }
+            .bottom-bar { gap:5px; padding:8px; }
+            .bottom-btn { font-size:8px; padding:10px 3px; min-height:42px; }
+            .console-title { font-size:16px; }
+            .console-close { width:40px; height:40px; font-size:24px; }
+            .console-binds { grid-template-columns:1fr 1fr; }
+            .console-history { font-size:11px; }
         }
     </style>
 </head>
@@ -379,7 +360,7 @@
                 <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ IP</button>
             </div>
         </div>
-        <div class="server-item">
+                <div class="server-item">
             <div class="server-panel">
                 <div class="online-circle" data-server="ze" data-max="16" data-color="#ffd700">
                     <svg viewBox="0 0 50 50"><circle class="bg" cx="25" cy="25" r="20"/><circle class="fill" cx="25" cy="25" r="20" stroke="#ffd700" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
@@ -454,14 +435,38 @@
         </div>
         <div class="users-grid" id="usersList"></div>
     </div>
+</div>
 
-    <!-- ====== BOTTOM BAR (v18) ====== -->
-    <div class="bottom-bar">
-        <button class="bottom-btn" onclick="openRcon()" data-lang="eng">ADMIN CONSOLE</button>
-        <button class="bottom-btn" onclick="openRcon()" data-lang="rus">ADMIN Консоль</button>
-        <button class="bottom-btn muted" type="button">Скоро</button>
-        <button class="bottom-btn muted" type="button">Скоро</button>
-        <button class="bottom-btn muted" type="button">Скоро</button>
+<!-- ===== НИЖНЯЯ ПАНЕЛЬ С 4 КНОПКАМИ ===== -->
+<div class="bottom-bar">
+    <button class="bottom-btn console-btn" id="adminConsoleBtn" onclick="openAdminConsole()" data-lang="eng">Admin Console</button>
+    <button class="bottom-btn console-btn hidden" id="adminConsoleBtnRus" onclick="openAdminConsole()" data-lang="rus">Админ Консоль</button>
+    <button class="bottom-btn soon" data-lang="eng">Soon..</button>
+    <button class="bottom-btn soon hidden" data-lang="rus">Скоро..</button>
+    <button class="bottom-btn soon" data-lang="eng">Soon..</button>
+    <button class="bottom-btn soon hidden" data-lang="rus">Скоро..</button>
+    <button class="bottom-btn soon" data-lang="eng">Soon..</button>
+    <button class="bottom-btn soon hidden" data-lang="rus">Скоро..</button>
+</div>
+
+<!-- ===== КОНСОЛЬ ===== -->
+<div class="console-overlay" id="consoleOverlay">
+    <div class="console-header">
+        <span class="console-title">ADMIN CONSOLE</span>
+        <button class="console-close" onclick="closeAdminConsole()">&times;</button>
+    </div>
+    <div class="console-history" id="consoleHistory">
+        <div class="empty">История команд пуста...</div>
+    </div>
+    <div class="console-input-row">
+        <input class="console-input" id="consoleInput" placeholder="/command ..." autocomplete="off" spellcheck="false">
+        <button class="console-exec" onclick="execConsoleCommand()">RUN</button>
+    </div>
+    <div class="console-binds" id="consoleBinds">
+        <button class="bind-btn off" data-bind="zm" onclick="toggleBind('zm')"><span class="bind-name">ZM</span><span class="bind-state">Не привязан</span></button>
+        <button class="bind-btn off" data-bind="ze" onclick="toggleBind('ze')"><span class="bind-name">ZE</span><span class="bind-state">Не привязан</span></button>
+        <button class="bind-btn off" data-bind="dm" onclick="toggleBind('dm')"><span class="bind-name">DM</span><span class="bind-state">Не привязан</span></button>
+        <button class="bind-btn off" data-bind="jail" onclick="toggleBind('jail')"><span class="bind-name">JAIL</span><span class="bind-state">Не привязан</span></button>
     </div>
 </div>
 
@@ -517,51 +522,13 @@
     </div>
 </div>
 
-<!-- ====== ADMIN CONSOLE OVERLAY (v18) ====== -->
-<div class="rcon-overlay" id="rconOverlay">
-    <button class="rcon-close" onclick="closeRcon()" title="Close">✕</button>
-    <div class="rcon-container">
-        <div class="rcon-header">
-            <span class="rcon-header-title">ADMIN CONSOLE</span>
-            <span class="rcon-header-badge" id="rconUserBadge">—</span>
-        </div>
-        <div class="rcon-black-panel" id="rconHistory">
-            <div class="rcon-empty">// История команд пуста</div>
-        </div>
-        <div class="rcon-bindings" id="rconBindings">
-            <button class="rcon-bind-btn" data-server="zm" onclick="toggleRconBind('zm')">
-                <span class="bind-name">ZM</span>
-                <span class="bind-state">Не привязан</span>
-            </button>
-            <button class="rcon-bind-btn" data-server="ze" onclick="toggleRconBind('ze')">
-                <span class="bind-name">ZE</span>
-                <span class="bind-state">Не привязан</span>
-            </button>
-            <button class="rcon-bind-btn" data-server="dm" onclick="toggleRconBind('dm')">
-                <span class="bind-name">DM</span>
-                <span class="bind-state">Не привязан</span>
-            </button>
-            <button class="rcon-bind-btn" data-server="jail" onclick="toggleRconBind('jail')">
-                <span class="bind-name">JAIL</span>
-                <span class="bind-state">Не привязан</span>
-            </button>
-        </div>
-        <div class="rcon-input-row">
-            <input class="rcon-input" id="rconInput" placeholder="/command" autocomplete="off" spellcheck="false">
-            <button class="rcon-send" onclick="sendRcon()">Отправить</button>
-        </div>
-        <div class="rcon-hint">Enter — отправить · команда начинается с «/»</div>
-    </div>
-</div>
-
 <script>
-    const API_BASE = 'https://kontra-status.avalon-kontra.workers.dev';
-
     let currentLang = localStorage.getItem('kontra_lang') || 'eng';
     let isLoggedIn = false;
     let currentUser = null;
     let chatPartnerId = null;
-    let rconBindings = { zm: false, ze: false, dm: false, jail: false };
+    let consoleBinds = { zm: false, ze: false, dm: false, jail: false };
+    let consoleHistoryData = [];
 
     try {
         const savedUser = localStorage.getItem('kontra_user');
@@ -571,7 +538,22 @@
         }
     } catch (e) {}
 
-    const adminData={ eng:[ {name:'Mr.Whiskus',role:'Project Lead',duty:'Managing Avalon Hosting projects',contact:'',locked:true}, {name:'GooFiyan',role:'Coordinator',duty:'Managing Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'}, {name:'Cobra ツ',role:'Chief Admin (ZM&ZE servers)',duty:'Monitoring admins and server order',contact:'@FrostyV',href:'https://t.me/FrostyV'}, {name:'♣DEPUTAT♣',role:'Chief Admin (JailBreak)',duty:'Monitoring admins and server order',contact:'@VoinushS',href:'https://t.me/VoinushS'} ], rus:[ {name:'Mr.Whiskus',role:'Глава проекта',duty:'Управление проектами Avalon Hosting',contact:'',locked:true}, {name:'GooFiyan',role:'Координатор',duty:'Управление проектом Avalon Kontra Multiplayer FPS',contact:'@emoj_11',href:'https://t.me/emoj_11'}, {name:'Cobra ツ',role:'Гл.Админ (ZM&ZE серверов)',duty:'Следить за Админами и за порядком серверов',contact:'@FrostyV',href:'https://t.me/FrostyV'}, {name:'♣DEPUTAT♣',role:'Гл.Админ (JailBreak)',duty:'Следить за Админами и за порядком серверов',contact:'@VoinushS',href:'https://t.me/VoinushS'} ] };
+    const API_BASE = 'https://kontra-status.avalon-kontra.workers.dev';
+
+    const adminData = {
+        eng: [
+            { name:'Mr.Whiskus', role:'Project Lead', duty:'Managing Avalon Hosting projects', contact:'', locked:true },
+            { name:'GooFiyan', role:'Coordinator', duty:'Managing Avalon Kontra Multiplayer FPS', contact:'@emoj_11', href:'https://t.me/emoj_11' },
+            { name:'Cobra ツ', role:'Chief Admin (ZM&ZE servers)', duty:'Monitoring admins and server order', contact:'@FrostyV', href:'https://t.me/FrostyV' },
+            { name:'♣DEPUTAT♣', role:'Chief Admin (JailBreak)', duty:'Monitoring admins and server order', contact:'@VoinushS', href:'https://t.me/VoinushS' }
+        ],
+        rus: [
+            { name:'Mr.Whiskus', role:'Глава проекта', duty:'Управление проектами Avalon Hosting', contact:'', locked:true },
+            { name:'GooFiyan', role:'Координатор', duty:'Управление проектом Avalon Kontra Multiplayer FPS', contact:'@emoj_11', href:'https://t.me/emoj_11' },
+            { name:'Cobra ツ', role:'Гл.Админ (ZM&ZE серверов)', duty:'Следить за Админами и за порядком серверов', contact:'@FrostyV', href:'https://t.me/FrostyV' },
+            { name:'♣DEPUTAT♣', role:'Гл.Админ (JailBreak)', duty:'Следить за Админами и за порядком серверов', contact:'@VoinushS', href:'https://t.me/VoinushS' }
+        ]
+    };
 
     const privilegeInfo = {
         vip: {
@@ -607,17 +589,32 @@
             return;
         }
         try {
-            const response = await fetch(`${API_BASE}/auth/login`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ username, password }) });
+            const response = await fetch(API_BASE + '/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
             const data = await response.json();
             if (data.ok) {
                 isLoggedIn = true;
-                currentUser = { deviceId: data.deviceId, username: data.username, balance: data.balance, avatar: data.avatar || '', password: password, prefix: data.prefix || '', prefixColor: data.prefixColor || '', bold: data.bold || false };
+                currentUser = {
+                    deviceId: data.deviceId,
+                    username: data.username,
+                    balance: data.balance,
+                    avatar: data.avatar || '',
+                    password: password,
+                    prefix: data.prefix || '',
+                    prefixColor: data.prefixColor || '',
+                    bold: data.bold || false
+                };
                 localStorage.setItem('kontra_user', JSON.stringify(currentUser));
                 updateAuthUI();
                 closeAuthModal();
                 loadUsersOnline();
                 loadDailyReward();
                 updateActivity();
+                loadConsoleBinds();
+                loadConsoleHistory();
             } else {
                 alert(currentLang === 'rus' ? 'Неверный ник или пароль' : 'Wrong nickname or password');
             }
@@ -628,13 +625,25 @@
 
     async function logout() {
         if (currentUser && currentUser.deviceId) {
-            try { await fetch(`${API_BASE}/auth/logout`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ deviceId: currentUser.deviceId }) }); } catch (e) {}
+            try {
+                await fetch(API_BASE + '/auth/logout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ deviceId: currentUser.deviceId })
+                });
+            } catch (e) {}
         }
         isLoggedIn = false;
         currentUser = null;
         localStorage.removeItem('kontra_user');
         updateAuthUI();
         loadUsersOnline();
+    }
+
+    function hasConsoleAccess() {
+        if (!isLoggedIn || !currentUser || !currentUser.prefix) return false;
+        const p = currentUser.prefix;
+        return p === 'Coordinator' || p === '[ZM] Admin' || p === '[Jail] Admin';
     }
 
     function updateAuthUI() {
@@ -674,18 +683,11 @@
         document.getElementById('authButtonRus').classList.toggle('hidden', currentLang !== 'rus');
     }
 
-    // ============ РОЛЬ / ДОСТУП К КОНСОЛИ ============
-    function hasRconAccess() {
-        if (!isLoggedIn || !currentUser || !currentUser.prefix) return false;
-        const p = String(currentUser.prefix).toLowerCase();
-        return p.includes('coordinator') || p.includes('[zm] admin') || p.includes('[jail] admin');
-    }
-
     // ============ АКТИВНОСТЬ ============
     async function updateActivity() {
         if (!currentUser || !currentUser.deviceId) return;
         try {
-            await fetch(`${API_BASE}/update_activity`, {
+            await fetch(API_BASE + '/update_activity', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ deviceId: currentUser.deviceId })
@@ -698,10 +700,19 @@
         const s = document.getElementById('langSlider');
         const r = document.getElementById('langRus');
         const e = document.getElementById('langEng');
-        if (currentLang === 'eng') { currentLang = 'rus'; e.classList.remove('active'); r.classList.add('active'); s.className = 'lang-slider left'; }
-        else { currentLang = 'eng'; r.classList.remove('active'); e.classList.add('active'); s.className = 'lang-slider right'; }
+        if (currentLang === 'eng') {
+            currentLang = 'rus';
+            e.classList.remove('active'); r.classList.add('active');
+            s.className = 'lang-slider left';
+        } else {
+            currentLang = 'eng';
+            r.classList.remove('active'); e.classList.add('active');
+            s.className = 'lang-slider right';
+        }
         localStorage.setItem('kontra_lang', currentLang);
-        document.querySelectorAll('[data-lang]').forEach(el => { el.classList.toggle('hidden', el.getAttribute('data-lang') !== currentLang); });
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            el.classList.toggle('hidden', el.getAttribute('data-lang') !== currentLang);
+        });
         updateAuthUI();
         if (document.getElementById('adminPanel').classList.contains('open')) renderAdminList();
         if (document.getElementById('privilegeModal').classList.contains('active')) { openPrivilegeModal(window._currentPrivilegeType || 'vip'); }
@@ -711,7 +722,9 @@
     function renderAdminList() {
         const container = document.getElementById('adminListContent');
         const list = adminData[currentLang];
-        container.innerHTML = list.map(a => `<div class="admin-item"><div class="admin-name">${a.name}</div><div class="admin-role">${a.role}</div><div class="admin-duty">${a.duty}</div>${a.locked ? `<span class="admin-contact locked">${currentLang === 'rus' ? 'Связаться: Доступ закрыт' : 'Contact: Access closed'}</span>` : `<a href="${a.href}" target="_blank" class="admin-contact">${a.contact}</a>`}</div>`).join('');
+        container.innerHTML = list.map(a =>
+            `<div class="admin-item"><div class="admin-name">${a.name}</div><div class="admin-role">${a.role}</div><div class="admin-duty">${a.duty}</div>${a.locked ? `<span class="admin-contact locked">${currentLang === 'rus' ? 'Связаться: Доступ закрыт' : 'Contact: Access closed'}</span>` : `<a href="${a.href}" target="_blank" class="admin-contact">${a.contact}</a>`}</div>`
+        ).join('');
     }
 
     function togglePrivilege() {
@@ -752,16 +765,18 @@
         setTimeout(() => { btn.textContent = currentLang === 'rus' ? 'КОПИРОВАТЬ IP' : 'COPY IP'; btn.classList.remove('copied'); }, 2000);
     }
 
-    // ============ ПОЛЬЗОВАТЕЛИ ============
+    // ============ ПОЛЬЗОВАТЕЛИ (оптимизировано — без N+1) ============
+    let usersLoading = false;
     async function loadUsersOnline() {
+        if (usersLoading) return;
+        usersLoading = true;
         try {
-            const response = await fetch(`${API_BASE}/users_online`);
+            const response = await fetch(API_BASE + '/users_online');
             const data = await response.json();
 
             const usersGrid = document.getElementById('usersList');
-            usersGrid.innerHTML = '';
-
             const visitorsGrid = document.getElementById('visitorsTodayList');
+            usersGrid.innerHTML = '';
             visitorsGrid.innerHTML = '';
 
             if (data.ok && data.users) {
@@ -770,28 +785,27 @@
                 const todayStart = new Date();
                 todayStart.setHours(0, 0, 0, 0);
 
-                const sortedUsers = data.users.sort((a, b) => {
-                    const aPrivileged = a.prefix ? 0 : 1;
-                    const bPrivileged = b.prefix ? 0 : 1;
-                    if (aPrivileged !== bPrivileged) return aPrivileged - bPrivileged;
-
-                    const aInGame = a.in_game ? 0 : 1;
-                    const bInGame = b.in_game ? 0 : 1;
-                    if (aInGame !== bInGame) return aInGame - bInGame;
-
-                    return a.username.localeCompare(b.username);
+                const sortedUsers = data.users.slice().sort((a, b) => {
+                    const aPriv = a.prefix ? 0 : 1;
+                    const bPriv = b.prefix ? 0 : 1;
+                    if (aPriv !== bPriv) return aPriv - bPriv;
+                    const aGame = a.in_game ? 0 : 1;
+                    const bGame = b.in_game ? 0 : 1;
+                    if (aGame !== bGame) return aGame - bGame;
+                    return (a.username || '').localeCompare(b.username || '');
                 });
 
                 for (const user of sortedUsers) {
                     const item = document.createElement('div');
                     item.className = 'user-item';
                     item.onclick = () => openChat(user);
-                    const prefixHtml = user.prefix ? `<span class="user-item-prefix ${user.prefix_color === 'violet' ? 'prefix-violet' : user.prefix_color === 'red' ? 'prefix-red' : 'prefix-gray'}">${user.prefix}</span>` : '';
+                    const prefixHtml = user.prefix
+                        ? `<span class="user-item-prefix ${user.prefix_color === 'violet' ? 'prefix-violet' : user.prefix_color === 'red' ? 'prefix-red' : 'prefix-gray'}">${user.prefix}</span>`
+                        : '';
                     let statusHtml = '';
                     if (user.in_game) {
                         statusHtml = '<span class="status-ingame" data-lang="rus">"В игре"</span><span class="status-ingame hidden" data-lang="eng">"In game"</span>';
                     }
-
                     item.innerHTML = `
                         <div class="user-item-avatar">
                             ${user.avatar ? `<img src="${user.avatar}" alt="avatar">` : '<svg viewBox="0 0 20 20"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>'}
@@ -807,9 +821,11 @@
                         visitorItem.className = 'user-item';
                         visitorItem.onclick = () => openChat(user);
                         const isOnline = (now - user.last_site_visit) <= threeMinutes;
-                        const visitorStatusHtml = isOnline ? '<span class="status-online" data-lang="rus">"Онлайн"</span><span class="status-online hidden" data-lang="eng">"Online"</span>' : '<span class="status-today" data-lang="rus">"Сегодня"</span><span class="status-today hidden" data-lang="eng">"Today"</span>';
+                        const visitorStatusHtml = isOnline
+                            ? '<span class="status-online" data-lang="rus">"Онлайн"</span><span class="status-online hidden" data-lang="eng">"Online"</span>'
+                            : '<span class="status-today" data-lang="rus">"Сегодня"</span><span class="status-today hidden" data-lang="eng">"Today"</span>';
                         visitorItem.innerHTML = `
-                            <div class="user-item-avatar">
+                                                        <div class="user-item-avatar">
                                 ${user.avatar ? `<img src="${user.avatar}" alt="avatar">` : '<svg viewBox="0 0 20 20"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>'}
                             </div>
                             ${prefixHtml}
@@ -824,636 +840,601 @@
                     el.classList.toggle('hidden', el.getAttribute('data-lang') !== currentLang);
                 });
             }
+        } catch (e) {
+            console.error('loadUsersOnline failed', e);
+        } finally {
+            usersLoading = false;
+        }
+    }
+
+    // ============ ЕЖЕДНЕВНАЯ НАГРАДА ============
+    async function loadDailyReward() {
+        if (!currentUser) return;
+        try {
+            const response = await fetch(`${API_BASE}/daily_reward?deviceId=${encodeURIComponent(currentUser.deviceId)}`);
+            const data = await response.json();
+            if (data.ok) {
+                const minutes = Math.floor(data.playTimeSec / 60);
+                const dailyText = document.getElementById('dailyPlayTime');
+                if (currentLang === 'rus') {
+                    dailyText.textContent = `Вы сегодня играли: ${minutes} минут`;
+                    if (data.rewardClaimed) dailyText.textContent += ' (награда получена)';
+                } else {
+                    dailyText.textContent = `You played today: ${minutes} minutes`;
+                    if (data.rewardClaimed) dailyText.textContent += ' (reward claimed)';
+                }
+            }
         } catch (e) {}
     }
 
-   // ============ ЕЖЕДНЕВНАЯ НАГРАДА ============
-async function loadDailyReward() {
-    if (!currentUser) return;
-    try {
-        const response = await fetch(`${API_BASE}/daily_reward?deviceId=${currentUser.deviceId}`);
-        const data = await response.json();
-        if (data.ok) {
-            const minutes = Math.floor(data.playTimeSec / 60);
-            const dailyText = document.getElementById('dailyPlayTime');
-            if (currentLang === 'rus') {
-                dailyText.textContent = `Вы сегодня играли: ${minutes} минут`;
-                if (data.rewardClaimed) dailyText.textContent += ' (награда получена)';
-            } else {
-                dailyText.textContent = `You played today: ${minutes} minutes`;
-                if (data.rewardClaimed) dailyText.textContent += ' (reward claimed)';
-            }
-        }
-    } catch (e) {}
-}
+    // ============ ЧАТ ============
+    function openChatList() {
+        loadUsersOnline();
+        document.getElementById('usersPanel').scrollIntoView({ behavior: 'smooth' });
+    }
 
-// ============ ЧАТ ============
-function openChatList() { loadUsersOnline(); document.getElementById('usersPanel').scrollIntoView({ behavior: 'smooth' }); }
-
-function openChat(user) {
-    chatPartnerId = user.device_id;
-    document.getElementById('chatUserName').textContent = user.username;
-    document.getElementById('chatUserAvatar').innerHTML = user.avatar ? `<img src="${user.avatar}" alt="avatar">` : '<svg viewBox="0 0 20 20"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>';
-    document.getElementById('chatModal').classList.add('active');
-    loadMessages();
-    markMessagesAsRead();
-}
-
-function closeChat() { document.getElementById('chatModal').classList.remove('active'); chatPartnerId = null; }
-
-async function sendMessage() {
-    if (!chatPartnerId || !currentUser) return;
-    const input = document.getElementById('chatInput');
-    const message = input.value.trim();
-    if (!message) return;
-    try {
-        await fetch(`${API_BASE}/send_message`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fromDeviceId: currentUser.deviceId, toDeviceId: chatPartnerId, message: message })
-        });
-        input.value = '';
+    function openChat(user) {
+        chatPartnerId = user.device_id;
+        document.getElementById('chatUserName').textContent = user.username;
+        document.getElementById('chatUserAvatar').innerHTML = user.avatar
+            ? `<img src="${user.avatar}" alt="avatar">`
+            : '<svg viewBox="0 0 20 20"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>';
+        document.getElementById('chatModal').classList.add('active');
         loadMessages();
-    } catch (e) {}
-}
+        markMessagesAsRead();
+    }
 
-async function markMessagesAsRead() {
-    if (!chatPartnerId || !currentUser) return;
-    try {
-        await fetch(`${API_BASE}/mark_read`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ deviceId: currentUser.deviceId, fromDeviceId: chatPartnerId })
-        });
-    } catch (e) {}
-}
+    function closeChat() {
+        document.getElementById('chatModal').classList.remove('active');
+        chatPartnerId = null;
+    }
 
-async function loadMessages() {
-    if (!chatPartnerId || !currentUser) return;
-    try {
-        const response = await fetch(`${API_BASE}/get_messages?fromDeviceId=${currentUser.deviceId}&toDeviceId=${chatPartnerId}`);
-        const data = await response.json();
-        const chatMessages = document.getElementById('chatMessages');
-        chatMessages.innerHTML = '';
-        if (data.ok && data.messages) {
-            data.messages.forEach(msg => {
-                const div = document.createElement('div');
-                div.className = `chat-message ${msg.from_device_id === currentUser.deviceId ? 'mine' : 'theirs'}`;
-
-                const time = new Date(msg.created_at);
-                const timeStr = time.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-
-                const readStatus = msg.from_device_id === currentUser.deviceId ?
-                    (msg.read === 1 ? '<span class="read-status">✓✓ Прочитано</span>' : '<span class="read-status">✓</span>') : '';
-
-                div.innerHTML = `
-                    ${msg.message}
-                    <div class="msg-meta">
-                        <span class="msg-time">${timeStr}</span>
-                        ${readStatus}
-                    </div>
-                    <button class="delete-msg" onclick="deleteMessage('${msg.id}')"><img src="close.svg" alt="delete"></button>
-                `;
-                chatMessages.appendChild(div);
+    async function sendMessage() {
+        if (!chatPartnerId || !currentUser) return;
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        if (!message) return;
+        try {
+            await fetch(API_BASE + '/send_message', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fromDeviceId: currentUser.deviceId, toDeviceId: chatPartnerId, message })
             });
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-    } catch (e) {}
-}
+            input.value = '';
+            loadMessages();
+        } catch (e) {}
+    }
 
-async function deleteMessage(messageId) {
-    if (!currentUser) return;
-    try {
-        await fetch(`${API_BASE}/delete_message`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ messageId, deviceId: currentUser.deviceId })
-        });
-        loadMessages();
-    } catch (e) {}
-}
+    async function markMessagesAsRead() {
+        if (!chatPartnerId || !currentUser) return;
+        try {
+            await fetch(API_BASE + '/mark_read', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ deviceId: currentUser.deviceId, fromDeviceId: chatPartnerId })
+            });
+        } catch (e) {}
+    }
 
-// ============ НАСТРОЙКИ ============
-function openSettings() { document.getElementById('settingsModal').classList.add('active'); }
-function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); }
-
-async function uploadAvatar(file) {
-    if (!file || !currentUser) return;
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-        img.onload = async function() {
-            canvas.width = 300;
-            canvas.height = 300;
-            ctx.drawImage(img, 0, 0, 300, 300);
-            const base64 = canvas.toDataURL('image/jpeg', 0.8);
-
-            try {
-                const response = await fetch(`${API_BASE}/upload_avatar`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ deviceId: currentUser.deviceId, avatar: base64 })
+    async function loadMessages() {
+        if (!chatPartnerId || !currentUser) return;
+        try {
+            const response = await fetch(`${API_BASE}/get_messages?fromDeviceId=${encodeURIComponent(currentUser.deviceId)}&toDeviceId=${encodeURIComponent(chatPartnerId)}`);
+            const data = await response.json();
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+            if (data.ok && data.messages) {
+                data.messages.forEach(msg => {
+                    const div = document.createElement('div');
+                    div.className = `chat-message ${msg.from_device_id === currentUser.deviceId ? 'mine' : 'theirs'}`;
+                    const time = new Date(msg.created_at);
+                    const timeStr = time.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                    div.innerHTML = `
+                        ${msg.message}
+                        <div class="msg-meta">
+                            <span class="msg-time">${timeStr}</span>
+                        </div>
+                        <button class="delete-msg" onclick="deleteMessage('${msg.id}')"><img src="close.svg" alt="delete"></button>
+                    `;
+                    chatMessages.appendChild(div);
                 });
-                const data = await response.json();
-                if (data.ok) {
-                    currentUser.avatar = base64;
-                    localStorage.setItem('kontra_user', JSON.stringify(currentUser));
-                    updateAuthUI();
-                    closeSettings();
-                    loadUsersOnline();
-                }
-            } catch (e) {}
-        };
-        img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-}
-
-// ============ ЖИВОЙ ОНЛАЙН ============
-const STATUS_URL = `${API_BASE}/network`;
-const REFRESH_INTERVAL = 10000;
-let activeServerId = null;
-
-async function fetchServerStatus() {
-    try {
-        const response = await fetch(STATUS_URL);
-        const data = await response.json();
-        updateServerList(data.servers);
-        renderServerTabs(data.servers);
-        updateMapImages(data.servers);
-    } catch (e) {
-        console.error("Status fetch failed:", e);
-    }
-}
-
-function updateMapImages(servers) {
-    const zmServer = servers.find(s => s.id === 'zm');
-    const dmServer = servers.find(s => s.id === 'dm');
-    const zeServer = servers.find(s => s.id === 'ze');
-    const jailServer = servers.find(s => s.id === 'jail');
-
-    const zmImg = document.getElementById('zmMapImage');
-    const dmImg = document.getElementById('dmMapImage');
-    const zeImg = document.getElementById('zeMapImage');
-    const jailImg = document.getElementById('jailMapImage');
-
-    if (zmServer && zmImg) {
-        if (zmServer.serverOnline) {
-            zmImg.src = 'images/officialmap.jpg';
-            zmImg.classList.remove('hidden');
-        } else {
-            zmImg.classList.add('hidden');
-        }
-    }
-
-    if (dmServer && dmImg) {
-        const mapName = dmServer.map;
-        let src = '';
-        if (mapName === 'de_dust2_2x2_css') src = 'images/css.jpg';
-        else if (mapName === 'de_dust2_2x2') src = 'images/dust.jpg';
-        else if (mapName === 'de_dust2_3x3') src = 'images/dust.jpg';
-        else if (mapName === 'fy_iceworld') src = 'images/iceworld.jpg';
-        else if (mapName === 'fy_pool_day') src = 'images/pool.jpg';
-        else if (mapName === '$2000$') src = 'images/$2000$.jpg';
-
-        if (dmServer.serverOnline) {
-            dmImg.src = src || 'images/officialmap.jpg';
-            dmImg.classList.remove('hidden');
-        } else {
-            dmImg.classList.add('hidden');
-        }
-    }
-
-    if (zeServer && zeImg) {
-        const mapName = zeServer.map;
-        let src = '';
-        if (mapName === 'ze_area51_v1') src = 'images/ze_area51_v1.jpg';
-        else if (mapName === 'ze_bbworld_lvl1_b2') src = 'images/ze_bbworld_lvl1_b2.jpg';
-        else if (mapName === 'ze_blackmesa_v6') src = 'images/ze_blackmesa_v6.jpg';
-        else if (mapName === 'ze_campescape_lg') src = 'images/ze_campescape_lg.jpg';
-        else if (mapName === 'ze_dark_lab_dpfix') src = 'images/ze_dark_lab_dpfix.jpg';
-        else if (mapName === 'ze_darkprofessional_dp1') src = 'images/ze_darkprofessional_dp1.jpg';
-        else if (mapName === 'ze_dust_escape_remake_dpfix') src = 'images/ze_dust_escape_remake_dpfix.jpg';
-        else if (mapName === 'ze_dustwood_lb') src = 'images/ze_dustwood_lb.jpg';
-        else if (mapName === 'ze_etherworld_dp_final') src = 'images/ze_etherworld_dp_final.jpg';
-        else if (mapName === 'ze_freezy_xmas_b2') src = 'images/ze_freezy_xmas_b2.jpg';
-        else if (mapName === 'ze_frozen_hope_dpcs') src = 'images/ze_frozen_hope_dpcs.jpg';
-        else if (mapName === 'ze_imagineland_escape') src = 'images/ze_imagineland_escape.jpg';
-        else if (mapName === 'ze_isla_nublar_level3_dpfix') src = 'images/ze_isla_nublar_level3_dpfix.jpg';
-        else if (mapName === 'ze_jp4_reverse') src = 'images/ze_jp4_reverse.jpg';
-        else if (mapName === 'ze_jurassicpark_minecraft_fixv1') src = 'images/ze_jurassicpark_minecraft_fixv1.jpg';
-        else if (mapName === 'ze_lastway_tr') src = 'images/ze_lastway_tr.jpg';
-        else if (mapName === 'ze_minecraft_ms_dp') src = 'images/ze_minecraft_ms_dp.jpg';
-        else if (mapName === 'ze_minecraft_nether_fix_lgcs') src = 'images/ze_minecraft_nether_fix_lgcs.jpg';
-        else if (mapName === 'ze_radioactive_dp') src = 'images/ze_radioactive_dp.jpg';
-
-        if (zeServer.serverOnline) {
-            zeImg.src = src || 'images/officialmap.jpg';
-            zeImg.classList.remove('hidden');
-        } else {
-            zeImg.classList.add('hidden');
-        }
-    }
-
-    if (jailServer && jailImg) {
-        const mapName = jailServer.map;
-        let src = '';
-        if (mapName === 'jail_minecraft_v3') src = 'images/jail_minecraft.jpg';
-        else if (mapName === 'jail_warm') src = 'images/jail_warm.jpg';
-        else if (mapName === 'jail_xmf') src = 'images/jail_xmf.jpg';
-        else if (mapName === 'jail_west_v2') src = 'images/jail_west.jpg';
-        else if (mapName === 'jail_gravity') src = 'images/jail_gravity.jpg';
-        else if (mapName === 'jail_arena_city') src = 'images/jail_arena.jpg';
-        else if (mapName === 'jail_gemisi') src = 'images/jail_gemisi.jpg';
-
-        if (jailServer.serverOnline) {
-            jailImg.src = src || 'images/officialmap.jpg';
-            jailImg.classList.remove('hidden');
-        } else {
-            jailImg.classList.add('hidden');
-        }
-    }
-}
-
-function updateServerList(servers) {
-    document.querySelectorAll('.online-circle').forEach(circle => {
-        const serverId = circle.getAttribute('data-server');
-        const maxPlayers = parseInt(circle.getAttribute('data-max'));
-        const serverData = servers.find(s => s.id === serverId);
-        if (!serverData) return;
-        const online = serverData.online;
-        const isOffline = !serverData.serverOnline;
-        const fill = circle.querySelector('.fill');
-        const numEl = circle.querySelector('.num');
-        numEl.textContent = isOffline ? '0' : online;
-        const circumference = 125.66;
-        const percent = isOffline ? 0 : online / maxPlayers;
-        fill.style.strokeDashoffset = circumference * (1 - percent);
-        const panel = circle.closest('.server-panel');
-        const dot = panel.querySelector('.status .dot');
-        const statusText = panel.querySelector('.status');
-        const statusLangEl = statusText.querySelector('[data-lang]:not(.hidden)');
-        if (isOffline) {
-            dot.style.background = '#555';
-            dot.style.boxShadow = 'none';
-            statusText.style.color = '#555';
-            if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Офлайн' : 'Offline';
-        } else {
-            const color = circle.getAttribute('data-color');
-            dot.style.background = color;
-            dot.style.boxShadow = `0 0 8px ${color}`;
-            statusText.style.color = color;
-            if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Онлайн' : 'Online';
-        }
-    });
-}
-
-function renderServerTabs(servers) {
-    const onlineServers = servers.filter(s => s.serverOnline);
-    const tabsCard = document.getElementById('tabsCard');
-    const tabsContainer = document.getElementById('serverTabs');
-    if (!onlineServers.length) { tabsCard.style.display = 'none'; return; }
-    tabsCard.style.display = 'block';
-    tabsContainer.innerHTML = '';
-    onlineServers.forEach(server => {
-        const tab = document.createElement('button');
-        tab.className = 'server-tab';
-        tab.textContent = server.name;
-        tab.onclick = () => showServerDetails(server);
-        tabsContainer.appendChild(tab);
-    });
-    if (!activeServerId || !onlineServers.find(s => s.id === activeServerId)) { activeServerId = onlineServers[0].id; }
-    const active = onlineServers.find(s => s.id === activeServerId);
-    if (active) showServerDetails(active);
-}
-
-function showServerDetails(server) {
-    activeServerId = server.id;
-    document.querySelectorAll('.server-tab').forEach(tab => {
-        tab.classList.toggle('active', tab.textContent === server.name);
-    });
-    const ctPlayers = server.players.filter(p => p.team === 'CT').sort((a, b) => b.score - a.score);
-    const tPlayers = server.players.filter(p => p.team === 'T').sort((a, b) => b.score - a.score);
-    const container = document.getElementById('serverDetails');
-    const lang = currentLang === 'rus' ? 'rus' : 'eng';
-    const labels = lang === 'rus'
-        ? { name: 'Имя', kills: 'Убийств', deaths: 'Смертей', ct: 'Контр-террористы', t: 'Террористы', ctShort: 'Контр-террористов:', tShort: 'Террористов:' }
-        : { name: 'Name', kills: 'Kills', deaths: 'Deaths', ct: 'Counter-Terrorists', t: 'Terrorists', ctShort: 'Counter-Terrorists:', tShort: 'Terrorists:' };
-
-    container.innerHTML = `
-        <div class="server-detail-card">
-            <div class="detail-row"><span>IP:</span><span>${server.address}</span></div>
-            <div class="detail-row"><span>${lang === 'rus' ? 'Карта' : 'Map'}:</span><span>${server.map}</span></div>
-            <div class="detail-row"><span>${lang === 'rus' ? 'Режим' : 'Mode'}:</span><span>${server.mode}</span></div>
-            <div class="detail-row"><span>${lang === 'rus' ? 'Онлайн' : 'Online'}:</span><span>${server.online}/${server.maxPlayers}</span></div>
-            <div class="detail-row" style="color:#aa5555"><span style="display:flex;align-items:center;gap:4px;"><svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.tShort}</span><span>${server.zombies}</span></div>
-            <div class="detail-row" style="color:#5555aa"><span style="display:flex;align-items:center;gap:4px;"><svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.ctShort}</span><span>${server.survivors}</span></div>
-        </div>
-        <div class="teams-container">
-            <div class="team-column" style="border:1px solid rgba(85,85,170,0.3);">
-                <div class="team-header" style="color:#5555aa"><svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.ct}</div>
-                <table class="players-table"><thead><tr><th>${labels.name}</th><th>${labels.kills}</th><th>${labels.deaths}</th></tr></thead><tbody>${ctPlayers.map((p, i) => `<tr style="color:#5555aa"><td>${i + 1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
-            </div>
-            <div class="team-column" style="border:1px solid rgba(170,85,85,0.3);">
-                <div class="team-header" style="color:#aa5555"><svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg> ${labels.t}</div>
-                <table class="players-table"><thead><tr><th>${labels.name}</th><th>${labels.kills}</th><th>${labels.deaths}</th></tr></thead><tbody>${tPlayers.map((p, i) => `<tr style="color:#aa5555"><td>${i + 1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
-            </div>
-        </div>
-    `;
-}
-
-// ============ МОДАЛЬНОЕ ОКНО ПРИВИЛЕГИЙ ============
-function openPrivilegeModal(type) {
-    const data = privilegeInfo[type][currentLang];
-    const modal = document.getElementById('privilegeModal');
-    const content = document.getElementById('privilegeModalContent');
-    const textColorMap = { vip: '#ff8aae', premium: '#e0e0e0', deluxe: '#ffd700' };
-    content.innerHTML = `
-        <div class="privilege-server-header">${data.server}</div>
-        <div class="privilege-modal-title" style="color:${textColorMap[type]}">${data.name}</div>
-        <div class="privilege-modal-divider"></div>
-        <button class="buy-now-btn" onclick="showPurchasePlans('${type}')">${currentLang === 'rus' ? 'Купить сейчас' : 'Buy Now'}</button>
-        <div class="privilege-section">
-            <div class="privilege-section-title">${currentLang === 'rus' ? 'Цены' : 'Prices'}</div>
-            ${data.prices.map(p => `<div class="privilege-price-item"><span>${p[0]}</span><span>${p[1]}</span></div>`).join('')}
-        </div>
-        <div class="privilege-section">
-            <div class="privilege-section-title">${currentLang === 'rus' ? 'Способы оплаты:' : 'Payment methods:'}</div>
-            <div class="privilege-feature">Click [UZS]</div>
-            <div class="privilege-feature">${currentLang === 'rus' ? 'Т-Банк (Россия и СНГ)' : 'T-Bank (Russia & CIS)'}</div>
-            <div class="privilege-feature">${currentLang === 'rus' ? 'VISA (международные переводы)' : 'VISA (international transfers)'}</div>
-            <div class="privilege-feature">${currentLang === 'rus' ? 'Kaspi KZ (Казахстан)' : 'Kaspi KZ (Kazakhstan)'}</div>
-        </div>
-        <div class="privilege-section">
-            <div class="privilege-section-title">${currentLang === 'rus' ? 'Свяжитесь чтобы купить привилегию:' : 'Contact to buy privilege:'}</div>
-            <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @emoj_11</a>
-        </div>
-        <div class="privilege-section">
-            <div class="privilege-section-title">${currentLang === 'rus' ? 'Другой способ оплаты:' : 'Other payment method:'}</div>
-            <div class="privilege-feature">Paypal</div>
-            <div class="privilege-feature">Ko-fi.com</div>
-        </div>
-        <div class="privilege-section">
-            <div class="privilege-section-title">${currentLang === 'rus' ? 'Свяжитесь чтобы купить привилегию:' : 'Contact to buy privilege:'}</div>
-            <a href="https://t.me/akythu" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @akythu</a>
-                </div>
-        <div class="privilege-section">
-            <div class="privilege-section-title">| ${data.name} ${currentLang === 'rus' ? 'Возможности' : 'Features'} |</div>
-            ${data.features.map(f => `<div class="privilege-feature">${f}</div>`).join('')}
-        </div>
-        <div class="privilege-section">
-            ${data.images.map(img => `<img src="${img}" class="privilege-image" alt="${data.name}">`).join('')}
-        </div>
-    `;
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    window._currentPrivilegeType = type;
-}
-
-function showPurchasePlans(type) {
-    if (!isLoggedIn) {
-        alert(currentLang === 'rus' ? 'Сначала войдите в аккаунт' : 'Please login first');
-        return;
-    }
-    const data = privilegeInfo[type][currentLang];
-    const content = document.getElementById('privilegeModalContent');
-
-    function getPriceByDays(days) {
-        const item = data.prices.find(p => p[0].startsWith(days + ' '));
-        return item ? item[1] : '?';
-    }
-
-    content.innerHTML = `
-        <div class="privilege-server-header">${data.server}</div>
-        <div class="privilege-modal-title" style="color:${type === 'vip' ? '#ff8aae' : type === 'premium' ? '#e0e0e0' : '#ffd700'}">${data.name}</div>
-        <div class="privilege-modal-divider"></div>
-        <div class="privilege-section">
-            <div class="privilege-section-title">${currentLang === 'rus' ? 'Выберите тариф' : 'Choose plan'}</div>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 3)">3 ${currentLang === 'rus' ? 'дня' : 'days'}: ${getPriceByDays(3)}</button>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 7)">7 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(7)}</button>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 10)">10 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(10)}</button>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 15)">15 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(15)}</button>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}', 30)">30 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(30)}</button>
-            <button class="plan-cancel" onclick="closePurchasePlans('${type}')">${currentLang === 'rus' ? 'Отменить' : 'Cancel'}</button>
-        </div>
-    `;
-}
-
-function closePurchasePlans(type) {
-    openPrivilegeModal(type);
-}
-
-async function purchasePrivilege(type, days) {
-    if (!isLoggedIn || !currentUser) {
-        alert(currentLang === 'rus' ? 'Сначала войдите в аккаунт' : 'Please login first');
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_BASE}/purchase`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                deviceId: currentUser.deviceId,
-                username: currentUser.username,
-                password: currentUser.password || '',
-                privilegeType: type,
-                durationDays: days
-            })
-        });
-        const data = await response.json();
-
-        if (data.ok) {
-            alert(currentLang === 'rus' ? 'Привилегия успешно куплена!' : 'Privilege purchased successfully!');
-            closePrivilegeModal();
-            currentUser.balance = data.newBalance !== undefined ? data.newBalance : currentUser.balance - data.price;
-            localStorage.setItem('kontra_user', JSON.stringify(currentUser));
-            updateAuthUI();
-        } else {
-            if (data.error === 'insufficient_balance') {
-                alert(currentLang === 'rus' ? 'Недостаточно средств на балансе' : 'Insufficient balance');
-            } else {
-                alert(currentLang === 'rus' ? 'Ошибка покупки' : 'Purchase error');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-        }
-    } catch (e) {
-        alert('Ошибка соединения с сервером');
+        } catch (e) {}
     }
-}
 
-function closePrivilegeModal() {
-    document.getElementById('privilegeModal').classList.remove('active');
-    document.body.style.overflow = '';
-}
+    async function deleteMessage(messageId) {
+        if (!currentUser) return;
+        try {
+            await fetch(API_BASE + '/delete_message', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messageId, deviceId: currentUser.deviceId })
+            });
+            loadMessages();
+        } catch (e) {}
+    }
 
-function closePrivilegeModalOutside(e) {
-    if (e.target === e.currentTarget) closePrivilegeModal();
-}
+    // ============ НАСТРОЙКИ ============
+    function openSettings() { document.getElementById('settingsModal').classList.add('active'); }
+    function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); }
 
-// ============ ADMIN CONSOLE (v18) ============
-function openRcon() {
-    if (!hasRconAccess()) return;
-    document.getElementById('rconOverlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    const badge = document.getElementById('rconUserBadge');
-    badge.textContent = currentUser.username;
-    loadRconBindings();
-    loadRconHistory();
-}
+    async function uploadAvatar(file) {
+        if (!file || !currentUser) return;
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            img.onload = async function () {
+                canvas.width = 300;
+                canvas.height = 300;
+                ctx.drawImage(img, 0, 0, 300, 300);
+                const base64 = canvas.toDataURL('image/jpeg', 0.8);
+                try {
+                    const response = await fetch(API_BASE + '/upload_avatar', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ deviceId: currentUser.deviceId, avatar: base64 })
+                    });
+                    const data = await response.json();
+                    if (data.ok) {
+                        currentUser.avatar = base64;
+                        localStorage.setItem('kontra_user', JSON.stringify(currentUser));
+                        updateAuthUI();
+                        closeSettings();
+                        loadUsersOnline();
+                    }
+                } catch (e) {}
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 
-function closeRcon() {
-    document.getElementById('rconOverlay').classList.remove('active');
-    document.body.style.overflow = '';
-}
+    // ============ ЖИВОЙ ОНЛАЙН ============
+    const STATUS_URL = API_BASE + '/network';
+    const REFRESH_INTERVAL = 10000;
+    let activeServerId = null;
 
-async function loadRconBindings() {
-    if (!currentUser) return;
-    try {
-        const response = await fetch(`${API_BASE}/rcon/bindings?deviceId=${encodeURIComponent(currentUser.deviceId)}`);
-        const data = await response.json();
-        if (data.ok && data.bindings) {
-            rconBindings = data.bindings;
-            renderRconBindings();
+    async function fetchServerStatus() {
+        try {
+            const response = await fetch(STATUS_URL);
+            const data = await response.json();
+            updateServerList(data.servers);
+            renderServerTabs(data.servers);
+            updateMapImages(data.servers);
+        } catch (e) {
+            console.error('Status fetch failed:', e);
         }
-    } catch (e) {}
-}
+    }
 
-function renderRconBindings() {
-    document.querySelectorAll('.rcon-bind-btn').forEach(btn => {
-        const serverId = btn.getAttribute('data-server');
-        const bound = rconBindings[serverId] === true;
-        btn.classList.toggle('bound', bound);
-        btn.classList.toggle('unbound', !bound);
-        const stateEl = btn.querySelector('.bind-state');
-        if (stateEl) stateEl.textContent = bound ? 'Привязан' : 'Не привязан';
-    });
-}
+    function updateMapImages(servers) {
+        const zmServer = servers.find(s => s.id === 'zm');
+        const dmServer = servers.find(s => s.id === 'dm');
+        const zeServer = servers.find(s => s.id === 'ze');
+        const jailServer = servers.find(s => s.id === 'jail');
 
-async function toggleRconBind(serverId) {
-    if (!currentUser || !hasRconAccess()) return;
-    rconBindings[serverId] = !rconBindings[serverId];
-    renderRconBindings();
-    try {
-        await fetch(`${API_BASE}/rcon/bind`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ deviceId: currentUser.deviceId, serverId, bound: rconBindings[serverId] })
+        const zmImg = document.getElementById('zmMapImage');
+        const dmImg = document.getElementById('dmMapImage');
+        const zeImg = document.getElementById('zeMapImage');
+        const jailImg = document.getElementById('jailMapImage');
+
+        if (zmServer && zmImg) {
+            if (zmServer.serverOnline) {
+                zmImg.src = 'images/officialmap.jpg';
+                zmImg.classList.remove('hidden');
+            } else zmImg.classList.add('hidden');
+        }
+
+        if (dmServer && dmImg) {
+            const mapName = dmServer.map;
+            let src = '';
+            if (mapName === 'de_dust2_2x2_css') src = 'images/css.jpg';
+            else if (mapName === 'de_dust2_2x2') src = 'images/dust.jpg';
+            else if (mapName === 'de_dust2_3x3') src = 'images/dust.jpg';
+            else if (mapName === 'fy_iceworld') src = 'images/iceworld.jpg';
+            else if (mapName === 'fy_pool_day') src = 'images/pool.jpg';
+            else if (mapName === '$2000$') src = 'images/$2000$.jpg';
+            if (dmServer.serverOnline) {
+                dmImg.src = src || 'images/officialmap.jpg';
+                dmImg.classList.remove('hidden');
+            } else dmImg.classList.add('hidden');
+        }
+
+        if (zeServer && zeImg) {
+            const mapName = zeServer.map;
+            const zeMapList = ['ze_area51_v1','ze_bbworld_lvl1_b2','ze_blackmesa_v6','ze_campescape_lg','ze_dark_lab_dpfix','ze_darkprofessional_dp1','ze_dust_escape_remake_dpfix','ze_dustwood_lb','ze_etherworld_dp_final','ze_freezy_xmas_b2','ze_frozen_hope_dpcs','ze_imagineland_escape','ze_isla_nublar_level3_dpfix','ze_jp4_reverse','ze_jurassicpark_minecraft_fixv1','ze_lastway_tr','ze_minecraft_ms_dp','ze_minecraft_nether_fix_lgcs','ze_radioactive_dp'];
+            let src = zeMapList.includes(mapName) ? `images/${mapName}.jpg` : '';
+            if (zeServer.serverOnline) {
+                zeImg.src = src || 'images/officialmap.jpg';
+                zeImg.classList.remove('hidden');
+            } else zeImg.classList.add('hidden');
+        }
+
+        if (jailServer && jailImg) {
+            const mapName = jailServer.map;
+            const jailMapList = {'jail_minecraft_v3':'jail_minecraft.jpg','jail_warm':'jail_warm.jpg','jail_xmf':'jail_xmf.jpg','jail_west_v2':'jail_west.jpg','jail_gravity':'jail_gravity.jpg','jail_arena_city':'jail_arena.jpg','jail_gemisi':'jail_gemisi.jpg'};
+            let src = jailMapList[mapName] ? `images/${jailMapList[mapName]}` : '';
+            if (jailServer.serverOnline) {
+                jailImg.src = src || 'images/officialmap.jpg';
+                jailImg.classList.remove('hidden');
+            } else jailImg.classList.add('hidden');
+        }
+    }
+
+    function updateServerList(servers) {
+        document.querySelectorAll('.online-circle').forEach(circle => {
+            const serverId = circle.getAttribute('data-server');
+            const maxPlayers = parseInt(circle.getAttribute('data-max'));
+            const serverData = servers.find(s => s.id === serverId);
+            if (!serverData) return;
+            const online = serverData.online;
+            const isOffline = !serverData.serverOnline;
+            const fill = circle.querySelector('.fill');
+            const numEl = circle.querySelector('.num');
+            numEl.textContent = isOffline ? '0' : online;
+            const circumference = 125.66;
+            const percent = isOffline ? 0 : online / maxPlayers;
+            fill.style.strokeDashoffset = circumference * (1 - percent);
+            const panel = circle.closest('.server-panel');
+            const dot = panel.querySelector('.status .dot');
+            const statusText = panel.querySelector('.status');
+            const statusLangEl = statusText.querySelector('[data-lang]:not(.hidden)');
+            if (isOffline) {
+                dot.style.background = '#555';
+                dot.style.boxShadow = 'none';
+                statusText.style.color = '#555';
+                if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Офлайн' : 'Offline';
+            } else {
+                const color = circle.getAttribute('data-color');
+                dot.style.background = color;
+                dot.style.boxShadow = `0 0 8px ${color}`;
+                statusText.style.color = color;
+                if (statusLangEl) statusLangEl.textContent = currentLang === 'rus' ? 'Онлайн' : 'Online';
+            }
         });
-    } catch (e) {}
-}
+    }
 
-async function loadRconHistory() {
-    try {
-        const response = await fetch(`${API_BASE}/rcon/history`);
-        const data = await response.json();
-        const panel = document.getElementById('rconHistory');
-        if (!data.ok || !data.history || !data.history.length) {
-            panel.innerHTML = '<div class="rcon-empty">// История команд пуста</div>';
+    function renderServerTabs(servers) {
+        const onlineServers = servers.filter(s => s.serverOnline);
+        const tabsCard = document.getElementById('tabsCard');
+        const tabsContainer = document.getElementById('serverTabs');
+        if (!onlineServers.length) { tabsCard.style.display = 'none'; return; }
+        tabsCard.style.display = 'block';
+        tabsContainer.innerHTML = '';
+        onlineServers.forEach(server => {
+            const tab = document.createElement('button');
+            tab.className = 'server-tab';
+            tab.textContent = server.name;
+            tab.onclick = () => showServerDetails(server);
+            tabsContainer.appendChild(tab);
+        });
+        if (!activeServerId || !onlineServers.find(s => s.id === activeServerId)) { activeServerId = onlineServers[0].id; }
+        const active = onlineServers.find(s => s.id === activeServerId);
+        if (active) showServerDetails(active);
+    }
+
+    function showServerDetails(server) {
+        activeServerId = server.id;
+        document.querySelectorAll('.server-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent === server.name);
+        });
+        const ctPlayers = server.players.filter(p => p.team === 'CT').sort((a, b) => b.score - a.score);
+        const tPlayers = server.players.filter(p => p.team === 'T').sort((a, b) => b.score - a.score);
+        const container = document.getElementById('serverDetails');
+        const lang = currentLang === 'rus' ? 'rus' : 'eng';
+        const labels = lang === 'rus'
+            ? { name: 'Имя', kills: 'Убийств', deaths: 'Смертей', ct: 'Контр-террористы', t: 'Террористы', ctShort: 'Контр-террористов:', tShort: 'Террористов:' }
+            : { name: 'Name', kills: 'Kills', deaths: 'Deaths', ct: 'Counter-Terrorists', t: 'Terrorists', ctShort: 'Counter-Terrorists:', tShort: 'Terrorists:' };
+
+        container.innerHTML = `
+            <div class="server-detail-card">
+                <div class="detail-row"><span>IP:</span><span>${server.address}</span></div>
+                <div class="detail-row"><span>${lang === 'rus' ? 'Карта' : 'Map'}:</span><span>${server.map}</span></div>
+                <div class="detail-row"><span>${lang === 'rus' ? 'Режим' : 'Mode'}:</span><span>${server.mode}</span></div>
+                <div class="detail-row"><span>${lang === 'rus' ? 'Онлайн' : 'Online'}:</span><span>${server.online}/${server.maxPlayers}</span></div>
+                <div class="detail-row" style="color:#aa5555"><span>${labels.tShort}</span><span>${server.zombies}</span></div>
+                <div class="detail-row" style="color:#5555aa"><span>${labels.ctShort}</span><span>${server.survivors}</span></div>
+            </div>
+            <div class="teams-container">
+                <div class="team-column" style="border:1px solid rgba(85,85,170,0.3);">
+                    <div class="team-header" style="color:#5555aa">${labels.ct}</div>
+                    <table class="players-table"><thead><tr><th>${labels.name}</th><th>${labels.kills}</th><th>${labels.deaths}</th></tr></thead><tbody>${ctPlayers.map((p, i) => `<tr style="color:#5555aa"><td>${i + 1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
+                </div>
+                <div class="team-column" style="border:1px solid rgba(170,85,85,0.3);">
+                    <div class="team-header" style="color:#aa5555">${labels.t}</div>
+                    <table class="players-table"><thead><tr><th>${labels.name}</th><th>${labels.kills}</th><th>${labels.deaths}</th></tr></thead><tbody>${tPlayers.map((p, i) => `<tr style="color:#aa5555"><td>${i + 1}. ${p.name}</td><td>${p.score}</td><td>${p.deaths}</td></tr>`).join('')}</tbody></table>
+                </div>
+            </div>
+        `;
+    }
+
+    // ============ МОДАЛЬНОЕ ОКНО ПРИВИЛЕГИЙ ============
+    function openPrivilegeModal(type) {
+        const data = privilegeInfo[type][currentLang];
+        const modal = document.getElementById('privilegeModal');
+        const content = document.getElementById('privilegeModalContent');
+        const textColorMap = { vip: '#ff8aae', premium: '#e0e0e0', deluxe: '#ffd700' };
+        content.innerHTML = `
+            <div class="privilege-server-header">${data.server}</div>
+            <div class="privilege-modal-title" style="color:${textColorMap[type]}">${data.name}</div>
+            <div class="privilege-modal-divider"></div>
+            <button class="buy-now-btn" onclick="showPurchasePlans('${type}')">${currentLang === 'rus' ? 'Купить сейчас' : 'Buy Now'}</button>
+            <div class="privilege-section">
+                <div class="privilege-section-title">${currentLang === 'rus' ? 'Цены' : 'Prices'}</div>
+                ${data.prices.map(p => `<div class="privilege-price-item"><span>${p[0]}</span><span>${p[1]}</span></div>`).join('')}
+            </div>
+            <div class="privilege-section">
+                <div class="privilege-section-title">${currentLang === 'rus' ? 'Способы оплаты:' : 'Payment methods:'}</div>
+                <div class="privilege-feature">Click [UZS]</div>
+                <div class="privilege-feature">${currentLang === 'rus' ? 'Т-Банк (Россия и СНГ)' : 'T-Bank (Russia & CIS)'}</div>
+                <div class="privilege-feature">${currentLang === 'rus' ? 'VISA (международные переводы)' : 'VISA (international transfers)'}</div>
+                <div class="privilege-feature">${currentLang === 'rus' ? 'Kaspi KZ (Казахстан)' : 'Kaspi KZ (Kazakhstan)'}</div>
+            </div>
+            <div class="privilege-section">
+                <div class="privilege-section-title">${currentLang === 'rus' ? 'Свяжитесь чтобы купить привилегию:' : 'Contact to buy privilege:'}</div>
+                <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @emoj_11</a>
+            </div>
+            <div class="privilege-section">
+                <div class="privilege-section-title">${currentLang === 'rus' ? 'Другой способ оплаты:' : 'Other payment method:'}</div>
+                <div class="privilege-feature">Paypal</div>
+                <div class="privilege-feature">Ko-fi.com</div>
+            </div>
+            <div class="privilege-section">
+                <div class="privilege-section-title">${currentLang === 'rus' ? 'Свяжитесь чтобы купить привилегию:' : 'Contact to buy privilege:'}</div>
+                <a href="https://t.me/akythu" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @akythu</a>
+            </div>
+            <div class="privilege-section">
+                                <div class="privilege-section-title">| ${data.name} ${currentLang === 'rus' ? 'Возможности' : 'Features'} |</div>
+                ${data.features.map(f => `<div class="privilege-feature">${f}</div>`).join('')}
+            </div>
+            <div class="privilege-section">
+                ${data.images.map(img => `<img src="${img}" class="privilege-image" alt="${data.name}">`).join('')}
+            </div>
+        `;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        window._currentPrivilegeType = type;
+    }
+
+    function showPurchasePlans(type) {
+        if (!isLoggedIn) {
+            alert(currentLang === 'rus' ? 'Сначала войдите в аккаунт' : 'Please login first');
             return;
         }
-        panel.innerHTML = data.history.map(item => {
-            const d = new Date(item.created_at);
-            const dateStr = d.toLocaleDateString('ru-RU');
-            const timeStr = d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-            const servers = item.servers || {};
-            const serverLine = ['zm', 'ze', 'dm', 'jail'].map(sid => {
-                const ok = servers[sid] === true;
-                return `${sid.toUpperCase()} <span class="${ok ? 'c-ok' : 'c-fail'}">${ok ? '✓' : '✗'}</span>`;
-            }).join(' ');
-            return `<div class="rcon-line"><span class="c-dim">[${dateStr}]</span> <span class="c-dim">[${timeStr}]</span> <span class="c-user">${escapeHtml(item.username)}</span> <span class="c-dim">→</span> <span class="c-cmd">"${escapeHtml(item.command)}"</span> <span class="c-dim">→</span> ${serverLine}</div>`;
-        }).join('');
-        panel.scrollTop = panel.scrollHeight;
-    } catch (e) {}
-}
+        const data = privilegeInfo[type][currentLang];
+        const content = document.getElementById('privilegeModalContent');
 
-function escapeHtml(str) {
-    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-async function sendRcon() {
-    if (!currentUser || !hasRconAccess()) return;
-    const input = document.getElementById('rconInput');
-    let command = input.value.trim();
-    if (!command) return;
-    if (!command.startsWith('/')) {
-        alert(currentLang === 'rus' ? 'Команда должна начинаться с «/»' : 'Command must start with "/"');
-        return;
-    }
-    const commandForServer = command.slice(1);
-
-    const boundServers = Object.keys(rconBindings).filter(sid => rconBindings[sid] === true);
-    if (!boundServers.length) {
-        alert(currentLang === 'rus' ? 'Нет привязанных серверов' : 'No bound servers');
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_BASE}/rcon/exec`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                deviceId: currentUser.deviceId,
-                username: currentUser.username,
-                command: command,
-                servers: boundServers
-            })
-        });
-        const data = await response.json();
-        if (data.ok) {
-            input.value = '';
-            loadRconHistory();
-        } else {
-            alert(currentLang === 'rus' ? 'Ошибка отправки команды' : 'Failed to send command');
+        function getPriceByDays(days) {
+            const item = data.prices.find(p => p[0].startsWith(days + ' '));
+            return item ? item[1] : '?';
         }
-    } catch (e) {
-        alert('Ошибка соединения с сервером');
-    }
-}
 
-document.getElementById('rconInput').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        sendRcon();
+        content.innerHTML = `
+            <div class="privilege-server-header">${data.server}</div>
+            <div class="privilege-modal-title" style="color:${type === 'vip' ? '#ff8aae' : type === 'premium' ? '#e0e0e0' : '#ffd700'}">${data.name}</div>
+            <div class="privilege-modal-divider"></div>
+            <div class="privilege-section">
+                <div class="privilege-section-title">${currentLang === 'rus' ? 'Выберите тариф' : 'Choose plan'}</div>
+                <button class="plan-btn" onclick="purchasePrivilege('${type}', 3)">3 ${currentLang === 'rus' ? 'дня' : 'days'}: ${getPriceByDays(3)}</button>
+                <button class="plan-btn" onclick="purchasePrivilege('${type}', 7)">7 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(7)}</button>
+                <button class="plan-btn" onclick="purchasePrivilege('${type}', 10)">10 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(10)}</button>
+                <button class="plan-btn" onclick="purchasePrivilege('${type}', 15)">15 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(15)}</button>
+                <button class="plan-btn" onclick="purchasePrivilege('${type}', 30)">30 ${currentLang === 'rus' ? 'дней' : 'days'}: ${getPriceByDays(30)}</button>
+                <button class="plan-cancel" onclick="closePurchasePlans('${type}')">${currentLang === 'rus' ? 'Отменить' : 'Cancel'}</button>
+            </div>
+        `;
     }
-});
 
-// ============ ИНИЦИАЛИЗАЦИЯ ============
-if (currentLang === 'rus') {
-    document.querySelectorAll('[data-lang]').forEach(el => {
-        el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'rus');
+    function closePurchasePlans(type) { openPrivilegeModal(type); }
+
+    async function purchasePrivilege(type, days) {
+        if (!isLoggedIn || !currentUser) {
+            alert(currentLang === 'rus' ? 'Сначала войдите в аккаунт' : 'Please login first');
+            return;
+        }
+        try {
+            const response = await fetch(API_BASE + '/purchase', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    deviceId: currentUser.deviceId,
+                    username: currentUser.username,
+                    password: currentUser.password || '',
+                    privilegeType: type,
+                    durationDays: days
+                })
+            });
+            const data = await response.json();
+            if (data.ok) {
+                alert(currentLang === 'rus' ? 'Привилегия успешно куплена!' : 'Privilege purchased successfully!');
+                closePrivilegeModal();
+                currentUser.balance = data.newBalance !== undefined ? data.newBalance : currentUser.balance - data.price;
+                localStorage.setItem('kontra_user', JSON.stringify(currentUser));
+                updateAuthUI();
+            } else {
+                if (data.error === 'insufficient_balance') {
+                    alert(currentLang === 'rus' ? 'Недостаточно средств на балансе' : 'Insufficient balance');
+                } else {
+                    alert(currentLang === 'rus' ? 'Ошибка покупки' : 'Purchase error');
+                }
+            }
+        } catch (e) {
+            alert('Ошибка соединения с сервером');
+        }
+    }
+
+    function closePrivilegeModal() {
+        document.getElementById('privilegeModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function closePrivilegeModalOutside(e) {
+        if (e.target === e.currentTarget) closePrivilegeModal();
+    }
+
+    // ============ ADMIN CONSOLE ============
+    function openAdminConsole() {
+        if (!hasConsoleAccess()) return;
+        document.getElementById('consoleOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        loadConsoleBinds();
+        loadConsoleHistory();
+    }
+
+    function closeAdminConsole() {
+        document.getElementById('consoleOverlay').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    async function loadConsoleBinds() {
+        if (!isLoggedIn || !currentUser) return;
+        try {
+            const response = await fetch(`${API_BASE}/rcon/binds?deviceId=${encodeURIComponent(currentUser.deviceId)}`);
+            const data = await response.json();
+            if (data.ok && data.binds) {
+                consoleBinds = {
+                    zm: !!data.binds.zm,
+                    ze: !!data.binds.ze,
+                    dm: !!data.binds.dm,
+                    jail: !!data.binds.jail
+                };
+                renderConsoleBinds();
+            }
+        } catch (e) {}
+    }
+
+    function renderConsoleBinds() {
+        document.querySelectorAll('.bind-btn').forEach(btn => {
+            const key = btn.getAttribute('data-bind');
+            const on = consoleBinds[key];
+            btn.classList.toggle('on', on);
+            btn.classList.toggle('off', !on);
+            const stateEl = btn.querySelector('.bind-state');
+            if (stateEl) {
+                if (currentLang === 'rus') stateEl.textContent = on ? 'Привязан' : 'Не привязан';
+                else stateEl.textContent = on ? 'Bound' : 'Unbound';
+            }
+        });
+    }
+
+    async function toggleBind(serverId) {
+        if (!isLoggedIn || !currentUser) return;
+        consoleBinds[serverId] = !consoleBinds[serverId];
+        renderConsoleBinds();
+        try {
+            await fetch(API_BASE + '/rcon/bind', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ deviceId: currentUser.deviceId, serverId, enabled: consoleBinds[serverId] })
+            });
+        } catch (e) {}
+    }
+
+    async function loadConsoleHistory() {
+        try {
+            const response = await fetch(API_BASE + '/rcon/history');
+            const data = await response.json();
+            const historyEl = document.getElementById('consoleHistory');
+            if (data.ok && data.history && data.history.length) {
+                consoleHistoryData = data.history;
+                historyEl.innerHTML = data.history.map(h => {
+                    const bindStatus = ['zm','ze','dm','jail'].map(s => {
+                        const label = s.toUpperCase();
+                        const ok = h.servers && h.servers.includes(s);
+                        return `${label} ${ok ? '✓' : '✗'}`;
+                    }).join(' ');
+                    return `<div class="h-line"><span class="h-time">[${h.date}] [${h.time}]</span> <span class="h-user">${h.user}</span> → <span class="h-cmd">"${escapeHtml(h.command)}"</span> → <span class="h-status">${bindStatus}</span></div>`;
+                }).join('');
+            } else {
+                historyEl.innerHTML = '<div class="empty">История команд пуста...</div>';
+            }
+        } catch (e) {}
+    }
+
+    function escapeHtml(s) {
+        return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    async function execConsoleCommand() {
+        if (!isLoggedIn || !currentUser || !hasConsoleAccess()) return;
+        const input = document.getElementById('consoleInput');
+        const cmd = input.value.trim();
+        if (!cmd || !cmd.startsWith('/')) return;
+
+        const bound = Object.keys(consoleBinds).filter(k => consoleBinds[k]);
+        if (!bound.length) {
+            alert(currentLang === 'rus' ? 'Привяжите хотя бы один сервер' : 'Bind at least one server');
+            return;
+        }
+
+        try {
+            const response = await fetch(API_BASE + '/rcon/exec', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    deviceId: currentUser.deviceId,
+                    username: currentUser.username,
+                    command: cmd,
+                    servers: bound
+                })
+            });
+            const data = await response.json();
+            if (data.ok) {
+                input.value = '';
+                loadConsoleHistory();
+            } else {
+                alert(currentLang === 'rus' ? 'Ошибка: ' + (data.error || 'unknown') : 'Error: ' + (data.error || 'unknown'));
+            }
+        } catch (e) {
+            alert('Ошибка соединения');
+        }
+    }
+
+    // Enter в консоли
+    document.addEventListener('DOMContentLoaded', function() {
+        const inp = document.getElementById('consoleInput');
+        if (inp) inp.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') execConsoleCommand();
+        });
     });
-    document.getElementById('langRus').classList.add('active');
-    document.getElementById('langEng').classList.remove('active');
-    document.getElementById('langSlider').className = 'lang-slider left';
-} else {
-    document.querySelectorAll('[data-lang]').forEach(el => {
-        el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'eng');
-    });
-    document.getElementById('langEng').classList.add('active');
-    document.getElementById('langRus').classList.remove('active');
-    document.getElementById('langSlider').className = 'lang-slider right';
-}
 
-fetchServerStatus();
-setInterval(fetchServerStatus, REFRESH_INTERVAL);
-setInterval(loadUsersOnline, 45000);
-setInterval(loadDailyReward, 30000);
-setInterval(updateActivity, 30000);
-updateAuthUI();
-loadUsersOnline();
-loadDailyReward();
-
-document.getElementById('avatarFile').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        uploadAvatar(file);
+    // ============ ИНИЦИАЛИЗАЦИЯ ============
+    if (currentLang === 'rus') {
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'rus');
+        });
+        document.getElementById('langRus').classList.add('active');
+        document.getElementById('langEng').classList.remove('active');
+        document.getElementById('langSlider').className = 'lang-slider left';
+    } else {
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            el.classList.toggle('hidden', el.getAttribute('data-lang') !== 'eng');
+        });
+        document.getElementById('langEng').classList.add('active');
+        document.getElementById('langRus').classList.remove('active');
+        document.getElementById('langSlider').className = 'lang-slider right';
     }
-    this.value = '';
-});
+
+    fetchServerStatus();
+    setInterval(fetchServerStatus, REFRESH_INTERVAL);
+    setInterval(loadUsersOnline, 45000);
+    setInterval(loadDailyReward, 30000);
+    setInterval(updateActivity, 30000);
+    updateAuthUI();
+    loadUsersOnline();
+    loadDailyReward();
+    if (isLoggedIn) {
+        loadConsoleBinds();
+        loadConsoleHistory();
+    }
+
+    document.getElementById('avatarFile').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) uploadAvatar(file);
+        this.value = '';
+    });
 </script>
 </body>
 </html>
