@@ -19,10 +19,8 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 @keyframes modalPop { from{opacity:0;transform:scale(0.95) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
 @keyframes softGlowGreen { 0%,100%{text-shadow:0 0 8px rgba(46,204,113,0.6)} 50%{text-shadow:0 0 15px rgba(46,204,113,0.9)} }
 @keyframes softGlowGray { 0%,100%{text-shadow:0 0 8px rgba(192,192,192,0.5)} 50%{text-shadow:0 0 15px rgba(192,192,192,0.8)} }
-@keyframes softGlowLime { 0%,100%{text-shadow:0 0 8px rgba(57,255,20,0.6)} 50%{text-shadow:0 0 15px rgba(57,255,20,0.9)} }
 @keyframes softGlowGold { 0%,100%{text-shadow:0 0 8px rgba(255,215,0,0.6)} 50%{text-shadow:0 0 15px rgba(255,215,0,0.95)} }
-@keyframes fortuneArrow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
-@keyframes spinGlow { 0%,100%{box-shadow:0 0 15px rgba(255,215,0,0.4)} 50%{box-shadow:0 0 30px rgba(255,215,0,0.8)} }
+@keyframes fortuneArrow { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(3px)} }
 @keyframes rewardPop { 0%{transform:scale(0.5);opacity:0} 60%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
 
 .container { max-width:500px; width:100%; }
@@ -35,8 +33,8 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .lang-slider { position:absolute; top:2px; bottom:2px; width:calc(50% - 4px); background:linear-gradient(135deg,#4cc9f0 0%,#7b5cff 100%); border-radius:30px; transition:transform 0.4s; z-index:1; opacity:0.9; box-shadow:0 0 10px rgba(76,201,240,0.5); }
 .lang-slider.right { transform:translateX(calc(100% + 2px)); }
 .lang-slider.left { transform:translateX(0); }
-.auth-btn { background:rgba(76,201,240,0.08); border:1px solid rgba(76,201,240,0.4); color:#4cc9f0; padding:3px 12px; border-radius:20px; font-size:8px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; -webkit-tap-highlight-color: transparent; }
-.auth-btn:hover { background:rgba(76,201,240,0.2); box-shadow:0 0 15px rgba(76,201,240,0.3); }
+.auth-btn { background:rgba(76,201,240,0.08); border:1px solid rgba(76,201,240,0.4); color:#4cc9f0; padding:3px 12px; border-radius:20px; font-size:8px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; }
+.auth-btn:hover { background:rgba(76,201,240,0.2); }
 .balance-display { font-size:10px; color:var(--green); font-weight:700; animation:softGlowGreen 2s ease-in-out infinite; }
 .user-profile { display:flex; flex-direction:column; align-items:center; gap:2px; margin-top:10px; }
 .user-avatar { width:30px; height:30px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.3); }
@@ -46,7 +44,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .prefix-violet { color:#9b7bff; text-shadow:0 0 8px rgba(155,123,255,0.6); }
 .prefix-gray { color:#c0c0c0; text-shadow:0 0 8px rgba(192,192,192,0.4); }
 .prefix-red { color:#ff4757; text-shadow:0 0 8px rgba(255,71,87,0.6); }
-.nav-btn { cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; margin-top:4px; background:transparent; border:none; -webkit-tap-highlight-color: transparent; }
+.nav-btn { cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; margin-top:4px; background:transparent; border:none; }
 .nav-btn img { width:28px; height:28px; }
 .nav-btn span { font-size:7px; color:var(--text-bright); display:block; text-align:center; }
 
@@ -57,7 +55,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .avatar-wrap .logo-img { width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; }
 .divider { width:50px; height:1px; margin:0 auto 12px; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3)); opacity:0.6; }
 .cta-row { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
-.btn { font-weight:600; font-size:9px; letter-spacing:0.04em; text-transform:uppercase; text-decoration:none; padding:8px 13px; border-radius:30px; border:1px solid var(--glass-border); color:var(--text); background:rgba(255,255,255,0.03); transition:all 0.3s; display:inline-flex; align-items:center; gap:5px; cursor:pointer; font-family:'Inter',sans-serif; -webkit-tap-highlight-color: transparent; }
+.btn { font-weight:600; font-size:9px; letter-spacing:0.04em; text-transform:uppercase; text-decoration:none; padding:8px 13px; border-radius:30px; border:1px solid var(--glass-border); color:var(--text); background:rgba(255,255,255,0.03); transition:all 0.3s; display:inline-flex; align-items:center; gap:5px; cursor:pointer; font-family:'Inter',sans-serif; }
 .btn svg { width:12px; height:12px; flex-shrink:0; }
 .btn:hover { transform:translateY(-1px); }
 .btn:active { animation:btnPress 0.3s; }
@@ -85,7 +83,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .admin-item .admin-contact { display:inline-block; margin-top:6px; font-size:12px; color:var(--accent); text-decoration:none; font-weight:600; }
 .admin-item .admin-contact.locked { color:var(--text-dim); cursor:default; }
 
-/* === СЕРВЕРА 2x2 === */
+/* === СЕРВЕРА 2x2 (карта 4:3, кнопка КОПИРОВАТЬ рядом со статусом) === */
 .servers-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; padding:14px 12px; margin-top:10px; backdrop-filter:blur(20px); }
 .servers-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 .server-panel { display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:10px; position:relative; }
@@ -100,17 +98,16 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .info { display:flex; flex-direction:column; gap:1px; flex:1; min-width:0; }
 .name { font-size:10px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .ip { font-size:9px; font-weight:600; font-family:'Orbitron',sans-serif; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3),var(--accent)); background-size:300% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:gradientShift 4s ease-in-out infinite; opacity:0.9; }
-.status { font-size:7px; color:var(--green); display:flex; align-items:center; gap:3px; font-weight:600; }
-.status .dot { width:5px; height:5px; background:var(--green); border-radius:50%; display:inline-block; animation:pulseDot 1.2s ease-in-out infinite; }
-.server-bottom { display:flex; gap:6px; align-items:center; }
-.map-image { width:100%; height:40px; border-radius:6px; object-fit:cover; border:1px solid rgba(255,255,255,0.2); flex:1; }
-.copy-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:#d0d0d0; padding:4px 10px; border-radius:20px; font-family:'Inter',sans-serif; font-size:8px; font-weight:600; cursor:pointer; transition:all 0.3s; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; }
+.server-status-row { display:flex; align-items:center; justify-content:space-between; gap:6px; margin-top:0; }
+.status { font-size:8px; color:var(--green); display:flex; align-items:center; gap:3px; font-weight:600; flex:1; min-width:0; }
+.status .dot { width:5px; height:5px; background:var(--green); border-radius:50%; display:inline-block; animation:pulseDot 1.2s ease-in-out infinite; flex-shrink:0; }
+.copy-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:#d0d0d0; padding:3px 10px; border-radius:20px; font-family:'Inter',sans-serif; font-size:8px; font-weight:600; cursor:pointer; transition:all 0.3s; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; }
 .copy-btn:hover { border-color:var(--accent); color:var(--accent); }
 .copy-btn.copied { border-color:var(--green); color:var(--green); }
+.map-image { width:100%; aspect-ratio:4/3; border-radius:8px; object-fit:cover; border:1px solid rgba(255,255,255,0.2); display:block; }
 
 .hidden { display:none !important; }
 
-/* === Вкладки серверов === */
 .server-tabs-container { margin-top:14px; padding:10px 8px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.06); }
 .server-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
 .server-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text); padding:6px 14px; border-radius:20px; font-size:9px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; white-space:nowrap; }
@@ -122,12 +119,10 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .teams-container { display:flex; gap:12px; margin-top:12px; }
 .team-column { flex:1; background:rgba(255,255,255,0.02); border-radius:10px; padding:8px; }
 .team-header { display:flex; align-items:center; gap:5px; font-size:11px; font-weight:700; margin-bottom:6px; }
-.team-header svg { width:14px; height:14px; }
 .players-table { width:100%; border-collapse:collapse; font-size:10px; }
 .players-table th { background:rgba(255,255,255,0.05); color:var(--text-dim); padding:5px; text-align:left; font-weight:600; }
 .players-table td { padding:5px; border-bottom:1px solid rgba(255,255,255,0.04); }
 
-/* === Модалки === */
 .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:999; justify-content:center; align-items:center; padding:20px; animation:modalBg 0.3s ease; }
 .modal-overlay.active { display:flex; }
 .modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:480px; width:100%; max-height:80vh; overflow-y:auto; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; box-shadow:0 0 60px rgba(0,0,0,0.5); }
@@ -156,19 +151,19 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .auth-input:focus { border-color:var(--accent); }
 .auth-submit { width:100%; background:linear-gradient(135deg, var(--accent), var(--accent2)); border:none; border-radius:12px; padding:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.05em; text-transform:uppercase; }
 
-/* === Панель награды === */
-.reward-panel { position:relative; margin-top:12px; border-radius:16px; padding:16px 14px 14px; border:1px solid rgba(255,215,0,0.25); background-color:rgba(20,20,30,0.6); background-image:url('reward_bg.png'); background-size:cover; background-position:center; overflow:hidden; }
-.reward-panel::before { content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.15) 100%); pointer-events:none; }
-.reward-content { position:relative; z-index:2; max-width:70%; }
-.reward-title { color:#fff; font-weight:800; font-size:12px; line-height:1.35; margin-bottom:10px; text-shadow:0 1px 4px rgba(0,0,0,0.8); }
-.reward-remaining { color:#ffd700; font-weight:700; font-size:11px; margin-bottom:8px; text-shadow:0 1px 4px rgba(0,0,0,0.8); animation:softGlowGold 2s ease-in-out infinite; }
-.reward-bar { width:100%; height:10px; background:rgba(255,255,255,0.08); border-radius:8px; overflow:hidden; border:1px solid rgba(255,215,0,0.3); }
+/* === ПАНЕЛЬ НАГРАДЫ (увеличена высота, текст в 3 строки, полоска короче) === */
+.reward-panel { position:relative; margin-top:12px; border-radius:16px; padding:22px 16px 22px; min-height:170px; border:1px solid rgba(255,215,0,0.25); background-color:rgba(20,20,30,0.6); background-image:url('reward_bg.png'); background-size:contain; background-repeat:no-repeat; background-position:right center; overflow:hidden; }
+.reward-panel::before { content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 55%, rgba(0,0,0,0.05) 100%); pointer-events:none; }
+.reward-content { position:relative; z-index:2; max-width:62%; }
+.reward-title { color:#fff; font-weight:800; font-size:12px; line-height:1.45; margin-bottom:14px; text-shadow:0 1px 4px rgba(0,0,0,0.85); }
+.reward-remaining { color:#ffd700; font-weight:700; font-size:11px; margin-bottom:8px; text-shadow:0 1px 4px rgba(0,0,0,0.85); animation:softGlowGold 2s ease-in-out infinite; }
+.reward-bar { width:65%; max-width:200px; height:10px; background:rgba(255,255,255,0.08); border-radius:8px; overflow:hidden; border:1px solid rgba(255,215,0,0.3); }
 .reward-bar-fill { height:100%; width:0%; background:linear-gradient(90deg, #ff9f43, #ffd700); border-radius:8px; transition:width 0.6s ease; box-shadow:0 0 12px rgba(255,215,0,0.6); }
-.reward-btn { position:absolute; right:14px; bottom:14px; z-index:3; background:rgba(255,215,0,0.35); border:1px solid rgba(255,215,0,0.7); color:#fff; padding:8px 18px; border-radius:24px; font-weight:800; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.3s; }
+.reward-btn { position:absolute; right:14px; bottom:14px; z-index:3; background:rgba(255,215,0,0.35); border:1px solid rgba(255,215,0,0.7); color:#fff; padding:9px 22px; border-radius:24px; font-weight:800; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.3s; }
 .reward-btn.available { background:#ffd700; color:#1a1a1a; box-shadow:0 0 20px rgba(255,215,0,0.7); animation:softGlowGold 1.5s ease-in-out infinite; }
 .reward-btn:disabled { cursor:not-allowed; opacity:0.7; }
 
-/* === Фортуна === */
+/* === ФОРТУНА === */
 .fortune-modal { background:rgba(15,15,25,0.95); border:1px solid rgba(255,215,0,0.4); border-radius:20px; max-width:500px; width:100%; padding:24px 20px; position:relative; box-shadow:0 0 60px rgba(255,215,0,0.3); }
 .fortune-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:16px; color:#ffd700; text-align:center; margin-bottom:18px; text-shadow:0 0 15px rgba(255,215,0,0.6); }
 .fortune-wrapper { position:relative; padding-top:22px; }
@@ -183,7 +178,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .fortune-item.gray .label { color:#c0c0c0; }
 .fortune-result { text-align:center; margin-top:18px; font-size:16px; font-weight:800; color:#ffd700; min-height:24px; animation:rewardPop 0.5s ease; }
 
-/* === Свайп-карусель пользователей === */
+/* === СВАЙП-КАРУСЕЛЬ ПОЛЬЗОВАТЕЛЕЙ === */
 .users-scroll { display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
 .users-scroll::-webkit-scrollbar { display:none; }
 .user-card { flex:0 0 calc(100% / 4.4); scroll-snap-align:start; display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 4px; border-radius:10px; background:rgba(255,255,255,0.03); cursor:pointer; transition:background 0.3s; min-width:0; }
@@ -200,7 +195,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .users-panel-header img { width:40px; height:40px; }
 .users-panel-header span { font-size:11px; font-weight:700; color:var(--text-bright); }
 
-/* === Чат === */
+/* === ЧАТ === */
 .chat-window { background:rgba(20,20,30,0.95); border:1px solid rgba(255,255,255,0.15); border-radius:20px; width:100%; max-width:400px; height:500px; display:flex; flex-direction:column; overflow:hidden; }
 .chat-header { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.1); }
 .chat-user-info { display:flex; align-items:center; gap:8px; }
@@ -222,14 +217,14 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .chat-input { flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:8px 12px; color:var(--text-bright); font-size:13px; outline:none; font-family:'Inter',sans-serif; }
 .chat-send { background:var(--accent); border:none; border-radius:12px; padding:8px 14px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; }
 
-/* === Нижняя панель кнопок === */
+/* === НИЖНЯЯ ПАНЕЛЬ 4 КНОПКИ === */
 .bottom-bar { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px; margin-top:14px; }
 .bottom-btn { height:52px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:12px; color:var(--text-bright); font-family:'Inter',sans-serif; font-weight:700; font-size:10px; letter-spacing:0.04em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; padding:0 6px; text-align:center; }
 .bottom-btn:active { animation:btnPress 0.3s; }
 .bottom-btn.active-role { border-color:rgba(76,201,240,0.6); color:#4cc9f0; background:rgba(76,201,240,0.08); box-shadow:0 0 15px rgba(76,201,240,0.25); }
 .bottom-btn.soon { color:var(--text-dim); cursor:not-allowed; opacity:0.55; }
 
-/* === Полноэкранная консоль === */
+/* === ПОЛНОЭКРАННАЯ КОНСОЛЬ === */
 .console-screen { display:none; position:fixed; inset:0; background:rgba(5,5,10,0.98); z-index:2000; flex-direction:column; padding:20px; animation:modalBg 0.3s ease; }
 .console-screen.active { display:flex; }
 .console-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
@@ -269,6 +264,8 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
   .console-close { font-size:28px; }
   .console-input { font-size:12px; padding:10px; }
   .console-send { padding:10px 16px; font-size:11px; }
+  .reward-content { max-width:70%; }
+  .reward-bar { width:80%; }
 }
 </style>
 </head>
@@ -366,14 +363,14 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
                     <div class="info">
                         <span class="name">CS 1.6 ZM & LVL</span>
                         <span class="ip" id="serverIp1">5.141.89.34:5006</span>
-                        <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
                     </div>
                 </div>
-                <div class="server-bottom">
-                    <img class="map-image hidden" id="zmMapImage" src="" alt="map">
-                    <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY IP</button>
-                    <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИЯ</button>
+                <div class="server-status-row">
+                    <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
+                    <button class="copy-btn" onclick="copyIP('serverIp1',this)" data-lang="eng">COPY</button>
+                    <button class="copy-btn hidden" onclick="copyIP('serverIp1',this)" data-lang="rus">КОПИРОВАТЬ</button>
                 </div>
+                <img class="map-image hidden" id="zmMapImage" src="" alt="map">
             </div>
 
             <div class="server-panel" data-server-panel="ze">
@@ -385,14 +382,14 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
                     <div class="info">
                         <span class="name">CS 1.6 ZE</span>
                         <span class="ip" id="serverIp2">5.141.89.34:5005</span>
-                        <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
                     </div>
                 </div>
-                <div class="server-bottom">
-                    <img class="map-image hidden" id="zeMapImage" src="" alt="map">
-                    <button class="copy-btn" onclick="copyIP('serverIp2',this)" data-lang="eng">COPY IP</button>
-                    <button class="copy-btn hidden" onclick="copyIP('serverIp2',this)" data-lang="rus">КОПИЯ</button>
+                <div class="server-status-row">
+                    <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
+                    <button class="copy-btn" onclick="copyIP('serverIp2',this)" data-lang="eng">COPY</button>
+                    <button class="copy-btn hidden" onclick="copyIP('serverIp2',this)" data-lang="rus">КОПИРОВАТЬ</button>
                 </div>
+                <img class="map-image hidden" id="zeMapImage" src="" alt="map">
             </div>
 
             <div class="server-panel" data-server-panel="dm">
@@ -404,14 +401,14 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
                     <div class="info">
                         <span class="name">CS 1.6 DM</span>
                         <span class="ip" id="serverIp3">5.141.89.34:5002</span>
-                        <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
                     </div>
                 </div>
-                <div class="server-bottom">
-                    <img class="map-image hidden" id="dmMapImage" src="" alt="map">
-                    <button class="copy-btn" onclick="copyIP('serverIp3',this)" data-lang="eng">COPY IP</button>
-                    <button class="copy-btn hidden" onclick="copyIP('serverIp3',this)" data-lang="rus">КОПИЯ</button>
+                <div class="server-status-row">
+                    <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
+                    <button class="copy-btn" onclick="copyIP('serverIp3',this)" data-lang="eng">COPY</button>
+                    <button class="copy-btn hidden" onclick="copyIP('serverIp3',this)" data-lang="rus">КОПИРОВАТЬ</button>
                 </div>
+                <img class="map-image hidden" id="dmMapImage" src="" alt="map">
             </div>
 
             <div class="server-panel" data-server-panel="jail">
@@ -423,14 +420,14 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
                     <div class="info">
                         <span class="name">JAIL | Побег 12+</span>
                         <span class="ip" id="serverIp4">5.141.89.34:5003</span>
-                        <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
                     </div>
                 </div>
-                <div class="server-bottom">
-                    <img class="map-image hidden" id="jailMapImage" src="" alt="map">
-                    <button class="copy-btn" onclick="copyIP('serverIp4',this)" data-lang="eng">COPY IP</button>
-                    <button class="copy-btn hidden" onclick="copyIP('serverIp4',this)" data-lang="rus">КОПИЯ</button>
+                <div class="server-status-row">
+                    <div class="status"><span class="dot"></span><span data-lang="eng">Offline</span><span data-lang="rus" class="hidden">Офлайн</span></div>
+                    <button class="copy-btn" onclick="copyIP('serverIp4',this)" data-lang="eng">COPY</button>
+                    <button class="copy-btn hidden" onclick="copyIP('serverIp4',this)" data-lang="rus">КОПИРОВАТЬ</button>
                 </div>
+                <img class="map-image hidden" id="jailMapImage" src="" alt="map">
             </div>
         </div>
 
@@ -440,11 +437,10 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
         </div>
     </div>
 
-    <!-- Панель награды -->
     <div class="reward-panel" id="rewardPanel">
         <div class="reward-content">
-            <div class="reward-title" data-lang="rus">Сыграйте 60 минут на любом сервере и тогда сможете открыть ящик наград один раз в день!</div>
-            <div class="reward-title hidden" data-lang="eng">Play 60 minutes on any server and you can open a reward box once a day!</div>
+            <div class="reward-title" data-lang="rus">Сыграйте 60 минут на любом<br>сервере и тогда сможете открыть<br>ящик наград один раз в день!</div>
+            <div class="reward-title hidden" data-lang="eng">Play 60 minutes on any<br>server and you can open a<br>reward box once a day!</div>
             <div class="reward-remaining" id="rewardRemaining" data-lang="rus">Осталось сыграть: 60 минут</div>
             <div class="reward-remaining hidden" id="rewardRemainingEng" data-lang="eng">Left to play: 60 minutes</div>
             <div class="reward-bar"><div class="reward-bar-fill" id="rewardBarFill"></div></div>
@@ -453,7 +449,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
         <button class="reward-btn hidden" id="rewardBtnEng" onclick="openRewardBox()" disabled data-lang="eng">Open</button>
     </div>
 
-    <!-- Посетители сегодня -->
     <div class="users-panel" id="visitorsTodayPanel">
         <div class="users-panel-header">
             <img src="online.svg" alt="online">
@@ -463,7 +458,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
         <div class="users-scroll" id="visitorsTodayList"></div>
     </div>
 
-    <!-- Все пользователи сайта -->
     <div class="users-panel" id="usersPanel">
         <div class="users-panel-header">
             <img src="online.svg" alt="online">
@@ -473,7 +467,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
         <div class="users-scroll" id="usersList"></div>
     </div>
 
-    <!-- Нижняя панель 4 кнопки -->
     <div class="bottom-bar">
         <button class="bottom-btn" id="btnConsole" onclick="tryOpenConsole()">
             <span data-lang="rus">Admin Консоль</span>
@@ -485,7 +478,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Модалка привилегий -->
 <div class="modal-overlay" id="privilegeModal" onclick="closePrivilegeModalOutside(event)">
     <div class="modal">
         <button class="modal-close" onclick="closePrivilegeModal()">&times;</button>
@@ -493,7 +485,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Модалка логина -->
 <div class="modal-overlay" id="authModal" onclick="closeAuthModalOutside(event)">
     <div class="modal auth-modal">
         <button class="modal-close" onclick="closeAuthModal()">&times;</button>
@@ -508,7 +499,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Модалка настроек -->
 <div class="modal-overlay" id="settingsModal">
     <div class="modal auth-modal">
         <button class="modal-close" onclick="closeSettings()">&times;</button>
@@ -523,7 +513,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Чат -->
 <div class="modal-overlay" id="chatModal">
     <div class="chat-window">
         <div class="chat-header">
@@ -541,7 +530,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Фортуна -->
 <div class="modal-overlay" id="fortuneModal">
     <div class="fortune-modal">
         <div class="fortune-title">🎁 FORTUNE 🎁</div>
@@ -555,7 +543,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Полноэкранная консоль -->
 <div class="console-screen" id="consoleScreen">
     <div class="console-header">
         <span class="console-title">ADMIN CONSOLE</span>
@@ -589,17 +576,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 <audio id="fortuneAudio" src="images/fortune.mp3" preload="auto"></audio>
 
 <script>
-/* ==========================================================
-   KONTRA — Frontend v18
-   Изменения vs v17:
-   - Убраны .unread-badge и статус "✓✓ Прочитано"
-   - Убран N+1 fetch get_unread в loadUsersOnline
-   - Серверная сетка 2x2
-   - Панель награды + фортуна (звук + шансы)
-   - Полноэкранная Admin Console + привязка ZM/ZE/DM/JAIL
-   - Команды /setvip /setpremium /setdeluxe /ban
-   ========================================================== */
-
 const API = 'https://kontra-status.avalon-kontra.workers.dev';
 let currentLang = localStorage.getItem('kontra_lang') || 'eng';
 let isLoggedIn = false;
@@ -617,7 +593,6 @@ try {
     if (savedUser) { currentUser = JSON.parse(savedUser); isLoggedIn = true; }
 } catch(e) {}
 
-/* ========== АДМИНЫ ========== */
 const adminData = {
     eng: [
         {name:'Mr.Whiskus', role:'Project Lead', duty:'Managing Avalon Hosting projects', contact:'', locked:true},
@@ -633,7 +608,6 @@ const adminData = {
     ]
 };
 
-/* ========== ПРИВИЛЕГИИ ========== */
 const privilegeInfo = {
     vip: {
         eng: { name:'VIP+', server:'CS 1.6 ZM & LVL SYSTEM', prices:[['30 days','$3.21'],['15 days','$1.67'],['10 days','$1.16'],['7 days','$0.77'],['3 days','$0.32']], features:['Prefix: VIP+','Prefix Color: Red','Chat Color: Server','VIP zombie in shop: Speed, HP and Double Jump','Balance on join: $7050','Menu VIP+: /bonus','100 armor every round','200 HP every round','/150ap - +150 armor once per map','/150hp - +150 HP once per map','/priv_money - +$2000 [60 sec cooldown]','/anti - free Antidote once per map'], images:['images/IMG_20260828_092418_325.jpg'] },
@@ -649,7 +623,6 @@ const privilegeInfo = {
     }
 };
 
-/* ========== ЯЗЫК ========== */
 function toggleLang() {
     const s = document.getElementById('langSlider');
     const r = document.getElementById('langRus');
@@ -667,7 +640,6 @@ function applyLang() {
     updateRewardUI();
 }
 
-/* ========== АВТОРИЗАЦИЯ ========== */
 function toggleAuthModal() {
     if (isLoggedIn) { logout(); return; }
     document.getElementById('authModal').classList.add('active');
@@ -752,7 +724,6 @@ async function updateActivity() {
     try { await fetch(`${API}/update_activity`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ deviceId: currentUser.deviceId }) }); } catch(e){}
 }
 
-/* ========== АДМИНЫ ========== */
 function renderAdminList() {
     const container = document.getElementById('adminListContent');
     const list = adminData[currentLang];
@@ -775,7 +746,7 @@ function toggleAdmin() {
 
 function copyIP(id, btn) {
     const ip = document.getElementById(id).textContent;
-    const done = () => { btn.textContent = currentLang==='rus'?'СКОПИРОВАН':'COPIED'; btn.classList.add('copied'); setTimeout(()=>{ btn.textContent = currentLang==='rus'?'КОПИЯ':'COPY IP'; btn.classList.remove('copied'); },2000); };
+    const done = () => { btn.textContent = currentLang==='rus'?'СКОПИРОВАН':'COPIED'; btn.classList.add('copied'); setTimeout(()=>{ btn.textContent = currentLang==='rus'?'КОПИРОВАТЬ':'COPY'; btn.classList.remove('copied'); },2000); };
     if (navigator.clipboard) navigator.clipboard.writeText(ip).then(done).catch(()=>fallbackCopy(ip,done));
     else fallbackCopy(ip,done);
 }
@@ -783,7 +754,6 @@ function fallbackCopy(ip, cb) {
     const t=document.createElement('input'); t.value=ip; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); cb();
 }
 
-/* ========== ПОЛЬЗОВАТЕЛИ (без N+1) ========== */
 async function loadUsersOnline() {
     if (loadUsersBusy) return;
     loadUsersBusy = true;
@@ -845,7 +815,6 @@ function buildUserCard(u, status) {
     return item;
 }
 
-/* ========== ЕЖЕДНЕВНАЯ НАГРАДА ========== */
 async function loadDailyReward() {
     if (!currentUser) { updateRewardUI(0, false); return; }
     try {
@@ -881,7 +850,6 @@ function updateRewardUI(playSec, claimed) {
     });
 }
 
-/* ========== ФОРТУНА ========== */
 const FORTUNE_REWARDS = [
     { label:'0 ₽',  value:0, weight:10, icon:'💀', cls:'gray' },
     { label:'+1 ₽', value:1, weight:10, icon:'🪙', cls:'' },
@@ -1021,7 +989,6 @@ async function finishReward(reward) {
     }, 2000);
 }
 
-/* ========== ЧАТ ========== */
 function openChatList() { loadUsersOnline(); document.getElementById('usersPanel').scrollIntoView({behavior:'smooth'}); }
 function openChat(user) {
     chatPartnerId = user.device_id;
@@ -1075,7 +1042,6 @@ async function deleteMessage(messageId) {
     try { await fetch(`${API}/delete_message`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ messageId, deviceId: currentUser.deviceId }) }); loadMessages(); } catch(e){}
 }
 
-/* ========== НАСТРОЙКИ ========== */
 function openSettings() { document.getElementById('settingsModal').classList.add('active'); document.body.style.overflow='hidden'; }
 function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); document.body.style.overflow=''; }
 
@@ -1109,7 +1075,6 @@ async function uploadAvatar(file) {
     reader.readAsDataURL(file);
 }
 
-/* ========== ЖИВОЙ ОНЛАЙН ========== */
 const STATUS_URL = `${API}/network`;
 const REFRESH_INTERVAL = 10000;
 
@@ -1131,7 +1096,6 @@ function updateMapImages(servers) {
         jail: document.getElementById('jailMapImage')
     };
     const mapSrcMap = {
-        zm: { 'official': 'images/officialmap.jpg' },
         dm: {
             'de_dust2_2x2_css': 'images/css.jpg',
             'de_dust2_2x2': 'images/dust.jpg',
@@ -1242,7 +1206,6 @@ function showServerDetails(server) {
     `;
 }
 
-/* ========== МОДАЛКА ПРИВИЛЕГИЙ ========== */
 function openPrivilegeModal(type) {
     const data = privilegeInfo[type][currentLang];
     const modal = document.getElementById('privilegeModal');
@@ -1275,7 +1238,7 @@ function openPrivilegeModal(type) {
         </div>
         <div class="privilege-section">
             <div class="privilege-section-title">${currentLang==='rus'?'Свяжитесь чтобы купить привилегию:':'Contact to buy privilege:'}</div>
-                        <a href="https://t.me/akythu" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @akythu</a>
+            <a href="https://t.me/akythu" target="_blank" class="privilege-contact-link"><svg viewBox="0 0 24 24"><path d="M21.05 2.93a1.5 1.5 0 0 0-1.55-.24L2.4 9.86c-1.02.4-1 .89-.18 1.14l4.44 1.39 1.64 5.02c.2.55.34.77.7.77.28 0 .4-.13.55-.28l1.68-1.63 4.3 3.18c.63.43 1.09.2 1.26-.37l3.44-16.2c.24-.95-.1-1.38-.68-1.95zM8.7 13.36l8.4-7.5c.4-.34-.09-.5-.6-.19L6.3 12.5l-.34 3.6z"/></svg> @akythu</a>
         </div>
         <div class="privilege-section">
             <div class="privilege-section-title">| ${data.name} ${currentLang==='rus'?'Возможности':'Features'} |</div>
@@ -1292,7 +1255,7 @@ function openPrivilegeModal(type) {
 
 function showPurchasePlans(type) {
     if (!isLoggedIn) { alert(currentLang==='rus'?'Сначала войдите в аккаунт':'Please login first'); return; }
-    const data = privilegeInfo[type][currentLang];
+        const data = privilegeInfo[type][currentLang];
     const content = document.getElementById('privilegeModalContent');
     function getPriceByDays(days) {
         const item = data.prices.find(p => p[0].startsWith(days + ' '));
@@ -1341,7 +1304,6 @@ async function purchasePrivilege(type, days) {
 function closePrivilegeModal() { document.getElementById('privilegeModal').classList.remove('active'); document.body.style.overflow=''; }
 function closePrivilegeModalOutside(e) { if (e.target === e.currentTarget) closePrivilegeModal(); }
 
-/* ========== ADMIN CONSOLE ========== */
 function tryOpenConsole() {
     if (!hasConsoleAccess()) return;
     openConsole();
@@ -1450,7 +1412,6 @@ async function sendConsoleCommand() {
     finally { consoleBusy = false; }
 }
 
-/* ========== ИНИЦИАЛИЗАЦИЯ ========== */
 if (currentLang === 'rus') {
     document.getElementById('langRus').classList.add('active');
     document.getElementById('langEng').classList.remove('active');
