@@ -950,22 +950,26 @@ function spinFortune(reward) {
         const itemW = 90;
         const totalItems = 60;
 
-        let targetIdx = -1;
-        for (let i=0; i<totalItems; i++) {
-            const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
-            if (r.label === reward.label) { targetIdx = i; break; }
+        // 1) Индекс нужной награды в первом "круге" трека
+        let targetIdxBase = -1;
+        for (let i=0; i<FORTUNE_REWARDS.length; i++) {
+            if (FORTUNE_REWARDS[i].label === reward.label) { targetIdxBase = i; break; }
         }
-        if (targetIdx < 0) targetIdx = 0;
+        if (targetIdxBase < 0) targetIdxBase = 0;
 
+        // 2) Крутим 8 полных кругов + останавливаемся на нужной награде
+        const fullLoops = 8;
+        const targetIdx = fullLoops * FORTUNE_REWARDS.length + targetIdxBase;
+
+        // 3) Позиция остановки — награда должна быть по центру "окна" трека
         const container = document.querySelector('.fortune-track');
         const containerW = container.offsetWidth;
         const centerOffset = containerW / 2 - itemW / 2;
         const finalX = -(targetIdx * itemW - centerOffset);
 
-        // +6 сек → было 6000, стало 12000
-        const duration = 12000;
+        // 4) Длительность + быстрая кривая (без вязкого хвоста)
+        const duration = 9000;
         const start = performance.now();
-        const startX = 0;
         const audio = document.getElementById('fortuneAudio');
         let lastSlot = -1;
         let playSound = true;
@@ -973,11 +977,10 @@ function spinFortune(reward) {
         function frame(now) {
             const t = Math.min(1, (now - start) / duration);
 
-            // Новая кривая: разгон → быстрое плато → мягкое торможение
-            // ease-out quad = 1 - (1-t)^2 — быстрее и короче хвост
+            // ease-out quad: быстро в начале → плавное торможение
             const ease = 1 - Math.pow(1 - t, 2);
 
-            const x = startX + (finalX - startX) * ease;
+            const x = finalX * ease;
             inner.style.transform = `translateX(${x}px)`;
 
             const passed = Math.floor(Math.abs(x) / itemW);
