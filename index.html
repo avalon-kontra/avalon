@@ -920,49 +920,56 @@ function spinFortune(reward) {
         const itemW = 90;
         const totalItems = 300;
 
+        // Ищем нужную награду в позиции 160-180 — ~100 прокруток
         let targetIdx = -1;
-        for (let i = 80; i < totalItems; i++) {
+        for (let i = 160; i < totalItems; i++) {
             const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
             if (r.label === reward.label) { targetIdx = i; break; }
         }
-        if (targetIdx < 0) targetIdx = 90;
+        if (targetIdx < 0) {
+            for (let i = 130; i < 160; i++) {
+                const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
+                if (r.label === reward.label) { targetIdx = i; break; }
+            }
+        }
+        if (targetIdx < 0) targetIdx = 160;
 
         const container = document.querySelector('.fortune-track');
         const containerW = container.offsetWidth;
         const centerOffset = containerW / 2 - itemW / 2;
         const finalX = -(targetIdx * itemW - centerOffset);
 
-        const DURATION = 15000;
+        // === 3-фазная кривая: 27 секунд ===
+        const DURATION = 27000;
+        const T1 = 4000;    // 0-4 сек   — быстрая фаза
+        const T2 = 10000;   // 4-10 сек  — плавное замедление
+                            // 10-27 сек — резкое замедление и мягкая остановка
+
         const start = performance.now();
         const startX = 0;
         const audio = document.getElementById('fortuneAudio');
         let lastSlot = -1;
         let playSound = true;
 
-        // Единая кривая: смесь easeOutQuad и easeOutQuart.
-        // Начинается быстро, всё время только замедляется, к концу почти замирает.
         function getProgress(t) {
-            const p = Math.min(1, t / DURATION);
-            // Кусочно: до 40% времени — easeOutQuad (быстро тормозит),
-            // после — easeOutQuart (очень медленно подходит к финишу).
-            // Но обе — производные совпадают на стыке p=0.4, поэтому нет рывков.
-            if (p < 0.4) {
-                // easeOutQuad: f(p) = 1 - (1-p)^2, но масштабируем чтобы f(0)=0, f(0.4)=X
-                const local = p / 0.4;
-                const eased = 1 - Math.pow(1 - local, 2);
-                return eased * 0.72;
-            } else {
-                // easeOutQuart от 0.72 до 1.0
-                const local = (p - 0.4) / 0.6;
-                const eased = 1 - Math.pow(1 - local, 4);
-                return 0.72 + eased * 0.28;
+            if (t < T1) {
+                const p = t / T1;
+                return p * 0.60;
             }
+            if (t < T2) {
+                const p = (t - T1) / (T2 - T1);
+                const eased = 1 - Math.pow(1 - p, 2);
+                return 0.60 + eased * 0.33;
+            }
+            const p = Math.min(1, (t - T2) / (DURATION - T2));
+            const eased = 1 - Math.pow(1 - p, 4);
+            return 0.93 + eased * 0.07;
         }
 
         function frame(now) {
             const t = now - start;
-            const progress = getProgress(t);
-            const x = startX + (finalX - startX) * progress;
+            const p = getProgress(Math.min(t, DURATION));
+            const x = startX + (finalX - startX) * p;
             inner.style.transform = `translateX(${x}px)`;
 
             const passed = Math.floor(Math.abs(x) / itemW);
