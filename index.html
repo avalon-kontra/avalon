@@ -920,7 +920,6 @@ function spinFortune(reward) {
         const itemW = 90;
         const totalItems = 300;
 
-        // Ищем нужную награду в позиции 80-100 — это даёт ~90 прокруток
         let targetIdx = -1;
         for (let i = 80; i < totalItems; i++) {
             const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
@@ -933,40 +932,37 @@ function spinFortune(reward) {
         const centerOffset = containerW / 2 - itemW / 2;
         const finalX = -(targetIdx * itemW - centerOffset);
 
-        // === 3-фазная кривая: 15 секунд ===
         const DURATION = 15000;
-        const T1 = 3000;    // 0-3 сек   — быстрая (50 прокруток)
-        const T2 = 9000;    // 3-9 сек   — плавное замедление (30 прокруток)
-                            // 9-15 сек  — резкое замедление и остановка (10 прокруток)
-
         const start = performance.now();
         const startX = 0;
         const audio = document.getElementById('fortuneAudio');
         let lastSlot = -1;
         let playSound = true;
 
+        // Единая кривая: смесь easeOutQuad и easeOutQuart.
+        // Начинается быстро, всё время только замедляется, к концу почти замирает.
         function getProgress(t) {
-            if (t < T1) {
-                // Фаза 1: 0-3 сек → прошли 50% пути
-                const p = t / T1;
-                return p * 0.50;
+            const p = Math.min(1, t / DURATION);
+            // Кусочно: до 40% времени — easeOutQuad (быстро тормозит),
+            // после — easeOutQuart (очень медленно подходит к финишу).
+            // Но обе — производные совпадают на стыке p=0.4, поэтому нет рывков.
+            if (p < 0.4) {
+                // easeOutQuad: f(p) = 1 - (1-p)^2, но масштабируем чтобы f(0)=0, f(0.4)=X
+                const local = p / 0.4;
+                const eased = 1 - Math.pow(1 - local, 2);
+                return eased * 0.72;
+            } else {
+                // easeOutQuart от 0.72 до 1.0
+                const local = (p - 0.4) / 0.6;
+                const eased = 1 - Math.pow(1 - local, 4);
+                return 0.72 + eased * 0.28;
             }
-            if (t < T2) {
-                // Фаза 2: 3-9 сек → ещё 30% (всего 80%)
-                const p = (t - T1) / (T2 - T1);
-                const eased = 1 - Math.pow(1 - p, 2);
-                return 0.50 + eased * 0.30;
-            }
-            // Фаза 3: 9-15 сек → финальные 20%
-            const p = Math.min(1, (t - T2) / (DURATION - T2));
-            const eased = 1 - Math.pow(1 - p, 4);
-            return 0.80 + eased * 0.20;
         }
 
         function frame(now) {
             const t = now - start;
-            const p = getProgress(Math.min(t, DURATION));
-            const x = startX + (finalX - startX) * p;
+            const progress = getProgress(t);
+            const x = startX + (finalX - startX) * progress;
             inner.style.transform = `translateX(${x}px)`;
 
             const passed = Math.floor(Math.abs(x) / itemW);
