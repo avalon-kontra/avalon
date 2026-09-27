@@ -585,9 +585,6 @@ let fortuneSpinning = false;
 let usersOnlineCache = [];
 let loadUsersBusy = false;
 
-// Кэш состояния награды — чтобы UI не сбрасывался на 0 до прихода свежего ответа
-let rewardState = { playSec: 0, claimed: false, loaded: false, forceClaimed: false };
-
 try {
     const savedUser = localStorage.getItem('kontra_user');
     if (savedUser) { currentUser = JSON.parse(savedUser); isLoggedIn = true; }
@@ -623,7 +620,6 @@ const privilegeInfo = {
     }
 };
 
-/* ========== ЯЗЫК ========== */
 function toggleLang() {
     const s = document.getElementById('langSlider');
     const r = document.getElementById('langRus');
@@ -641,7 +637,6 @@ function applyLang() {
     updateRewardUI();
 }
 
-/* ========== АВТОРИЗАЦИЯ ========== */
 function toggleAuthModal() {
     if (isLoggedIn) { logout(); return; }
     document.getElementById('authModal').classList.add('active');
@@ -664,11 +659,7 @@ async function login() {
             currentUser = { deviceId:data.deviceId, username:data.username, balance:data.balance, avatar:data.avatar||'', password, prefix:data.prefix||'', prefixColor:data.prefixColor||'', bold:data.bold||false };
             localStorage.setItem('kontra_user', JSON.stringify(currentUser));
             updateAuthUI(); closeAuthModal();
-            // СНАЧАЛА updateActivity (помечаем заход на сайт), ПОТОМ loadDailyReward
-            await updateActivity();
-            await loadDailyReward();
-            loadUsersOnline();
-            loadConsoleBinds();
+            setTimeout(() => { loadUsersOnline(); loadDailyReward(); updateActivity(); loadConsoleBinds(); }, 300);
         } else {
             alert(currentLang === 'rus' ? 'Неверный ник или пароль' : 'Wrong nickname or password');
         }
@@ -681,7 +672,6 @@ async function logout() {
     }
     isLoggedIn=false; currentUser=null;
     localStorage.removeItem('kontra_user');
-    rewardState = { playSec: 0, claimed: false, loaded: false, forceClaimed: false };
     updateAuthUI(); loadUsersOnline();
 }
 
@@ -714,6 +704,7 @@ function updateAuthUI() {
         } else { userPrefix.textContent=''; userPrefix.className='user-prefix'; }
         balanceDisplay.textContent = `Баланс: ${currentUser.balance || 0} ₽`;
         balanceDisplay.classList.remove('hidden');
+
         const btn = document.getElementById('btnConsole');
         if (hasConsoleAccess()) btn.classList.add('active-role');
         else btn.classList.remove('active-role');
@@ -731,12 +722,12 @@ async function updateActivity() {
     try { await fetch(`${API}/update_activity`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ deviceId: currentUser.deviceId }) }); } catch(e){}
 }
 
-/* ========== АДМИНЫ ========== */
 function renderAdminList() {
     const container = document.getElementById('adminListContent');
     const list = adminData[currentLang];
     container.innerHTML = list.map(a => `<div class="admin-item"><div class="admin-name">${a.name}</div><div class="admin-role">${a.role}</div><div class="admin-duty">${a.duty}</div>${a.locked ? `<span class="admin-contact locked">${currentLang==='rus'?'Связаться: Доступ закрыт':'Contact: Access closed'}</span>` : `<a href="${a.href}" target="_blank" class="admin-contact">${a.contact}</a>`}</div>`).join('');
 }
+
 function togglePrivilege() {
     const p = document.getElementById('privilegePanel');
     const a = document.getElementById('adminPanel');
@@ -750,6 +741,7 @@ function toggleAdmin() {
     if (p.classList.contains('open')) p.classList.remove('open');
     if (a.classList.contains('open')) renderAdminList();
 }
+
 function copyIP(id, btn) {
     const ip = document.getElementById(id).textContent;
     const done = () => { btn.textContent = currentLang==='rus'?'СКОПИРОВАН':'COPIED'; btn.classList.add('copied'); setTimeout(()=>{ btn.textContent = currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP'; btn.classList.remove('copied'); },2000); };
@@ -760,7 +752,6 @@ function fallbackCopy(ip, cb) {
     const t=document.createElement('input'); t.value=ip; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); cb();
 }
 
-/* ========== ПОЛЬЗОВАТЕЛИ ========== */
 async function loadUsersOnline() {
     if (loadUsersBusy) return;
     loadUsersBusy = true;
@@ -771,11 +762,14 @@ async function loadUsersOnline() {
         const visitorsGrid = document.getElementById('visitorsTodayList');
         usersGrid.innerHTML=''; visitorsGrid.innerHTML='';
         if (!data.ok || !data.users) return;
+
         const now = Date.now();
         const threeMinutes = 3*60*1000;
         const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+
         const filtered = data.users.filter(u => (u.last_site_visit > 0) || u.in_game);
         usersOnlineCache = filtered;
+
         const sorted = filtered.slice().sort((a,b) => {
             const aP = a.prefix?0:1, bP = b.prefix?0:1;
             if (aP!==bP) return aP-bP;
@@ -783,6 +777,7 @@ async function loadUsersOnline() {
             if (aG!==bG) return aG-bG;
             return (a.username||'').localeCompare(b.username||'');
         });
+
         for (const u of sorted) {
             usersGrid.appendChild(buildUserCard(u, null));
             if (u.last_site_visit && u.last_site_visit >= todayStart.getTime()) {
@@ -804,9 +799,11 @@ function buildUserCard(u, status) {
     if (u.in_game) statusHtml = '<span class="status-ingame">"В игре"</span>';
     else if (status === 'online') statusHtml = '<span class="status-online">"Онлайн"</span>';
     else if (status === 'today') statusHtml = '<span class="status-today">"Сегодня"</span>';
+
     const avatarHtml = u.avatar
         ? `<img src="${u.avatar}" alt="avatar">`
         : '<svg viewBox="0 0 20 20"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>';
+
     item.innerHTML = `
         <div class="user-card-avatar">${avatarHtml}</div>
         ${prefixHtml}
@@ -816,40 +813,26 @@ function buildUserCard(u, status) {
     return item;
 }
 
-/* ========== ЕЖЕДНЕВНАЯ НАГРАДА ========== */
 async function loadDailyReward() {
-    if (!currentUser) { updateRewardUI(); return; }
+    if (!currentUser) { updateRewardUI(0, false); return; }
     try {
         const r = await fetch(`${API}/daily_reward?deviceId=${currentUser.deviceId}`);
         const data = await r.json();
-        if (data.ok) {
-            rewardState.playSec = data.playTimeSec || 0;
-            rewardState.claimed = data.rewardClaimed === true;
-            rewardState.loaded = true;
-            if (rewardState.forceClaimed) rewardState.claimed = true;
-            updateRewardUI();
-        } else {
-            // Не смогли получить — оставляем прошлое состояние
-            updateRewardUI();
-        }
-    } catch(e) {
-        // Сеть отвалилась — не сбрасываем UI
-        updateRewardUI();
-    }
+        if (data.ok) updateRewardUI(data.playTimeSec || 0, data.rewardClaimed === true);
+    } catch(e){ updateRewardUI(0, false); }
 }
 
-function updateRewardUI() {
-    const minutes = Math.floor((rewardState.playSec || 0) / 60);
+function updateRewardUI(playSec, claimed) {
+    if (playSec === undefined) playSec = 0;
+    const minutes = Math.floor(playSec / 60);
     const need = Math.max(0, 60 - minutes);
     const fill = Math.min(100, (minutes/60)*100);
-    const claimed = rewardState.claimed || rewardState.forceClaimed;
 
     const rem = document.getElementById('rewardRemaining');
     const remEng = document.getElementById('rewardRemainingEng');
     const bar = document.getElementById('rewardBarFill');
     const btnRu = document.getElementById('rewardBtn');
     const btnEn = document.getElementById('rewardBtnEng');
-    if (!rem || !remEng || !bar || !btnRu || !btnEn) return;
 
     if (currentLang === 'rus') rem.textContent = `Осталось сыграть: ${need} минут`;
     else remEng.textContent = `Left to play: ${need} minutes`;
@@ -865,7 +848,6 @@ function updateRewardUI() {
     });
 }
 
-/* ========== ФОРТУНА ========== */
 const FORTUNE_REWARDS = [
     { label:'0 ₽',  value:0, weight:10, icon:'💀', cls:'gray' },
     { label:'+1 ₽', value:1, weight:10, icon:'🪙', cls:'' },
@@ -887,7 +869,7 @@ function pickWeighted() {
 function buildFortuneTrack() {
     const inner = document.getElementById('fortuneInner');
     inner.innerHTML = '';
-    const slots = 120; // удвоено — трек длиннее, чтобы хватило дистанции прокрутки
+    const slots = 60;
     for (let i=0; i<slots; i++) {
         const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
         const div = document.createElement('div');
@@ -900,10 +882,7 @@ function buildFortuneTrack() {
 async function openRewardBox() {
     if (fortuneSpinning) return;
     if (!currentUser) { alert(currentLang==='rus'?'Войдите в аккаунт':'Login first'); return; }
-    if (rewardState.forceClaimed || rewardState.claimed) {
-        alert(currentLang==='rus'?'Награда уже открыта сегодня':'Reward already opened today');
-        return;
-    }
+
     try {
         const r = await fetch(`${API}/daily_reward?deviceId=${currentUser.deviceId}`);
         const d = await r.json();
@@ -939,21 +918,21 @@ function spinFortune(reward) {
         const resultEl = document.getElementById('fortuneResult');
         resultEl.textContent = '';
         const itemW = 90;
+        const totalItems = 60;
 
-        // Ищем позицию нужной награды — стартуем с 60-го слота, чтобы был запас слева
-        let targetIdx = 60;
-        for (let i=60; i<120; i++) {
+        let targetIdx = -1;
+        for (let i=0; i<totalItems; i++) {
             const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
             if (r.label === reward.label) { targetIdx = i; break; }
         }
+        if (targetIdx < 0) targetIdx = 0;
 
         const container = document.querySelector('.fortune-track');
         const containerW = container.offsetWidth;
         const centerOffset = containerW / 2 - itemW / 2;
-        // Дистанция до нужной позиции; за счёт ease = 1 - (1-t)^4 анимация выглядит в ~5 раз быстрее
         const finalX = -(targetIdx * itemW - centerOffset);
 
-        const duration = 12000; // +6 сек к прежним 6
+        const duration = 12000;
         const start = performance.now();
         const startX = 0;
         const audio = document.getElementById('fortuneAudio');
@@ -962,8 +941,7 @@ function spinFortune(reward) {
 
         function frame(now) {
             const t = Math.min(1, (now - start) / duration);
-            // Плавное замедление с ускоренным стартом (×5 скорость через cubic)
-            const ease = 1 - Math.pow(1 - t, 4);
+            const ease = 1 - Math.pow(1 - t, 5);
             const x = startX + (finalX - startX) * ease;
             inner.style.transform = `translateX(${x}px)`;
 
@@ -989,9 +967,6 @@ function spinFortune(reward) {
 }
 
 async function finishReward(reward) {
-    // Сразу помечаем локально, чтобы UI не показывал "Открыть" до следующего ответа
-    rewardState.forceClaimed = true;
-    updateRewardUI();
     try {
         const r = await fetch(`${API}/open_reward`, {
             method:'POST',
@@ -1002,10 +977,8 @@ async function finishReward(reward) {
         if (d.ok) {
             currentUser.balance = d.newBalance;
             localStorage.setItem('kontra_user', JSON.stringify(currentUser));
-            rewardState.claimed = true;
-            rewardState.playSec = Math.max(rewardState.playSec, 3600);
             updateAuthUI();
-            updateRewardUI();
+            updateRewardUI(3600, true);
         }
     } catch(e){}
     setTimeout(() => {
@@ -1015,7 +988,6 @@ async function finishReward(reward) {
     }, 2000);
 }
 
-/* ========== ЧАТ ========== */
 function openChatList() { loadUsersOnline(); document.getElementById('usersPanel').scrollIntoView({behavior:'smooth'}); }
 function openChat(user) {
     chatPartnerId = user.device_id;
@@ -1069,7 +1041,6 @@ async function deleteMessage(messageId) {
     try { await fetch(`${API}/delete_message`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ messageId, deviceId: currentUser.deviceId }) }); loadMessages(); } catch(e){}
 }
 
-/* ========== НАСТРОЙКИ ========== */
 function openSettings() { document.getElementById('settingsModal').classList.add('active'); document.body.style.overflow='hidden'; }
 function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); document.body.style.overflow=''; }
 
@@ -1103,7 +1074,6 @@ async function uploadAvatar(file) {
     reader.readAsDataURL(file);
 }
 
-/* ========== ЖИВОЙ ОНЛАЙН ========== */
 const STATUS_URL = `${API}/network`;
 const REFRESH_INTERVAL = 10000;
 
@@ -1224,7 +1194,6 @@ function showServerDetails(server) {
     `;
 }
 
-/* ========== МОДАЛКА ПРИВИЛЕГИЙ ========== */
 function openPrivilegeModal(type) {
     const data = privilegeInfo[type][currentLang];
     const modal = document.getElementById('privilegeModal');
@@ -1248,7 +1217,7 @@ function openPrivilegeModal(type) {
         </div>
         <div class="privilege-section">
             <div class="privilege-section-title">${currentLang==='rus'?'Свяжитесь чтобы купить привилегию:':'Contact to buy privilege:'}</div>
-                        <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link">@emoj_11</a>
+            <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link">@emoj_11</a>
         </div>
         <div class="privilege-section">
             <div class="privilege-section-title">${currentLang==='rus'?'Другой способ оплаты:':'Other payment method:'}</div>
@@ -1287,7 +1256,7 @@ function showPurchasePlans(type) {
         <div class="modal-divider"></div>
         <div class="privilege-section">
             <div class="privilege-section-title">${currentLang==='rus'?'Выберите тариф':'Choose plan'}</div>
-            <button class="plan-btn" onclick="purchasePrivilege('${type}',3)">3 ${currentLang==='rus'?'дня':'days'}: ${getPriceByDays(3)}</button>
+                        <button class="plan-btn" onclick="purchasePrivilege('${type}',3)">3 ${currentLang==='rus'?'дня':'days'}: ${getPriceByDays(3)}</button>
             <button class="plan-btn" onclick="purchasePrivilege('${type}',7)">7 ${currentLang==='rus'?'дней':'days'}: ${getPriceByDays(7)}</button>
             <button class="plan-btn" onclick="purchasePrivilege('${type}',10)">10 ${currentLang==='rus'?'дней':'days'}: ${getPriceByDays(10)}</button>
             <button class="plan-btn" onclick="purchasePrivilege('${type}',15)">15 ${currentLang==='rus'?'дней':'days'}: ${getPriceByDays(15)}</button>
@@ -1432,7 +1401,7 @@ async function sendConsoleCommand() {
     finally { consoleBusy = false; }
 }
 
-/* ========== ИНИЦИАЛИЗАЦИЯ ========== */
+/* ========== ИНИЦИАЛИЗАЦИЯ (v20) ========== */
 if (currentLang === 'rus') {
     document.getElementById('langRus').classList.add('active');
     document.getElementById('langEng').classList.remove('active');
@@ -1447,22 +1416,14 @@ applyLang();
 fetchServerStatus();
 setInterval(fetchServerStatus, REFRESH_INTERVAL);
 setInterval(loadUsersOnline, 45000);
-setInterval(loadDailyReward, 30000);
-setInterval(async () => { await updateActivity(); }, 30000);
-
+setInterval(loadDailyReward, 15000);
+setInterval(updateActivity, 30000);
 updateAuthUI();
 loadUsersOnline();
-
-// ВАЖНО: сначала updateActivity, потом loadDailyReward
-(async () => {
-    if (isLoggedIn) {
-        await updateActivity();
-        await loadDailyReward();
-        loadConsoleBinds();
-    } else {
-        updateRewardUI();
-    }
-})();
+loadDailyReward();
+setTimeout(() => { updateAuthUI(); loadDailyReward(); }, 1500);
+setTimeout(() => { loadDailyReward(); }, 4000);
+if (isLoggedIn) loadConsoleBinds();
 
 document.getElementById('avatarFile').addEventListener('change', function(e) {
     const file = e.target.files[0];
