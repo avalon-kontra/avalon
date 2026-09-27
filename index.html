@@ -932,17 +932,43 @@ function spinFortune(reward) {
         const centerOffset = containerW / 2 - itemW / 2;
         const finalX = -(targetIdx * itemW - centerOffset);
 
-        const duration = 27000;
+        // === НОВАЯ 3-фазная кривая ===
+        const DURATION = 27000;         // всего 27 сек
+        const T1 = 4000;                // 0-4 сек  — быстрая фаза
+        const T2 = 10000;               // 4-10 сек — плавное замедление
+                                        // 10-27 сек — резкое замедление
+
         const start = performance.now();
         const startX = 0;
         const audio = document.getElementById('fortuneAudio');
         let lastSlot = -1;
         let playSound = true;
 
+        // Позиция в пикселях на конкретный момент t (в мс)
+        // Мы строим функцию progress(t) — сколько процентов пути пройдено.
+        // Три фазы — три отдельных easing-формулы, стыкуются по значению и производной.
+        function getProgress(t) {
+            if (t < T1) {
+                // Фаза 1: быстрая — почти линейная, чуть-чуть медленнее в конце
+                const p = t / T1;                      // 0..1
+                return p * 0.60;                       // прошли 60% пути за 4 сек
+            }
+            if (t < T2) {
+                // Фаза 2: плавное замедление — easeOutQuad
+                const p = (t - T1) / (T2 - T1);        // 0..1
+                const eased = 1 - Math.pow(1 - p, 2);  // easeOutQuad
+                return 0.60 + eased * 0.33;            // ещё 33% (всего 93%)
+            }
+            // Фаза 3: резкое замедление — easeOutQuart
+            const p = Math.min(1, (t - T2) / (DURATION - T2));  // 0..1
+            const eased = 1 - Math.pow(1 - p, 4);               // easeOutQuart
+            return 0.93 + eased * 0.07;                         // финальные 7% (100%)
+        }
+
         function frame(now) {
-            const t = Math.min(1, (now - start) / duration);
-            const ease = 1 - Math.pow(1 - t, 5);
-            const x = startX + (finalX - startX) * ease;
+            const t = now - start;
+            const p = getProgress(Math.min(t, DURATION));
+            const x = startX + (finalX - startX) * p;
             inner.style.transform = `translateX(${x}px)`;
 
             const passed = Math.floor(Math.abs(x) / itemW);
@@ -953,8 +979,9 @@ function spinFortune(reward) {
                 }
             }
 
-            if (t < 1) requestAnimationFrame(frame);
+            if (t < DURATION) requestAnimationFrame(frame);
             else {
+                inner.style.transform = `translateX(${finalX}px)`;
                 fortuneSpinning = false;
                 resultEl.textContent = reward.value === -1
                     ? (currentLang==='rus'?'🔄 Повтор!':'🔄 Repeat!')
