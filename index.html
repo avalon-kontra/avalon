@@ -84,7 +84,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .admin-item .admin-contact { display:inline-block; margin-top:6px; font-size:12px; color:var(--accent); text-decoration:none; font-weight:600; }
 .admin-item .admin-contact.locked { color:var(--text-dim); cursor:default; }
 
-/* === СЕРВЕРА — СТАРАЯ ВЁРСТКА (одна колонка) === */
 .servers-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; padding:14px 12px 6px; margin-top:10px; backdrop-filter:blur(20px); }
 .server-item { margin-bottom:8px; }
 .server-panel { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:8px 10px; }
@@ -107,7 +106,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 
 .hidden { display:none !important; }
 
-/* === Вкладки серверов === */
 .server-tabs-container { margin-top:14px; padding:10px 8px; background:rgba(255,255,255,0.02); border-radius:12px; border:1px solid rgba(255,255,255,0.06); }
 .server-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
 .server-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text); padding:6px 14px; border-radius:20px; font-size:9px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; }
@@ -124,7 +122,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .players-table th { background:rgba(255,255,255,0.05); color:var(--text-dim); padding:5px; text-align:left; font-weight:600; }
 .players-table td { padding:5px; border-bottom:1px solid rgba(255,255,255,0.04); }
 
-/* === Модалки === */
 .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:999; justify-content:center; align-items:center; padding:20px; animation:modalBg 0.3s ease; }
 .modal-overlay.active { display:flex; }
 .modal { background:rgba(20,20,30,0.9); border:1px solid rgba(255,255,255,0.15); border-radius:24px; max-width:480px; width:100%; max-height:80vh; overflow-y:auto; padding:24px 20px; position:relative; animation:modalPop 0.4s ease; box-shadow:0 0 60px rgba(0,0,0,0.5); }
@@ -153,7 +150,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .auth-input:focus { border-color:var(--accent); }
 .auth-submit { width:100%; background:linear-gradient(135deg, var(--accent), var(--accent2)); border:none; border-radius:12px; padding:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.05em; text-transform:uppercase; }
 
-/* === ПАНЕЛЬ НАГРАДЫ (увеличена высота) === */
 .reward-panel { position:relative; margin-top:12px; border-radius:16px; padding:20px 16px 18px; border:1px solid rgba(255,215,0,0.25); background-color:rgba(20,20,30,0.6); background-image:url('reward_bg.png'); background-size:cover; background-position:center right; overflow:hidden; min-height:190px; }
 .reward-panel::before { content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0.1) 100%); pointer-events:none; }
 .reward-content { position:relative; z-index:2; max-width:60%; padding-right:20px; }
@@ -165,7 +161,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .reward-btn.available { background:#ffd700; color:#1a1a1a; box-shadow:0 0 20px rgba(255,215,0,0.7); animation:softGlowGold 1.5s ease-in-out infinite; }
 .reward-btn:disabled { cursor:not-allowed; opacity:0.7; }
 
-/* === Фортуна === */
 .fortune-modal { background:rgba(15,15,25,0.95); border:1px solid rgba(255,215,0,0.4); border-radius:20px; max-width:500px; width:100%; padding:24px 20px; position:relative; box-shadow:0 0 60px rgba(255,215,0,0.3); }
 .fortune-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:16px; color:#ffd700; text-align:center; margin-bottom:18px; text-shadow:0 0 15px rgba(255,215,0,0.6); }
 .fortune-wrapper { position:relative; padding-top:22px; }
@@ -180,7 +175,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .fortune-item.gray .label { color:#c0c0c0; }
 .fortune-result { text-align:center; margin-top:18px; font-size:16px; font-weight:800; color:#ffd700; min-height:24px; animation:rewardPop 0.5s ease; }
 
-/* === Свайп-карусель пользователей === */
 .users-scroll { display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
 .users-scroll::-webkit-scrollbar { display:none; }
 .user-card { flex:0 0 calc(100% / 4.4); scroll-snap-align:start; display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 4px; border-radius:10px; background:rgba(255,255,255,0.03); cursor:pointer; transition:background 0.3s; min-width:0; }
@@ -197,7 +191,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .users-panel-header img { width:40px; height:40px; }
 .users-panel-header span { font-size:11px; font-weight:700; color:var(--text-bright); }
 
-/* === Чат === */
 .chat-window { background:rgba(20,20,30,0.95); border:1px solid rgba(255,255,255,0.15); border-radius:20px; width:100%; max-width:400px; height:500px; display:flex; flex-direction:column; overflow:hidden; }
 .chat-header { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.1); }
 .chat-user-info { display:flex; align-items:center; gap:8px; }
@@ -219,14 +212,12 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .chat-input { flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:8px 12px; color:var(--text-bright); font-size:13px; outline:none; font-family:'Inter',sans-serif; }
 .chat-send { background:var(--accent); border:none; border-radius:12px; padding:8px 14px; color:#fff; font-weight:700; font-size:12px; cursor:pointer; }
 
-/* === Нижняя панель кнопок === */
 .bottom-bar { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px; margin-top:14px; }
 .bottom-btn { height:52px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:12px; color:var(--text-bright); font-family:'Inter',sans-serif; font-weight:700; font-size:10px; letter-spacing:0.04em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; padding:0 6px; text-align:center; }
 .bottom-btn:active { animation:btnPress 0.3s; }
 .bottom-btn.active-role { border-color:rgba(76,201,240,0.6); color:#4cc9f0; background:rgba(76,201,240,0.08); box-shadow:0 0 15px rgba(76,201,240,0.25); }
 .bottom-btn.soon { color:var(--text-dim); cursor:not-allowed; opacity:0.55; }
 
-/* === Полноэкранная консоль === */
 .console-screen { display:none; position:fixed; inset:0; background:rgba(5,5,10,0.98); z-index:2000; flex-direction:column; padding:20px; animation:modalBg 0.3s ease; }
 .console-screen.active { display:flex; }
 .console-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
@@ -257,7 +248,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .bind-btn.unbound { border-color:rgba(255,71,87,0.4); background:rgba(255,71,87,0.06); }
 .bind-btn.unbound .bind-status { color:#ff4757; }
 
-/* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
 @media (max-width:400px) {
   .btn { padding:6px 10px; font-size:8px; }
   .online-circle { width:40px; height:40px; }
@@ -271,7 +261,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
   .reward-content { max-width:65%; }
 }
 
-/* === DESKTOP РЕЖИМ (ПК/НОУТ) === */
 @media (min-width: 768px) {
   body { padding:30px 20px; }
   .container { max-width: 1100px; }
@@ -281,28 +270,18 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
   .avatar-wrap { width:86px; height:86px; }
   .btn { font-size:10px; padding:9px 16px; }
   .btn svg { width:14px; height:14px; }
-
-  /* Панель серверов — 2 колонки на десктопе */
   .servers-card { padding:18px 16px 10px; }
   .servers-list-desktop { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .server-item { margin-bottom:0; }
   .name { font-size:12px; }
   .ip { font-size:11px; }
-
-  /* Панель награды */
   .reward-panel { min-height:210px; padding:24px 22px 20px; }
   .reward-content { max-width:52%; }
   .reward-title { font-size:14px; }
   .reward-remaining { font-size:13px; }
   .reward-btn { padding:12px 28px; font-size:12px; }
-
-  /* Пользователи — показываем больше карточек в ряд */
   .user-card { flex:0 0 calc(100% / 8); }
-
-  /* Нижняя панель */
   .bottom-btn { height:58px; font-size:12px; }
-
-  /* Вкладки серверов */
   .server-detail-card { grid-template-columns:1fr 1fr 1fr 1fr; }
   .teams-container { gap:16px; }
 }
@@ -455,7 +434,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
         </div>
     </div>
 
-    <!-- ПАНЕЛЬ НАГРАДЫ (увеличена высота, текст в 3 строки, полоска короче) -->
     <div class="reward-panel" id="rewardPanel">
         <div class="reward-content">
             <div class="reward-title" data-lang="rus">Сыграйте 60 минут на любом<br>сервере и тогда сможете открыть<br>ящик наград один раз в день!</div>
@@ -468,7 +446,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
         <button class="reward-btn hidden" id="rewardBtnEng" onclick="openRewardBox()" disabled data-lang="eng">Open</button>
     </div>
 
-    <!-- Посетители сегодня -->
     <div class="users-panel" id="visitorsTodayPanel">
         <div class="users-panel-header">
             <img src="online.svg" alt="online">
@@ -478,7 +455,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
         <div class="users-scroll" id="visitorsTodayList"></div>
     </div>
 
-    <!-- Все пользователи сайта -->
     <div class="users-panel" id="usersPanel">
         <div class="users-panel-header">
             <img src="online.svg" alt="online">
@@ -488,7 +464,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
         <div class="users-scroll" id="usersList"></div>
     </div>
 
-    <!-- Нижняя панель 4 кнопки -->
     <div class="bottom-bar">
         <button class="bottom-btn" id="btnConsole" onclick="tryOpenConsole()">
             <span data-lang="rus">Admin Консоль</span>
@@ -500,7 +475,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Модалка привилегий -->
 <div class="modal-overlay" id="privilegeModal" onclick="closePrivilegeModalOutside(event)">
     <div class="modal">
         <button class="modal-close" onclick="closePrivilegeModal()">&times;</button>
@@ -508,7 +482,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Модалка логина -->
 <div class="modal-overlay" id="authModal" onclick="closeAuthModalOutside(event)">
     <div class="modal auth-modal">
         <button class="modal-close" onclick="closeAuthModal()">&times;</button>
@@ -523,7 +496,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Модалка настроек -->
 <div class="modal-overlay" id="settingsModal">
     <div class="modal auth-modal">
         <button class="modal-close" onclick="closeSettings()">&times;</button>
@@ -538,7 +510,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Чат -->
 <div class="modal-overlay" id="chatModal">
     <div class="chat-window">
         <div class="chat-header">
@@ -556,7 +527,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Фортуна -->
 <div class="modal-overlay" id="fortuneModal">
     <div class="fortune-modal">
         <div class="fortune-title">🎁 FORTUNE 🎁</div>
@@ -570,7 +540,6 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
     </div>
 </div>
 
-<!-- Полноэкранная консоль -->
 <div class="console-screen" id="consoleScreen">
     <div class="console-header">
         <span class="console-title">ADMIN CONSOLE</span>
@@ -616,6 +585,9 @@ let fortuneSpinning = false;
 let usersOnlineCache = [];
 let loadUsersBusy = false;
 
+// Кэш состояния награды — чтобы UI не сбрасывался на 0 до прихода свежего ответа
+let rewardState = { playSec: 0, claimed: false, loaded: false, forceClaimed: false };
+
 try {
     const savedUser = localStorage.getItem('kontra_user');
     if (savedUser) { currentUser = JSON.parse(savedUser); isLoggedIn = true; }
@@ -651,6 +623,7 @@ const privilegeInfo = {
     }
 };
 
+/* ========== ЯЗЫК ========== */
 function toggleLang() {
     const s = document.getElementById('langSlider');
     const r = document.getElementById('langRus');
@@ -668,6 +641,7 @@ function applyLang() {
     updateRewardUI();
 }
 
+/* ========== АВТОРИЗАЦИЯ ========== */
 function toggleAuthModal() {
     if (isLoggedIn) { logout(); return; }
     document.getElementById('authModal').classList.add('active');
@@ -689,7 +663,12 @@ async function login() {
             isLoggedIn = true;
             currentUser = { deviceId:data.deviceId, username:data.username, balance:data.balance, avatar:data.avatar||'', password, prefix:data.prefix||'', prefixColor:data.prefixColor||'', bold:data.bold||false };
             localStorage.setItem('kontra_user', JSON.stringify(currentUser));
-            updateAuthUI(); closeAuthModal(); loadUsersOnline(); loadDailyReward(); updateActivity(); loadConsoleBinds();
+            updateAuthUI(); closeAuthModal();
+            // СНАЧАЛА updateActivity (помечаем заход на сайт), ПОТОМ loadDailyReward
+            await updateActivity();
+            await loadDailyReward();
+            loadUsersOnline();
+            loadConsoleBinds();
         } else {
             alert(currentLang === 'rus' ? 'Неверный ник или пароль' : 'Wrong nickname or password');
         }
@@ -702,6 +681,7 @@ async function logout() {
     }
     isLoggedIn=false; currentUser=null;
     localStorage.removeItem('kontra_user');
+    rewardState = { playSec: 0, claimed: false, loaded: false, forceClaimed: false };
     updateAuthUI(); loadUsersOnline();
 }
 
@@ -734,7 +714,6 @@ function updateAuthUI() {
         } else { userPrefix.textContent=''; userPrefix.className='user-prefix'; }
         balanceDisplay.textContent = `Баланс: ${currentUser.balance || 0} ₽`;
         balanceDisplay.classList.remove('hidden');
-
         const btn = document.getElementById('btnConsole');
         if (hasConsoleAccess()) btn.classList.add('active-role');
         else btn.classList.remove('active-role');
@@ -752,12 +731,12 @@ async function updateActivity() {
     try { await fetch(`${API}/update_activity`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ deviceId: currentUser.deviceId }) }); } catch(e){}
 }
 
+/* ========== АДМИНЫ ========== */
 function renderAdminList() {
     const container = document.getElementById('adminListContent');
     const list = adminData[currentLang];
     container.innerHTML = list.map(a => `<div class="admin-item"><div class="admin-name">${a.name}</div><div class="admin-role">${a.role}</div><div class="admin-duty">${a.duty}</div>${a.locked ? `<span class="admin-contact locked">${currentLang==='rus'?'Связаться: Доступ закрыт':'Contact: Access closed'}</span>` : `<a href="${a.href}" target="_blank" class="admin-contact">${a.contact}</a>`}</div>`).join('');
 }
-
 function togglePrivilege() {
     const p = document.getElementById('privilegePanel');
     const a = document.getElementById('adminPanel');
@@ -771,7 +750,6 @@ function toggleAdmin() {
     if (p.classList.contains('open')) p.classList.remove('open');
     if (a.classList.contains('open')) renderAdminList();
 }
-
 function copyIP(id, btn) {
     const ip = document.getElementById(id).textContent;
     const done = () => { btn.textContent = currentLang==='rus'?'СКОПИРОВАН':'COPIED'; btn.classList.add('copied'); setTimeout(()=>{ btn.textContent = currentLang==='rus'?'КОПИРОВАТЬ IP':'COPY IP'; btn.classList.remove('copied'); },2000); };
@@ -782,6 +760,7 @@ function fallbackCopy(ip, cb) {
     const t=document.createElement('input'); t.value=ip; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); cb();
 }
 
+/* ========== ПОЛЬЗОВАТЕЛИ ========== */
 async function loadUsersOnline() {
     if (loadUsersBusy) return;
     loadUsersBusy = true;
@@ -792,14 +771,11 @@ async function loadUsersOnline() {
         const visitorsGrid = document.getElementById('visitorsTodayList');
         usersGrid.innerHTML=''; visitorsGrid.innerHTML='';
         if (!data.ok || !data.users) return;
-
         const now = Date.now();
         const threeMinutes = 3*60*1000;
         const todayStart = new Date(); todayStart.setHours(0,0,0,0);
-
         const filtered = data.users.filter(u => (u.last_site_visit > 0) || u.in_game);
         usersOnlineCache = filtered;
-
         const sorted = filtered.slice().sort((a,b) => {
             const aP = a.prefix?0:1, bP = b.prefix?0:1;
             if (aP!==bP) return aP-bP;
@@ -807,7 +783,6 @@ async function loadUsersOnline() {
             if (aG!==bG) return aG-bG;
             return (a.username||'').localeCompare(b.username||'');
         });
-
         for (const u of sorted) {
             usersGrid.appendChild(buildUserCard(u, null));
             if (u.last_site_visit && u.last_site_visit >= todayStart.getTime()) {
@@ -829,11 +804,9 @@ function buildUserCard(u, status) {
     if (u.in_game) statusHtml = '<span class="status-ingame">"В игре"</span>';
     else if (status === 'online') statusHtml = '<span class="status-online">"Онлайн"</span>';
     else if (status === 'today') statusHtml = '<span class="status-today">"Сегодня"</span>';
-
     const avatarHtml = u.avatar
         ? `<img src="${u.avatar}" alt="avatar">`
         : '<svg viewBox="0 0 20 20"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.33 0-10 1.67-10 5v1h20v-1c0-3.33-6.67-5-10-5z"/></svg>';
-
     item.innerHTML = `
         <div class="user-card-avatar">${avatarHtml}</div>
         ${prefixHtml}
@@ -843,26 +816,40 @@ function buildUserCard(u, status) {
     return item;
 }
 
+/* ========== ЕЖЕДНЕВНАЯ НАГРАДА ========== */
 async function loadDailyReward() {
-    if (!currentUser) { updateRewardUI(0, false); return; }
+    if (!currentUser) { updateRewardUI(); return; }
     try {
         const r = await fetch(`${API}/daily_reward?deviceId=${currentUser.deviceId}`);
         const data = await r.json();
-        if (data.ok) updateRewardUI(data.playTimeSec || 0, data.rewardClaimed === true);
-    } catch(e){ updateRewardUI(0, false); }
+        if (data.ok) {
+            rewardState.playSec = data.playTimeSec || 0;
+            rewardState.claimed = data.rewardClaimed === true;
+            rewardState.loaded = true;
+            if (rewardState.forceClaimed) rewardState.claimed = true;
+            updateRewardUI();
+        } else {
+            // Не смогли получить — оставляем прошлое состояние
+            updateRewardUI();
+        }
+    } catch(e) {
+        // Сеть отвалилась — не сбрасываем UI
+        updateRewardUI();
+    }
 }
 
-function updateRewardUI(playSec, claimed) {
-    if (playSec === undefined) playSec = 0;
-    const minutes = Math.floor(playSec / 60);
+function updateRewardUI() {
+    const minutes = Math.floor((rewardState.playSec || 0) / 60);
     const need = Math.max(0, 60 - minutes);
     const fill = Math.min(100, (minutes/60)*100);
+    const claimed = rewardState.claimed || rewardState.forceClaimed;
 
     const rem = document.getElementById('rewardRemaining');
     const remEng = document.getElementById('rewardRemainingEng');
     const bar = document.getElementById('rewardBarFill');
     const btnRu = document.getElementById('rewardBtn');
     const btnEn = document.getElementById('rewardBtnEng');
+    if (!rem || !remEng || !bar || !btnRu || !btnEn) return;
 
     if (currentLang === 'rus') rem.textContent = `Осталось сыграть: ${need} минут`;
     else remEng.textContent = `Left to play: ${need} minutes`;
@@ -878,6 +865,7 @@ function updateRewardUI(playSec, claimed) {
     });
 }
 
+/* ========== ФОРТУНА ========== */
 const FORTUNE_REWARDS = [
     { label:'0 ₽',  value:0, weight:10, icon:'💀', cls:'gray' },
     { label:'+1 ₽', value:1, weight:10, icon:'🪙', cls:'' },
@@ -899,7 +887,7 @@ function pickWeighted() {
 function buildFortuneTrack() {
     const inner = document.getElementById('fortuneInner');
     inner.innerHTML = '';
-    const slots = 60;
+    const slots = 120; // удвоено — трек длиннее, чтобы хватило дистанции прокрутки
     for (let i=0; i<slots; i++) {
         const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
         const div = document.createElement('div');
@@ -912,7 +900,10 @@ function buildFortuneTrack() {
 async function openRewardBox() {
     if (fortuneSpinning) return;
     if (!currentUser) { alert(currentLang==='rus'?'Войдите в аккаунт':'Login first'); return; }
-
+    if (rewardState.forceClaimed || rewardState.claimed) {
+        alert(currentLang==='rus'?'Награда уже открыта сегодня':'Reward already opened today');
+        return;
+    }
     try {
         const r = await fetch(`${API}/daily_reward?deviceId=${currentUser.deviceId}`);
         const d = await r.json();
@@ -948,39 +939,32 @@ function spinFortune(reward) {
         const resultEl = document.getElementById('fortuneResult');
         resultEl.textContent = '';
         const itemW = 90;
-        const totalItems = 60;
 
-        // 1) Индекс нужной награды в первом "круге" трека
-        let targetIdxBase = -1;
-        for (let i=0; i<FORTUNE_REWARDS.length; i++) {
-            if (FORTUNE_REWARDS[i].label === reward.label) { targetIdxBase = i; break; }
+        // Ищем позицию нужной награды — стартуем с 60-го слота, чтобы был запас слева
+        let targetIdx = 60;
+        for (let i=60; i<120; i++) {
+            const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
+            if (r.label === reward.label) { targetIdx = i; break; }
         }
-        if (targetIdxBase < 0) targetIdxBase = 0;
 
-        // 2) Крутим 8 полных кругов + останавливаемся на нужной награде
-        const fullLoops = 8;
-        const targetIdx = fullLoops * FORTUNE_REWARDS.length + targetIdxBase;
-
-        // 3) Позиция остановки — награда должна быть по центру "окна" трека
         const container = document.querySelector('.fortune-track');
         const containerW = container.offsetWidth;
         const centerOffset = containerW / 2 - itemW / 2;
+        // Дистанция до нужной позиции; за счёт ease = 1 - (1-t)^4 анимация выглядит в ~5 раз быстрее
         const finalX = -(targetIdx * itemW - centerOffset);
 
-        // 4) Длительность + быстрая кривая (без вязкого хвоста)
-        const duration = 9000;
+        const duration = 12000; // +6 сек к прежним 6
         const start = performance.now();
+        const startX = 0;
         const audio = document.getElementById('fortuneAudio');
         let lastSlot = -1;
         let playSound = true;
 
         function frame(now) {
             const t = Math.min(1, (now - start) / duration);
-
-            // ease-out quad: быстро в начале → плавное торможение
-            const ease = 1 - Math.pow(1 - t, 2);
-
-            const x = finalX * ease;
+            // Плавное замедление с ускоренным стартом (×5 скорость через cubic)
+            const ease = 1 - Math.pow(1 - t, 4);
+            const x = startX + (finalX - startX) * ease;
             inner.style.transform = `translateX(${x}px)`;
 
             const passed = Math.floor(Math.abs(x) / itemW);
@@ -1005,6 +989,9 @@ function spinFortune(reward) {
 }
 
 async function finishReward(reward) {
+    // Сразу помечаем локально, чтобы UI не показывал "Открыть" до следующего ответа
+    rewardState.forceClaimed = true;
+    updateRewardUI();
     try {
         const r = await fetch(`${API}/open_reward`, {
             method:'POST',
@@ -1015,7 +1002,10 @@ async function finishReward(reward) {
         if (d.ok) {
             currentUser.balance = d.newBalance;
             localStorage.setItem('kontra_user', JSON.stringify(currentUser));
+            rewardState.claimed = true;
+            rewardState.playSec = Math.max(rewardState.playSec, 3600);
             updateAuthUI();
+            updateRewardUI();
         }
     } catch(e){}
     setTimeout(() => {
@@ -1025,6 +1015,7 @@ async function finishReward(reward) {
     }, 2000);
 }
 
+/* ========== ЧАТ ========== */
 function openChatList() { loadUsersOnline(); document.getElementById('usersPanel').scrollIntoView({behavior:'smooth'}); }
 function openChat(user) {
     chatPartnerId = user.device_id;
@@ -1078,6 +1069,7 @@ async function deleteMessage(messageId) {
     try { await fetch(`${API}/delete_message`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ messageId, deviceId: currentUser.deviceId }) }); loadMessages(); } catch(e){}
 }
 
+/* ========== НАСТРОЙКИ ========== */
 function openSettings() { document.getElementById('settingsModal').classList.add('active'); document.body.style.overflow='hidden'; }
 function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); document.body.style.overflow=''; }
 
@@ -1111,6 +1103,7 @@ async function uploadAvatar(file) {
     reader.readAsDataURL(file);
 }
 
+/* ========== ЖИВОЙ ОНЛАЙН ========== */
 const STATUS_URL = `${API}/network`;
 const REFRESH_INTERVAL = 10000;
 
@@ -1231,6 +1224,7 @@ function showServerDetails(server) {
     `;
 }
 
+/* ========== МОДАЛКА ПРИВИЛЕГИЙ ========== */
 function openPrivilegeModal(type) {
     const data = privilegeInfo[type][currentLang];
     const modal = document.getElementById('privilegeModal');
@@ -1254,7 +1248,7 @@ function openPrivilegeModal(type) {
         </div>
         <div class="privilege-section">
             <div class="privilege-section-title">${currentLang==='rus'?'Свяжитесь чтобы купить привилегию:':'Contact to buy privilege:'}</div>
-            <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link">@emoj_11</a>
+                        <a href="https://t.me/emoj_11" target="_blank" class="privilege-contact-link">@emoj_11</a>
         </div>
         <div class="privilege-section">
             <div class="privilege-section-title">${currentLang==='rus'?'Другой способ оплаты:':'Other payment method:'}</div>
@@ -1293,7 +1287,7 @@ function showPurchasePlans(type) {
         <div class="modal-divider"></div>
         <div class="privilege-section">
             <div class="privilege-section-title">${currentLang==='rus'?'Выберите тариф':'Choose plan'}</div>
-                        <button class="plan-btn" onclick="purchasePrivilege('${type}',3)">3 ${currentLang==='rus'?'дня':'days'}: ${getPriceByDays(3)}</button>
+            <button class="plan-btn" onclick="purchasePrivilege('${type}',3)">3 ${currentLang==='rus'?'дня':'days'}: ${getPriceByDays(3)}</button>
             <button class="plan-btn" onclick="purchasePrivilege('${type}',7)">7 ${currentLang==='rus'?'дней':'days'}: ${getPriceByDays(7)}</button>
             <button class="plan-btn" onclick="purchasePrivilege('${type}',10)">10 ${currentLang==='rus'?'дней':'days'}: ${getPriceByDays(10)}</button>
             <button class="plan-btn" onclick="purchasePrivilege('${type}',15)">15 ${currentLang==='rus'?'дней':'days'}: ${getPriceByDays(15)}</button>
@@ -1454,11 +1448,21 @@ fetchServerStatus();
 setInterval(fetchServerStatus, REFRESH_INTERVAL);
 setInterval(loadUsersOnline, 45000);
 setInterval(loadDailyReward, 30000);
-setInterval(updateActivity, 30000);
+setInterval(async () => { await updateActivity(); }, 30000);
+
 updateAuthUI();
 loadUsersOnline();
-loadDailyReward();
-if (isLoggedIn) loadConsoleBinds();
+
+// ВАЖНО: сначала updateActivity, потом loadDailyReward
+(async () => {
+    if (isLoggedIn) {
+        await updateActivity();
+        await loadDailyReward();
+        loadConsoleBinds();
+    } else {
+        updateRewardUI();
+    }
+})();
 
 document.getElementById('avatarFile').addEventListener('change', function(e) {
     const file = e.target.files[0];
