@@ -869,7 +869,7 @@ function pickWeighted() {
 function buildFortuneTrack() {
     const inner = document.getElementById('fortuneInner');
     inner.innerHTML = '';
-    const slots = 60;
+    const slots = 300;
     for (let i=0; i<slots; i++) {
         const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
         const div = document.createElement('div');
@@ -918,25 +918,32 @@ function spinFortune(reward) {
         const resultEl = document.getElementById('fortuneResult');
         resultEl.textContent = '';
         const itemW = 90;
-        const totalItems = 60;
+        const totalItems = 300;
 
+        // Ищем нужную награду в позиции 240-260 — это гарантирует 150+ прокруток
         let targetIdx = -1;
-        for (let i=0; i<totalItems; i++) {
+        for (let i = 240; i < totalItems; i++) {
             const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
             if (r.label === reward.label) { targetIdx = i; break; }
         }
-        if (targetIdx < 0) targetIdx = 0;
+        if (targetIdx < 0) {
+            for (let i = 200; i < 240; i++) {
+                const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
+                if (r.label === reward.label) { targetIdx = i; break; }
+            }
+        }
+        if (targetIdx < 0) targetIdx = 240;
 
         const container = document.querySelector('.fortune-track');
         const containerW = container.offsetWidth;
         const centerOffset = containerW / 2 - itemW / 2;
         const finalX = -(targetIdx * itemW - centerOffset);
 
-        // === НОВАЯ 3-фазная кривая ===
-        const DURATION = 27000;         // всего 27 сек
-        const T1 = 4000;                // 0-4 сек  — быстрая фаза
-        const T2 = 10000;               // 4-10 сек — плавное замедление
-                                        // 10-27 сек — резкое замедление
+        // === 3-фазная кривая: 27 секунд ===
+        const DURATION = 27000;
+        const T1 = 4000;    // 0-4 сек   — быстрая фаза (~100 прокруток)
+        const T2 = 10000;   // 4-10 сек  — плавное замедление (~40 прокруток)
+                            // 10-27 сек — резкое замедление и мягкая остановка (~10 прокруток)
 
         const start = performance.now();
         const startX = 0;
@@ -944,25 +951,19 @@ function spinFortune(reward) {
         let lastSlot = -1;
         let playSound = true;
 
-        // Позиция в пикселях на конкретный момент t (в мс)
-        // Мы строим функцию progress(t) — сколько процентов пути пройдено.
-        // Три фазы — три отдельных easing-формулы, стыкуются по значению и производной.
         function getProgress(t) {
             if (t < T1) {
-                // Фаза 1: быстрая — почти линейная, чуть-чуть медленнее в конце
-                const p = t / T1;                      // 0..1
-                return p * 0.60;                       // прошли 60% пути за 4 сек
+                const p = t / T1;
+                return p * 0.60;
             }
             if (t < T2) {
-                // Фаза 2: плавное замедление — easeOutQuad
-                const p = (t - T1) / (T2 - T1);        // 0..1
-                const eased = 1 - Math.pow(1 - p, 2);  // easeOutQuad
-                return 0.60 + eased * 0.33;            // ещё 33% (всего 93%)
+                const p = (t - T1) / (T2 - T1);
+                const eased = 1 - Math.pow(1 - p, 2);
+                return 0.60 + eased * 0.33;
             }
-            // Фаза 3: резкое замедление — easeOutQuart
-            const p = Math.min(1, (t - T2) / (DURATION - T2));  // 0..1
-            const eased = 1 - Math.pow(1 - p, 4);               // easeOutQuart
-            return 0.93 + eased * 0.07;                         // финальные 7% (100%)
+            const p = Math.min(1, (t - T2) / (DURATION - T2));
+            const eased = 1 - Math.pow(1 - p, 4);
+            return 0.93 + eased * 0.07;
         }
 
         function frame(now) {
