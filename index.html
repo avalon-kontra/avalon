@@ -917,33 +917,33 @@ function spinFortune(reward) {
         const inner = document.getElementById('fortuneInner');
         const resultEl = document.getElementById('fortuneResult');
         resultEl.textContent = '';
-        const itemW = 90;
-        const totalItems = 300;
+const itemW = 90;
+const totalItems = 300;
 
-        // Ищем нужную награду в позиции 240-260 — это гарантирует 150+ прокруток
-        let targetIdx = -1;
-        for (let i = 240; i < totalItems; i++) {
-            const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
-            if (r.label === reward.label) { targetIdx = i; break; }
-        }
-        if (targetIdx < 0) {
-            for (let i = 200; i < 240; i++) {
-                const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
-                if (r.label === reward.label) { targetIdx = i; break; }
-            }
-        }
-        if (targetIdx < 0) targetIdx = 240;
+// Ищем нужную награду в позиции 85-100 — это даёт ~90 прокруток
+let targetIdx = -1;
+for (let i = 85; i < 100; i++) {
+    const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
+    if (r.label === reward.label) { targetIdx = i; break; }
+}
+if (targetIdx < 0) {
+    for (let i = 80; i < 85; i++) {
+        const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
+        if (r.label === reward.label) { targetIdx = i; break; }
+    }
+}
+if (targetIdx < 0) targetIdx = 85;
 
         const container = document.querySelector('.fortune-track');
         const containerW = container.offsetWidth;
         const centerOffset = containerW / 2 - itemW / 2;
         const finalX = -(targetIdx * itemW - centerOffset);
 
-        // === 3-фазная кривая: 27 секунд ===
-        const DURATION = 27000;
-        const T1 = 4000;    // 0-4 сек   — быстрая фаза (~100 прокруток)
-        const T2 = 10000;   // 4-10 сек  — плавное замедление (~40 прокруток)
-                            // 10-27 сек — резкое замедление и мягкая остановка (~10 прокруток)
+// === 3-фазная кривая: 15 секунд ===
+const DURATION = 15000;
+const T1 = 3000;    // 0-3 сек   — быстрая фаза (~50 прокруток)
+const T2 = 9000;    // 3-9 сек   — плавное замедление (~30 прокруток)
+                    // 9-15 сек  — резкое замедление и остановка (~10 прокруток)
 
         const start = performance.now();
         const startX = 0;
@@ -952,19 +952,19 @@ function spinFortune(reward) {
         let playSound = true;
 
         function getProgress(t) {
-            if (t < T1) {
-                const p = t / T1;
-                return p * 0.60;
-            }
-            if (t < T2) {
-                const p = (t - T1) / (T2 - T1);
-                const eased = 1 - Math.pow(1 - p, 2);
-                return 0.60 + eased * 0.33;
-            }
-            const p = Math.min(1, (t - T2) / (DURATION - T2));
-            const eased = 1 - Math.pow(1 - p, 4);
-            return 0.93 + eased * 0.07;
-        }
+    if (t < T1) {
+        const p = t / T1;
+        return p * 0.555;
+    }
+    if (t < T2) {
+        const p = (t - T1) / (T2 - T1);
+        const eased = 1 - Math.pow(1 - p, 2);
+        return 0.555 + eased * 0.333;
+    }
+    const p = Math.min(1, (t - T2) / (DURATION - T2));
+    const eased = 1 - Math.pow(1 - p, 4);
+    return 0.888 + eased * 0.112;
+}
 
         function frame(now) {
             const t = now - start;
