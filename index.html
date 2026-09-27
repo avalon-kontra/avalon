@@ -962,7 +962,8 @@ function spinFortune(reward) {
         const centerOffset = containerW / 2 - itemW / 2;
         const finalX = -(targetIdx * itemW - centerOffset);
 
-        const duration = 15000;
+        // +6 сек → было 6000, стало 12000
+        const duration = 12000;
         const start = performance.now();
         const startX = 0;
         const audio = document.getElementById('fortuneAudio');
@@ -971,7 +972,11 @@ function spinFortune(reward) {
 
         function frame(now) {
             const t = Math.min(1, (now - start) / duration);
-            const ease = 1 - Math.pow(1 - t, 3);
+
+            // Новая кривая: разгон → быстрое плато → мягкое торможение
+            // ease-out quad = 1 - (1-t)^2 — быстрее и короче хвост
+            const ease = 1 - Math.pow(1 - t, 2);
+
             const x = startX + (finalX - startX) * ease;
             inner.style.transform = `translateX(${x}px)`;
 
