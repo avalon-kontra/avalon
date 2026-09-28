@@ -161,18 +161,43 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 .reward-btn.available { background:#ffd700; color:#1a1a1a; box-shadow:0 0 20px rgba(255,215,0,0.7); animation:softGlowGold 1.5s ease-in-out infinite; }
 .reward-btn:disabled { cursor:not-allowed; opacity:0.7; }
 
-.fortune-modal { background:rgba(15,15,25,0.95); border:1px solid rgba(255,215,0,0.4); border-radius:20px; max-width:500px; width:100%; padding:24px 20px; position:relative; box-shadow:0 0 60px rgba(255,215,0,0.3); }
-.fortune-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:16px; color:#ffd700; text-align:center; margin-bottom:18px; text-shadow:0 0 15px rgba(255,215,0,0.6); }
-.fortune-wrapper { position:relative; padding-top:22px; }
-.fortune-arrow { position:absolute; top:0; left:50%; transform:translateX(-50%); width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent; border-top:20px solid #ffd700; filter:drop-shadow(0 0 8px rgba(255,215,0,0.9)); animation:fortuneArrow 0.8s ease-in-out infinite; z-index:5; }
-.fortune-track { position:relative; height:80px; background:rgba(0,0,0,0.6); border:2px solid rgba(255,215,0,0.4); border-radius:12px; overflow:hidden; }
-.fortune-inner { display:flex; height:100%; align-items:center; will-change:transform; }
-.fortune-item { min-width:90px; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; border-right:1px solid rgba(255,255,255,0.08); flex-shrink:0; }
-.fortune-item .icon { font-size:26px; }
-.fortune-item .label { font-size:13px; font-weight:800; color:#fff; }
-.fortune-item.gold .label { color:#ffd700; text-shadow:0 0 10px rgba(255,215,0,0.7); }
-.fortune-item.lime .label { color:var(--lime); text-shadow:0 0 10px rgba(57,255,20,0.7); }
-.fortune-item.gray .label { color:#c0c0c0; }
+/* === КЕЙС В СТИЛЕ CS:GO === */
+.fortune-modal { background:rgba(15,15,25,0.95); border:1px solid rgba(74,123,217,0.4); border-radius:20px; max-width:740px; width:100%; padding:24px 20px; position:relative; box-shadow:0 0 60px rgba(74,123,217,0.3); }
+.fortune-title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:16px; color:#4a7bd9; text-align:center; margin-bottom:18px; letter-spacing:0.08em; text-shadow:0 0 15px rgba(74,123,217,0.6); }
+
+.case-wrapper { position:relative; width:100%; max-width:700px; height:140px; margin:0 auto; background:#0f0f1e; border:3px solid #2a2a4a; border-radius:10px; overflow:hidden; box-shadow:0 0 30px rgba(0,150,255,0.3), inset 0 0 40px rgba(0,0,0,0.8); }
+.case-track { position:absolute; top:0; left:0; height:100%; display:flex; align-items:center; will-change:transform; }
+.case-item { width:140px; height:140px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center; border-right:2px solid #1a1a2e; position:relative; background:linear-gradient(180deg, #1e1e3a 0%, #12122a 100%); box-sizing:border-box; overflow:hidden; }
+.case-item::before { content:''; position:absolute; inset:0; pointer-events:none; opacity:0.55; }
+.case-item[data-rarity="common"]::before    { background:radial-gradient(circle at 50% 55%, rgba(90,90,90,0.55) 0%, rgba(90,90,90,0.15) 45%, transparent 75%); }
+.case-item[data-rarity="uncommon"]::before  { background:radial-gradient(circle at 50% 55%, rgba(74,158,74,0.65) 0%, rgba(74,158,74,0.18) 45%, transparent 75%); }
+.case-item[data-rarity="rare"]::before      { background:radial-gradient(circle at 50% 55%, rgba(74,123,217,0.65) 0%, rgba(74,123,217,0.18) 45%, transparent 75%); }
+.case-item[data-rarity="epic"]::before      { background:radial-gradient(circle at 50% 55%, rgba(155,74,217,0.7) 0%, rgba(155,74,217,0.2) 45%, transparent 75%); }
+.case-item[data-rarity="legendary"]::before { background:radial-gradient(circle at 50% 55%, rgba(217,168,74,0.75) 0%, rgba(217,168,74,0.22) 45%, transparent 75%); }
+.case-item[data-rarity="mythic"]::before    { background:radial-gradient(circle at 50% 55%, rgba(217,74,74,0.75) 0%, rgba(217,74,74,0.22) 45%, transparent 75%); }
+
+.case-item::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; opacity:0.35; pointer-events:none; }
+.case-item[data-rarity="common"]::after    { background:#5a5a5a; }
+.case-item[data-rarity="uncommon"]::after  { background:#4a9e4a; }
+.case-item[data-rarity="rare"]::after      { background:#4a7bd9; }
+.case-item[data-rarity="epic"]::after      { background:#9b4ad9; }
+.case-item[data-rarity="legendary"]::after { background:#d9a84a; }
+.case-item[data-rarity="mythic"]::after    { background:#d94a4a; }
+
+.case-item .icon { font-size:44px; margin-bottom:6px; position:relative; z-index:2; filter:drop-shadow(0 0 8px rgba(255,255,255,0.15)); }
+.case-item .name { font-size:14px; font-weight:800; color:#fff; text-align:center; padding:0 5px; position:relative; z-index:2; text-shadow:0 1px 3px rgba(0,0,0,0.8); }
+.case-item .rarity-bar { position:absolute; bottom:0; left:0; right:0; height:4px; z-index:3; }
+.rarity-common    { background:#5a5a5a; }
+.rarity-uncommon  { background:#4a9e4a; }
+.rarity-rare      { background:#4a7bd9; }
+.rarity-epic      { background:#9b4ad9; }
+.rarity-legendary { background:#d9a84a; }
+.rarity-mythic    { background:#d94a4a; }
+
+.case-arrow { position:absolute; top:0; left:50%; transform:translateX(-50%); width:4px; height:100%; background:#ffd700; z-index:10; box-shadow:0 0 15px #ffd700, 0 0 30px #ffd700; pointer-events:none; }
+.case-arrow::before { content:''; position:absolute; top:-10px; left:50%; transform:translateX(-50%); border-left:12px solid transparent; border-right:12px solid transparent; border-top:15px solid #ffd700; filter:drop-shadow(0 0 8px #ffd700); }
+.case-arrow::after  { content:''; position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); border-left:12px solid transparent; border-right:12px solid transparent; border-bottom:15px solid #ffd700; filter:drop-shadow(0 0 8px #ffd700); }
+
 .fortune-result { text-align:center; margin-top:18px; font-size:16px; font-weight:800; color:#ffd700; min-height:24px; animation:rewardPop 0.5s ease; }
 
 .users-scroll { display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
@@ -530,11 +555,9 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); 
 <div class="modal-overlay" id="fortuneModal">
     <div class="fortune-modal">
         <div class="fortune-title">🎁 FORTUNE 🎁</div>
-        <div class="fortune-wrapper">
-            <div class="fortune-arrow"></div>
-            <div class="fortune-track">
-                <div class="fortune-inner" id="fortuneInner"></div>
-            </div>
+        <div class="case-wrapper">
+            <div class="case-track" id="caseTrack"></div>
+            <div class="case-arrow"></div>
         </div>
         <div class="fortune-result" id="fortuneResult"></div>
     </div>
@@ -848,16 +871,21 @@ function updateRewardUI(playSec, claimed) {
     });
 }
 
+/* === КЕЙС В СТИЛЕ CS:GO === */
 const FORTUNE_REWARDS = [
-    { label:'0 ₽',  value:0, weight:10, icon:'💀', cls:'gray' },
-    { label:'+1 ₽', value:1, weight:10, icon:'🪙', cls:'' },
-    { label:'+2 ₽', value:2, weight:10, icon:'🪙', cls:'' },
-    { label:'+3 ₽', value:3, weight:10, icon:'💰', cls:'' },
-    { label:'+4 ₽', value:4, weight:10, icon:'💰', cls:'lime' },
-    { label:'+5 ₽', value:5, weight:35, icon:'💎', cls:'gold' },
-    { label:'+6 ₽', value:6, weight:25, icon:'👑', cls:'gold' },
-    { label:'Повтор', value:-1, weight:10, icon:'🔄', cls:'gray' }
+    { label:'0 ₽',  value:0,  weight:10, icon:'💀', rarity:'common' },
+    { label:'+1 ₽', value:1,  weight:10, icon:'🪙', rarity:'uncommon' },
+    { label:'+2 ₽', value:2,  weight:10, icon:'🪙', rarity:'rare' },
+    { label:'+3 ₽', value:3,  weight:10, icon:'💰', rarity:'epic' },
+    { label:'+4 ₽', value:4,  weight:10, icon:'💰', rarity:'legendary' },
+    { label:'+5 ₽', value:5,  weight:35, icon:'💎', rarity:'mythic' },
+    { label:'+6 ₽', value:6,  weight:25, icon:'👑', rarity:'legendary' },
+    { label:'Повтор', value:-1, weight:10, icon:'🔄', rarity:'epic' }
 ];
+
+const CASE_ITEM_WIDTH = 140;
+const CASE_ITEM_COUNT = 60;
+const CASE_DURATION = 10000;
 
 function pickWeighted() {
     const total = FORTUNE_REWARDS.reduce((s,x) => s + x.weight, 0);
@@ -866,16 +894,20 @@ function pickWeighted() {
     return FORTUNE_REWARDS[0];
 }
 
-function buildFortuneTrack() {
-    const inner = document.getElementById('fortuneInner');
-    inner.innerHTML = '';
-    const slots = 60;
-    for (let i=0; i<slots; i++) {
-        const r = FORTUNE_REWARDS[Math.floor(Math.random() * FORTUNE_REWARDS.length)];
-        const div = document.createElement('div');
-        div.className = 'fortune-item ' + r.cls;
-        div.innerHTML = `<span class="icon">${r.icon}</span><span class="label">${r.label}</span>`;
-        inner.appendChild(div);
+function buildCaseTrack() {
+    const track = document.getElementById('caseTrack');
+    track.innerHTML = '';
+    for (let i = 0; i < CASE_ITEM_COUNT; i++) {
+        const reward = FORTUNE_REWARDS[Math.floor(Math.random() * FORTUNE_REWARDS.length)];
+        const item = document.createElement('div');
+        item.className = 'case-item';
+        item.dataset.rarity = reward.rarity;
+        item.innerHTML = `
+            <div class="icon">${reward.icon}</div>
+            <div class="name">${reward.label}</div>
+            <div class="rarity-bar rarity-${reward.rarity}"></div>
+        `;
+        track.appendChild(item);
     }
 }
 
@@ -894,7 +926,6 @@ async function openRewardBox() {
 
     document.getElementById('fortuneModal').classList.add('active');
     document.body.style.overflow='hidden';
-    buildFortuneTrack();
 
     const reward = pickWeighted();
     await spinFortune(reward);
@@ -914,40 +945,35 @@ async function openRewardBox() {
 function spinFortune(reward) {
     return new Promise(resolve => {
         fortuneSpinning = true;
-        const inner = document.getElementById('fortuneInner');
         const resultEl = document.getElementById('fortuneResult');
         resultEl.textContent = '';
 
-        const ITEM_WIDTH = 90;
-        const ITEM_COUNT = 60;
-        const DURATION = 10000;          // как в твоём примере
-        const WRAPPER_WIDTH = document.querySelector('.fortune-track').offsetWidth;
+        buildCaseTrack();
 
-        // Перестраиваем трек — рандомные награды
-        buildFortuneTrack();
-
-        // Ищем победителя — ту награду что выпала
-        const winnerLabel = reward.label;
-        const winner = FORTUNE_REWARDS.find(r => r.label === winnerLabel) || FORTUNE_REWARDS[0];
-
-        // Позиция в треке — где-то в конце 50-55
         const winnerPositionInTrack = 50 + Math.floor(Math.random() * 5);
 
-        // Подменяем награду в этой позиции на выигрышную
-        const items = inner.children;
-        if (items[winnerPositionInTrack]) {
-            items[winnerPositionInTrack].className = 'fortune-item ' + (winner.cls || '');
-            items[winnerPositionInTrack].innerHTML = `<span class="icon">${winner.icon}</span><span class="label">${winner.label}</span>`;
-        }
+        const track = document.getElementById('caseTrack');
+        const items = track.children;
 
-        // Финальная позиция — центр трека совпадает с центром выигрыша
-        const winnerCenterX = winnerPositionInTrack * ITEM_WIDTH + ITEM_WIDTH / 2;
+        // Подменяем слот победителя нужной наградой
+        items[winnerPositionInTrack].dataset.rarity = reward.rarity;
+        items[winnerPositionInTrack].innerHTML = `
+            <div class="icon">${reward.icon}</div>
+            <div class="name">${reward.label}</div>
+            <div class="rarity-bar rarity-${reward.rarity}"></div>
+        `;
+
+        const wrapper = document.querySelector('.case-wrapper');
+        const WRAPPER_WIDTH = wrapper.offsetWidth;
+
+        const winnerCenterX = winnerPositionInTrack * CASE_ITEM_WIDTH + CASE_ITEM_WIDTH / 2;
         const finalOffset = -(winnerCenterX - WRAPPER_WIDTH / 2);
 
         const startTime = performance.now();
         const startOffset = 0;
-        const audio = document.getElementById('fortuneAudio');
         let lastTickIndex = -1;
+
+        const audio = document.getElementById('fortuneAudio');
         let playSound = true;
 
         function easeOutQuint(t) {
@@ -956,13 +982,13 @@ function spinFortune(reward) {
 
         function animate(now) {
             const elapsed = now - startTime;
-            const t = Math.min(elapsed / DURATION, 1);
+            const t = Math.min(elapsed / CASE_DURATION, 1);
             const eased = easeOutQuint(t);
             const currentOffset = startOffset + (finalOffset - startOffset) * eased;
 
-            inner.style.transform = `translateX(${currentOffset}px)`;
+            track.style.transform = `translateX(${currentOffset}px)`;
 
-            const currentIndex = Math.floor(Math.abs(currentOffset) / ITEM_WIDTH);
+            const currentIndex = Math.floor(Math.abs(currentOffset) / CASE_ITEM_WIDTH);
             if (currentIndex !== lastTickIndex) {
                 lastTickIndex = currentIndex;
                 if (playSound && audio) {
@@ -973,7 +999,7 @@ function spinFortune(reward) {
             if (t < 1) {
                 requestAnimationFrame(animate);
             } else {
-                inner.style.transform = `translateX(${finalOffset}px)`;
+                track.style.transform = `translateX(${finalOffset}px)`;
                 fortuneSpinning = false;
                 resultEl.textContent = reward.value === -1
                     ? (currentLang==='rus'?'🔄 Повтор!':'🔄 Repeat!')
