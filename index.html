@@ -869,9 +869,9 @@ function pickWeighted() {
 function buildFortuneTrack() {
     const inner = document.getElementById('fortuneInner');
     inner.innerHTML = '';
-    const slots = 300;
+    const slots = 60;
     for (let i=0; i<slots; i++) {
-        const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
+        const r = FORTUNE_REWARDS[Math.floor(Math.random() * FORTUNE_REWARDS.length)];
         const div = document.createElement('div');
         div.className = 'fortune-item ' + r.cls;
         div.innerHTML = `<span class="icon">${r.icon}</span><span class="label">${r.label}</span>`;
@@ -917,72 +917,63 @@ function spinFortune(reward) {
         const inner = document.getElementById('fortuneInner');
         const resultEl = document.getElementById('fortuneResult');
         resultEl.textContent = '';
-        const itemW = 90;
-        const totalItems = 300;
 
-        // Ищем нужную награду в позиции 160-180 — ~100 прокруток
-        let targetIdx = -1;
-        for (let i = 160; i < totalItems; i++) {
-            const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
-            if (r.label === reward.label) { targetIdx = i; break; }
+        const ITEM_WIDTH = 90;
+        const ITEM_COUNT = 60;
+        const DURATION = 10000;          // как в твоём примере
+        const WRAPPER_WIDTH = document.querySelector('.fortune-track').offsetWidth;
+
+        // Перестраиваем трек — рандомные награды
+        buildFortuneTrack();
+
+        // Ищем победителя — ту награду что выпала
+        const winnerLabel = reward.label;
+        const winner = FORTUNE_REWARDS.find(r => r.label === winnerLabel) || FORTUNE_REWARDS[0];
+
+        // Позиция в треке — где-то в конце 50-55
+        const winnerPositionInTrack = 50 + Math.floor(Math.random() * 5);
+
+        // Подменяем награду в этой позиции на выигрышную
+        const items = inner.children;
+        if (items[winnerPositionInTrack]) {
+            items[winnerPositionInTrack].className = 'fortune-item ' + (winner.cls || '');
+            items[winnerPositionInTrack].innerHTML = `<span class="icon">${winner.icon}</span><span class="label">${winner.label}</span>`;
         }
-        if (targetIdx < 0) {
-            for (let i = 130; i < 160; i++) {
-                const r = FORTUNE_REWARDS[i % FORTUNE_REWARDS.length];
-                if (r.label === reward.label) { targetIdx = i; break; }
-            }
-        }
-        if (targetIdx < 0) targetIdx = 160;
 
-        const container = document.querySelector('.fortune-track');
-        const containerW = container.offsetWidth;
-        const centerOffset = containerW / 2 - itemW / 2;
-        const finalX = -(targetIdx * itemW - centerOffset);
+        // Финальная позиция — центр трека совпадает с центром выигрыша
+        const winnerCenterX = winnerPositionInTrack * ITEM_WIDTH + ITEM_WIDTH / 2;
+        const finalOffset = -(winnerCenterX - WRAPPER_WIDTH / 2);
 
-        // === 3-фазная кривая: 27 секунд ===
-        const DURATION = 27000;
-        const T1 = 4000;    // 0-4 сек   — быстрая фаза
-        const T2 = 10000;   // 4-10 сек  — плавное замедление
-                            // 10-27 сек — резкое замедление и мягкая остановка
-
-        const start = performance.now();
-        const startX = 0;
+        const startTime = performance.now();
+        const startOffset = 0;
         const audio = document.getElementById('fortuneAudio');
-        let lastSlot = -1;
+        let lastTickIndex = -1;
         let playSound = true;
 
-        function getProgress(t) {
-            if (t < T1) {
-                const p = t / T1;
-                return p * 0.60;
-            }
-            if (t < T2) {
-                const p = (t - T1) / (T2 - T1);
-                const eased = 1 - Math.pow(1 - p, 2);
-                return 0.60 + eased * 0.33;
-            }
-            const p = Math.min(1, (t - T2) / (DURATION - T2));
-            const eased = 1 - Math.pow(1 - p, 4);
-            return 0.93 + eased * 0.07;
+        function easeOutQuint(t) {
+            return 1 - Math.pow(1 - t, 5);
         }
 
-        function frame(now) {
-            const t = now - start;
-            const p = getProgress(Math.min(t, DURATION));
-            const x = startX + (finalX - startX) * p;
-            inner.style.transform = `translateX(${x}px)`;
+        function animate(now) {
+            const elapsed = now - startTime;
+            const t = Math.min(elapsed / DURATION, 1);
+            const eased = easeOutQuint(t);
+            const currentOffset = startOffset + (finalOffset - startOffset) * eased;
 
-            const passed = Math.floor(Math.abs(x) / itemW);
-            if (passed !== lastSlot) {
-                lastSlot = passed;
+            inner.style.transform = `translateX(${currentOffset}px)`;
+
+            const currentIndex = Math.floor(Math.abs(currentOffset) / ITEM_WIDTH);
+            if (currentIndex !== lastTickIndex) {
+                lastTickIndex = currentIndex;
                 if (playSound && audio) {
                     try { audio.currentTime = 0; audio.play().catch(()=>{ playSound=false; }); } catch(e){ playSound=false; }
                 }
             }
 
-            if (t < DURATION) requestAnimationFrame(frame);
-            else {
-                inner.style.transform = `translateX(${finalX}px)`;
+            if (t < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                inner.style.transform = `translateX(${finalOffset}px)`;
                 fortuneSpinning = false;
                 resultEl.textContent = reward.value === -1
                     ? (currentLang==='rus'?'🔄 Повтор!':'🔄 Repeat!')
@@ -990,7 +981,8 @@ function spinFortune(reward) {
                 resolve();
             }
         }
-        requestAnimationFrame(frame);
+
+        requestAnimationFrame(animate);
     });
 }
 
